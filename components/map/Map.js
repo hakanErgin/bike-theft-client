@@ -1,12 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 
@@ -39,7 +31,7 @@ const Map = () => {
       showsCompass={true}
       zoomControlEnabled={true}
       onMapReady={() => setMargin(0)}
-      region={regionState}
+      // region={regionState}
       onRegionChange={onRegionChange}
     />
   );
