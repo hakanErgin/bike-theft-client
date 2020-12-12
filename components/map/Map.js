@@ -19,7 +19,7 @@ const Map = () => {
   });
 
   function onRegionChange(region) {
-    // console.log(regionState);
+    console.log(regionState);
     setRegionState(region);
   }
 
@@ -31,8 +31,8 @@ const Map = () => {
       showsCompass={true}
       zoomControlEnabled={true}
       onMapReady={() => setMargin(0)}
-      // region={regionState}
-      onRegionChange={onRegionChange}
+      region={regionState}
+      onRegionChangeComplete={onRegionChange}
     />
   );
 };
