@@ -10,6 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@apollo/client": "^3.3.6",
+    "graphql": "^15.4.0",
     "react": "17.0.1",
     "react-native": "0.63.4",
     "react-native-maps": "0.27.1"
