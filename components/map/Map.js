@@ -3,6 +3,7 @@ import {StyleSheet, Button, Text, View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {useQuery, gql} from '@apollo/client';
 import Modal from 'react-native-modal';
+import TheftForm from './TheftForm';
 
 const BXL = {
   latitude: 50.850403778518455,
@@ -41,31 +42,27 @@ const styles = StyleSheet.create({
 const Map = () => {
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [margin, setMargin] = useState(1);
-  const [regionState, setRegionState] = useState(BXL);
   const [addingNewTheft, setAddingNewTheft] = useState(false);
   const [thefts, setThefts] = useState([]);
   const {loading, error} = useQuery(GET_THEFTS, {
     onCompleted: (theftsData) => setThefts(theftsData.findThefts.items),
   });
   const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedCoordinate, setSelectedCoordinate] = useState({});
 
   if (loading) {
     return <Text>Loading...</Text>;
   }
   if (error) {
-    console.log(error);
     return <Text>Error :(</Text>;
   }
 
-  function hideModal() {
+  function cancelAdding() {
     setModalVisible(false);
     setAddingNewTheft(false);
   }
 
-  function onRegionChange(region) {
-    // console.log(regionState);
-    setRegionState(region);
-  }
+  function applyAdding() {}
 
   function onMapPress(theft) {
     if (addingNewTheft === true) {
@@ -88,8 +85,11 @@ const Map = () => {
       />
       <Modal isVisible={isModalVisible}>
         <View style={styles.modal}>
-          <Text>Hello!</Text>
-          <Button title="Hide modal" onPress={hideModal} />
+          <TheftForm />
+          <View>
+            <Button title="Save" onPress={applyAdding} />
+            <Button title="Cancel" onPress={cancelAdding} />
+          </View>
         </View>
       </Modal>
       <MapView
@@ -100,8 +100,7 @@ const Map = () => {
         showsMyLocationButton={true}
         zoomControlEnabled={true}
         onMapReady={() => setMargin(0)}
-        region={regionState}
-        onRegionChangeComplete={onRegionChange}
+        initialRegion={BXL}
         onPress={onMapPress}>
         {thefts.map((theft, index) => (
           <Marker
