@@ -30,13 +30,6 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  modal: {
-    flex: 0.75,
-    backgroundColor: 'white',
-    justifyContent: 'space-between',
-    borderRadius: 20,
-    padding: 20,
-  },
 });
 
 const Map = () => {
@@ -62,8 +55,6 @@ const Map = () => {
     setAddingNewTheft(false);
   }
 
-  function applyAdding() {}
-
   function onMapPress(theft) {
     if (addingNewTheft === true) {
       const {latitude, longitude} = theft.nativeEvent.coordinate;
@@ -84,13 +75,7 @@ const Map = () => {
         onPress={addingNewTheftController}
       />
       <Modal isVisible={isModalVisible}>
-        <View style={styles.modal}>
-          <TheftForm />
-          <View>
-            <Button title="Save" onPress={applyAdding} />
-            <Button title="Cancel" onPress={cancelAdding} />
-          </View>
-        </View>
+        <TheftForm cancelAdding={cancelAdding} />
       </Modal>
       <MapView
         style={{...styles.map, margin}}
