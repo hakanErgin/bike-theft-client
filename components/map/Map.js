@@ -4,7 +4,6 @@ import MapView, {Marker} from 'react-native-maps';
 import {useQuery, gql} from '@apollo/client';
 import Modal from 'react-native-modal';
 import TheftForm from './TheftForm';
-import DatePicker from './DatePicker';
 
 const BXL = {
   latitude: 50.850403778518455,
@@ -80,7 +79,6 @@ const Map = () => {
 
   return (
     <>
-      <DatePicker />
       <Button
         title={addingNewTheft ? 'choose location' : 'add new'}
         onPress={addingNewTheftController}

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, TextInput, Button, StyleSheet} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+// import DatePicker from './DatePicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {Formik} from 'formik';
 
 const styles = StyleSheet.create({
   input: {
@@ -9,41 +11,47 @@ const styles = StyleSheet.create({
 });
 
 export default function TheftForm() {
-  const {control, handleSubmit, errors} = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date, setFieldValue) => {
+    setFieldValue('date', date);
+    hideDatePicker();
+  };
 
   return (
     <View>
-      <Controller
-        control={control}
-        render={({onChange, onBlur, value}) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={(val) => onChange(val)}
-            value={value}
-          />
+      <Formik
+        initialValues={{email: '', date: new Date()}}
+        onSubmit={(values) => console.log(values)}>
+        {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
+          <View>
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
+            />
+            <Button onPress={handleSubmit} title="Submit" />
+            <View>
+              <Button title="Show Date Picker" onPress={showDatePicker} />
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={(date) => handleConfirm(date, setFieldValue)}
+                onCancel={hideDatePicker}
+              />
+            </View>
+          </View>
         )}
-        name="description"
-        rules={{required: true}}
-        defaultValue="please describe your bike here"
-      />
-      {errors.description && <Text>This is required.</Text>}
-
-      <Controller
-        control={control}
-        render={({onChange, onBlur, value}) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={(val) => onChange(val)}
-            value={value}
-          />
-        )}
-        name="comments"
-        defaultValue="comments here"
-      />
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      </Formik>
     </View>
   );
 }
