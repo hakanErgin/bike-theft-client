@@ -53,6 +53,9 @@ const Map = () => {
   function cancelAdding() {
     setModalVisible(false);
     setAddingNewTheft(false);
+    const tempState = thefts;
+    tempState.pop();
+    setThefts(tempState);
   }
 
   function onMapPress(theft) {
