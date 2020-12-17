@@ -14,7 +14,7 @@ export default class DatePicker extends Component {
         value={date}
         mode="default"
         display="default"
-        onChange={(date) => this.setState({date})}
+        onChange={(dateParam) => this.setState({dateParam})}
       />
     );
   }
