@@ -41,7 +41,7 @@ const Map = () => {
     onCompleted: (theftsData) => setThefts(theftsData.findThefts.items),
   });
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedCoordinate, setSelectedCoordinate] = useState({});
+  const [selectedRegion, setSelectedRegion] = useState({});
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -62,6 +62,7 @@ const Map = () => {
     if (addingNewTheft === true) {
       const {latitude, longitude} = theft.nativeEvent.coordinate;
       const region = {latitude, longitude};
+      setSelectedRegion(region);
       setThefts([...thefts, {region}]);
       setModalVisible(true);
     }
@@ -78,7 +79,10 @@ const Map = () => {
         onPress={addingNewTheftController}
       />
       <Modal isVisible={isModalVisible}>
-        <TheftForm cancelAdding={cancelAdding} />
+        <TheftForm
+          cancelAdding={cancelAdding}
+          selectedRegion={selectedRegion}
+        />
       </Modal>
       <MapView
         style={{...styles.map, margin}}
