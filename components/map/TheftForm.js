@@ -33,17 +33,24 @@ const CREATE_THEFT = gql`
   }
 `;
 
-export default function TheftForm({cancelAdding, selectedRegion}) {
+export default function TheftForm({
+  cancelAdding,
+  selectedRegion,
+  setModalVisible,
+}) {
   const {longitude, latitude} = selectedRegion;
-  const [submitMutation, {data, error}] = useMutation(CREATE_THEFT);
+  const [submitCreateMutation, {data, error}] = useMutation(CREATE_THEFT);
 
-  error && console.log(error);
   function submitTheft(values) {
     console.log(values);
-    submitMutation({
+    submitCreateMutation({
       variables: {input: {region: {latitude, longitude}}},
     });
+    setModalVisible(false);
   }
+
+  error && console.log(error);
+  data && console.log(data);
 
   return (
     <View style={styles.modal}>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {StyleSheet, Button, Text, View} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
-import {useQuery, gql} from '@apollo/client';
+import {StyleSheet, Button, Text} from 'react-native';
+import MapView, {Marker, Callout} from 'react-native-maps';
+import {useQuery, useMutation, gql} from '@apollo/client';
 import Modal from 'react-native-modal';
 import TheftForm from './TheftForm';
 
@@ -17,11 +17,22 @@ const GET_THEFTS = gql`
     findThefts {
       items {
         _id
+        bike_description
+        comments
+        date
         region {
           latitude
           longitude
         }
       }
+    }
+  }
+`;
+
+const DELETE_THEFT = gql`
+  mutation($input: MutateTheftInput!) {
+    deleteTheft(input: $input) {
+      _id
     }
   }
 `;
@@ -37,17 +48,21 @@ const Map = () => {
   const [margin, setMargin] = useState(1);
   const [addingNewTheft, setAddingNewTheft] = useState(false);
   const [thefts, setThefts] = useState([]);
-  const {loading, error} = useQuery(GET_THEFTS, {
+  const {get_loading, get_error} = useQuery(GET_THEFTS, {
     onCompleted: (theftsData) => setThefts(theftsData.findThefts.items),
   });
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState({});
+  const [submitDeleteMutation, {delete_data, delete_error}] = useMutation(
+    DELETE_THEFT,
+  );
 
-  if (loading) {
+  if (get_loading) {
     return <Text>Loading...</Text>;
   }
-  if (error) {
-    return <Text>Error :(</Text>;
+
+  if (delete_error || get_error) {
+    console.log(delete_error || get_error);
   }
 
   function cancelAdding() {
@@ -72,6 +87,14 @@ const Map = () => {
     !addingNewTheft ? setAddingNewTheft(true) : setAddingNewTheft(false);
   }
 
+  const deleteTheft = (theftId) => () => {
+    console.log(theftId);
+    submitDeleteMutation({
+      variables: {input: {_id: theftId}},
+    });
+  };
+
+  delete_data && console.log(delete_data);
   return (
     <>
       <Button
@@ -82,6 +105,7 @@ const Map = () => {
         <TheftForm
           cancelAdding={cancelAdding}
           selectedRegion={selectedRegion}
+          setModalVisible={setModalVisible}
         />
       </Modal>
       <MapView
@@ -94,17 +118,23 @@ const Map = () => {
         onMapReady={() => setMargin(0)}
         initialRegion={BXL}
         onPress={onMapPress}>
-        {thefts.map((theft, index) => (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: theft.region.latitude,
-              longitude: theft.region.longitude,
-            }}
-            title={'aa'}
-            description={'asdfs'}
-          />
-        ))}
+        {thefts.map((theft, index) => {
+          const theftId = theft._id;
+          return (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: theft.region.latitude,
+                longitude: theft.region.longitude,
+              }}>
+              <Callout onPress={deleteTheft(theftId)}>
+                <Text>id: {theftId}</Text>
+                <Text>stuff that happened here</Text>
+                <Text>Tap for details</Text>
+              </Callout>
+            </Marker>
+          );
+        })}
       </MapView>
     </>
   );
