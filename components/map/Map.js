@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Button, Text} from 'react-native';
-import MapView, {Marker, Callout} from 'react-native-maps';
+import MapView, {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useQuery, useMutation, gql} from '@apollo/client';
 import Modal from 'react-native-modal';
 import TheftForm from './TheftForm';
@@ -88,7 +88,7 @@ const Map = () => {
   }
 
   const deleteTheft = (theftId) => () => {
-    console.log(theftId);
+    // console.log(theftId);
     submitDeleteMutation({
       variables: {input: {_id: theftId}},
     });
@@ -97,20 +97,8 @@ const Map = () => {
   delete_data && console.log(delete_data);
   return (
     <>
-      <Button
-        title={addingNewTheft ? 'choose location' : 'add new'}
-        onPress={addingNewTheftController}
-      />
-      <Modal isVisible={isModalVisible}>
-        <TheftForm
-          cancelAdding={cancelAdding}
-          selectedRegion={selectedRegion}
-          setModalVisible={setModalVisible}
-        />
-      </Modal>
       <MapView
         style={{...styles.map, margin}}
-        showsPointsOfInterest={false}
         showsBuildings={false}
         showsUserLocation={true}
         showsMyLocationButton={true}
@@ -135,7 +123,19 @@ const Map = () => {
             </Marker>
           );
         })}
+        <Heatmap points={thefts.map((t) => t.region)} />
       </MapView>
+      <Button
+        title={addingNewTheft ? 'choose location' : 'add new'}
+        onPress={addingNewTheftController}
+      />
+      <Modal isVisible={isModalVisible}>
+        <TheftForm
+          cancelAdding={cancelAdding}
+          selectedRegion={selectedRegion}
+          setModalVisible={setModalVisible}
+        />
+      </Modal>
     </>
   );
 };

@@ -42,7 +42,7 @@ export default function TheftForm({
   const [submitCreateMutation, {data, error}] = useMutation(CREATE_THEFT);
 
   function submitTheft(values) {
-    console.log(values);
+    // console.log(values);
     submitCreateMutation({
       variables: {input: {region: {latitude, longitude}}},
     });
