@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
+  button: {color: 'white'},
 });
 
 const Map = () => {
@@ -171,6 +172,7 @@ const Map = () => {
       <Button
         title={addingNewTheft ? 'choose location' : 'add new'}
         onPress={addingNewTheftController}
+        color={addingNewTheft ? 'red' : '#2196F3'}
       />
       <Modal isVisible={isModalVisible}>
         <TheftForm
