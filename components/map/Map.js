@@ -47,7 +47,7 @@ const Map = () => {
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [margin, setMargin] = useState(1);
   const [addingNewTheft, setAddingNewTheft] = useState(false);
-  const [thefts, setThefts] = useState([]);
+  const [thefts, setThefts] = useState();
   const {get_loading, get_error} = useQuery(GET_THEFTS, {
     onCompleted: (theftsData) => setThefts(theftsData.findThefts.items),
   });
@@ -56,6 +56,9 @@ const Map = () => {
   const [submitDeleteMutation, {delete_data, delete_error}] = useMutation(
     DELETE_THEFT,
   );
+  const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
+
+  //#region
 
   if (get_loading) {
     return <Text>Loading...</Text>;
@@ -94,6 +97,50 @@ const Map = () => {
     });
   };
 
+  //#endregion
+
+  function getZoomLevel(region) {
+    const zoomLevel = {
+      longitudeDelta: roundThemUp(region.longitudeDelta),
+      latitudeDelta: roundThemUp(region.latitudeDelta),
+    };
+
+    function roundThemUp(original) {
+      return Math.round(original * 100) / 10;
+    }
+    const {longitudeDelta, latitudeDelta} = zoomLevel;
+
+    if ((longitudeDelta || latitudeDelta) >= 0.2) {
+      setVisibleMapLayer('heatmap');
+    } else if ((longitudeDelta || latitudeDelta) < 0.2) {
+      setVisibleMapLayer('markers');
+    }
+  }
+
+  function renderVisibleLayer() {
+    if (visibleMapLayer === 'heatmap') {
+      return <Heatmap points={thefts.map((t) => t.region)} />;
+    } else if (visibleMapLayer === 'markers') {
+      return thefts.map((theft, index) => {
+        const theftId = theft._id;
+        return (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: theft.region.latitude,
+              longitude: theft.region.longitude,
+            }}>
+            <Callout onPress={deleteTheft(theftId)}>
+              <Text>id: {theftId}</Text>
+              <Text>stuff that happened here</Text>
+              <Text>Tap for details</Text>
+            </Callout>
+          </Marker>
+        );
+      });
+    }
+  }
+
   delete_data && console.log(delete_data);
   return (
     <>
@@ -105,25 +152,9 @@ const Map = () => {
         zoomControlEnabled={true}
         onMapReady={() => setMargin(0)}
         initialRegion={BXL}
-        onPress={onMapPress}>
-        {thefts.map((theft, index) => {
-          const theftId = theft._id;
-          return (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: theft.region.latitude,
-                longitude: theft.region.longitude,
-              }}>
-              <Callout onPress={deleteTheft(theftId)}>
-                <Text>id: {theftId}</Text>
-                <Text>stuff that happened here</Text>
-                <Text>Tap for details</Text>
-              </Callout>
-            </Marker>
-          );
-        })}
-        <Heatmap points={thefts.map((t) => t.region)} />
+        onPress={onMapPress}
+        onRegionChangeComplete={getZoomLevel}>
+        {thefts && renderVisibleLayer()}
       </MapView>
       <Button
         title={addingNewTheft ? 'choose location' : 'add new'}
