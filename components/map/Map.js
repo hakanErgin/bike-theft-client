@@ -1,16 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Button, Text} from 'react-native';
 import MapView, {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useQuery, useMutation, gql} from '@apollo/client';
 import Modal from 'react-native-modal';
 import TheftForm from './TheftForm';
-
-const BXL = {
-  latitude: 50.850403778518455,
-  longitude: 4.351369813084602,
-  latitudeDelta: 0.0864, //y
-  longitudeDelta: 0.0535, //x
-};
+import Geolocation from 'react-native-geolocation-service';
 
 const GET_THEFTS = gql`
   {
@@ -57,9 +51,28 @@ const Map = () => {
     DELETE_THEFT,
   );
   const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
+  const [initialRegion, setInitialRegion] = useState();
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position.coords);
+        setInitialRegion({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+        });
+      },
+      (error) => {
+        // See error code charts below.
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  }, []);
 
   //#region
-
   if (get_loading) {
     return <Text>Loading...</Text>;
   }
@@ -97,8 +110,6 @@ const Map = () => {
     });
   };
 
-  //#endregion
-
   function getZoomLevel(region) {
     const zoomLevel = {
       longitudeDelta: roundThemUp(region.longitudeDelta),
@@ -108,11 +119,11 @@ const Map = () => {
     function roundThemUp(original) {
       return Math.round(original * 100) / 10;
     }
-    const {longitudeDelta, latitudeDelta} = zoomLevel;
+    const {longitudeDelta} = zoomLevel;
 
-    if ((longitudeDelta || latitudeDelta) >= 0.2) {
+    if (longitudeDelta >= 0.2) {
       setVisibleMapLayer('heatmap');
-    } else if ((longitudeDelta || latitudeDelta) < 0.2) {
+    } else if (longitudeDelta < 0.2) {
       setVisibleMapLayer('markers');
     }
   }
@@ -140,6 +151,7 @@ const Map = () => {
       });
     }
   }
+  //#endregion
 
   delete_data && console.log(delete_data);
   return (
@@ -151,7 +163,7 @@ const Map = () => {
         showsMyLocationButton={true}
         zoomControlEnabled={true}
         onMapReady={() => setMargin(0)}
-        initialRegion={BXL}
+        initialRegion={initialRegion}
         onPress={onMapPress}
         onRegionChangeComplete={getZoomLevel}>
         {thefts && renderVisibleLayer()}
