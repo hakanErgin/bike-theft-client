@@ -10,11 +10,12 @@ const CustomMapView = ({
   setSelectedRegion,
   isAddingNewTheft,
   setIsModalVisible,
+  visibleMapLayer,
+  setVisibleMapLayer,
 }) => {
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [margin, setMargin] = useState(1);
   const [thefts, setThefts] = useState();
-  const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
   const [initialRegion, setInitialRegion] = useState();
 
   const {get_loading, get_error} = useQuery(GET_THEFTS, {

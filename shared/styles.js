@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  button: {color: 'white'},
+  buttonContainer: {position: 'absolute', top: 15, left: 15},
 });
 
 export default styles;
