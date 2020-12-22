@@ -1,5 +1,5 @@
 import React from 'react';
-import Map from './components/map/Map';
+import MapScreen from './screens/MapScreen';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 
 const client = new ApolloClient({
@@ -10,7 +10,7 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <Map />
+      <MapScreen />
     </ApolloProvider>
   );
 };

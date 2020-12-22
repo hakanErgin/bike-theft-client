@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Button, Text} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import MapView, {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useQuery, useMutation, gql} from '@apollo/client';
-import Modal from 'react-native-modal';
-import TheftForm from './TheftForm';
 import Geolocation from 'react-native-geolocation-service';
 
 const GET_THEFTS = gql`
@@ -38,16 +36,17 @@ const styles = StyleSheet.create({
   button: {color: 'white'},
 });
 
-const Map = () => {
+const CustomMapView = ({
+  setSelectedRegion,
+  addingNewTheft,
+  setModalVisible,
+}) => {
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [margin, setMargin] = useState(1);
-  const [addingNewTheft, setAddingNewTheft] = useState(false);
   const [thefts, setThefts] = useState();
   const {get_loading, get_error} = useQuery(GET_THEFTS, {
     onCompleted: (theftsData) => setThefts(theftsData.findThefts.items),
   });
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState({});
   const [submitDeleteMutation, {delete_data, delete_error}] = useMutation(
     DELETE_THEFT,
   );
@@ -57,7 +56,6 @@ const Map = () => {
   useEffect(() => {
     Geolocation.getCurrentPosition(
       (position) => {
-        console.log(position.coords);
         setInitialRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -66,14 +64,12 @@ const Map = () => {
         });
       },
       (error) => {
-        // See error code charts below.
         console.log(error.code, error.message);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   }, []);
 
-  //#region
   if (get_loading) {
     return <Text>Loading...</Text>;
   }
@@ -82,26 +78,14 @@ const Map = () => {
     console.log(delete_error || get_error);
   }
 
-  function cancelAdding() {
-    setModalVisible(false);
-    setAddingNewTheft(false);
-    const tempState = thefts;
-    tempState.pop();
-    setThefts(tempState);
-  }
-
   function onMapPress(theft) {
     if (addingNewTheft === true) {
       const {latitude, longitude} = theft.nativeEvent.coordinate;
       const region = {latitude, longitude};
       setSelectedRegion(region);
-      setThefts([...thefts, {region}]);
+      // setThefts([...thefts, {region}]);
       setModalVisible(true);
     }
-  }
-
-  function addingNewTheftController() {
-    !addingNewTheft ? setAddingNewTheft(true) : setAddingNewTheft(false);
   }
 
   const deleteTheft = (theftId) => () => {
@@ -152,9 +136,9 @@ const Map = () => {
       });
     }
   }
-  //#endregion
 
   delete_data && console.log(delete_data);
+
   return (
     <>
       <MapView
@@ -169,20 +153,8 @@ const Map = () => {
         onRegionChangeComplete={getZoomLevel}>
         {thefts && renderVisibleLayer()}
       </MapView>
-      <Button
-        title={addingNewTheft ? 'choose location' : 'add new'}
-        onPress={addingNewTheftController}
-        color={addingNewTheft ? 'red' : '#2196F3'}
-      />
-      <Modal isVisible={isModalVisible}>
-        <TheftForm
-          cancelAdding={cancelAdding}
-          selectedRegion={selectedRegion}
-          setModalVisible={setModalVisible}
-        />
-      </Modal>
     </>
   );
 };
 
-export default Map;
+export default CustomMapView;
