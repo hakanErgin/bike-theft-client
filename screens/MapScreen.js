@@ -1,47 +1,36 @@
 import React, {useState} from 'react';
-import {StyleSheet, Button} from 'react-native';
-import Modal from 'react-native-modal';
-import TheftForm from '../components/TheftForm';
+import {Button} from 'react-native';
 import CustomMapView from '../components/CustomMapView';
+import FormModal from '../components/FormModal';
 
 const MapScreen = () => {
-  //https://github.com/react-native-maps/react-native-maps/issues/2010
-  const [addingNewTheft, setAddingNewTheft] = useState(false);
-  // const [thefts, setThefts] = useState();
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isAddingNewTheft, setIsAddingNewTheft] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState({});
+  // const [thefts, setThefts] = useState();
 
-  function cancelAdding() {
-    setModalVisible(false);
-    setAddingNewTheft(false);
-    // const tempState = thefts;
-    // tempState.pop();
-    // setThefts(tempState);
-  }
-
-  function addingNewTheftController() {
-    !addingNewTheft ? setAddingNewTheft(true) : setAddingNewTheft(false);
+  function isAddingNewTheftController() {
+    !isAddingNewTheft ? setIsAddingNewTheft(true) : setIsAddingNewTheft(false);
   }
 
   return (
     <>
       <CustomMapView
         setSelectedRegion={setSelectedRegion}
-        addingNewTheft={addingNewTheft}
-        setModalVisible={setModalVisible}
+        isAddingNewTheft={isAddingNewTheft}
+        setIsModalVisible={setIsModalVisible}
       />
       <Button
-        title={addingNewTheft ? 'choose location' : 'add new'}
-        onPress={addingNewTheftController}
-        color={addingNewTheft ? 'red' : '#2196F3'}
+        title={isAddingNewTheft ? 'choose location' : 'add new'}
+        onPress={isAddingNewTheftController}
+        color={isAddingNewTheft ? 'red' : '#2196F3'}
       />
-      <Modal isVisible={isModalVisible}>
-        <TheftForm
-          cancelAdding={cancelAdding}
-          selectedRegion={selectedRegion}
-          setModalVisible={setModalVisible}
-        />
-      </Modal>
+      <FormModal
+        isModalVisible={isModalVisible}
+        selectedRegion={selectedRegion}
+        setIsModalVisible={setIsModalVisible}
+        setIsAddingNewTheft={setIsAddingNewTheft}
+      />
     </>
   );
 };
