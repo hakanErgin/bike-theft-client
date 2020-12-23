@@ -25,7 +25,7 @@ const MapScreen = () => {
         visibleMapLayer={visibleMapLayer}
         setVisibleMapLayer={setVisibleMapLayer}
       />
-      <View style={styles.buttonContainer}>
+      <View style={styles.addBtnContainer}>
         {visibleMapLayer === 'markers' && (
           <Button
             title={isAddingNewTheft ? 'choose location' : 'add new'}
