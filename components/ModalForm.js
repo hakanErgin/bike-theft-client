@@ -14,9 +14,12 @@ const ModalForm = ({
   setIsAddingNewTheft,
 }) => {
   const {longitude, latitude} = selectedRegion;
-  const [submitCreateMutation, {data, error}] = useMutation(CREATE_THEFT, {
-    refetchQueries: [{query: GET_THEFTS}],
-  });
+  const [submitCreateMutation, {error: create_error}] = useMutation(
+    CREATE_THEFT,
+    {
+      refetchQueries: [{query: GET_THEFTS}],
+    },
+  );
 
   function submitTheft(values) {
     // console.log(values);
@@ -27,15 +30,11 @@ const ModalForm = ({
     setIsAddingNewTheft(false);
   }
 
-  error && console.log(error);
-  data && console.log(data);
+  create_error && console.log(create_error);
 
   function cancelAdding() {
     setIsModalVisible(false);
     setIsAddingNewTheft(false);
-    // const tempState = thefts;
-    // tempState.pop();
-    // setThefts(tempState);
   }
 
   return (

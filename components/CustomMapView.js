@@ -23,11 +23,10 @@ const CustomMapView = ({
   );
   const [
     submitDeleteMutation,
-    {data: delete_data, error: delete_error},
+    {error: delete_error},
   ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
 
   useEffect(() => {
-    console.log(get_data);
     get_data && setThefts(get_data.findThefts.items);
   }, [get_data]);
 
@@ -61,7 +60,6 @@ const CustomMapView = ({
       const {latitude, longitude} = theft.nativeEvent.coordinate;
       const region = {latitude, longitude};
       setSelectedRegion(region);
-      // setThefts([...thefts, {region}]);
       setIsModalVisible(true);
     }
   }
@@ -106,8 +104,6 @@ const CustomMapView = ({
       });
     }
   }
-
-  delete_data && console.log(delete_data);
 
   return (
     <>
