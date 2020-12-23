@@ -18,12 +18,18 @@ const CustomMapView = ({
   const [thefts, setThefts] = useState();
   const [initialRegion, setInitialRegion] = useState();
 
-  const {get_loading, get_error} = useQuery(GET_THEFTS, {
-    onCompleted: (theftsData) => setThefts(theftsData.findThefts.items),
-  });
-  const [submitDeleteMutation, {delete_data, delete_error}] = useMutation(
-    DELETE_THEFT,
+  const {loading: get_loading, error: get_error, data: get_data} = useQuery(
+    GET_THEFTS,
   );
+  const [
+    submitDeleteMutation,
+    {data: delete_data, error: delete_error},
+  ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
+
+  useEffect(() => {
+    console.log(get_data);
+    get_data && setThefts(get_data.findThefts.items);
+  }, [get_data]);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -31,8 +37,8 @@ const CustomMapView = ({
         setInitialRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
         });
       },
       (error) => {

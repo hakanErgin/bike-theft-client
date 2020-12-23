@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, View} from 'react-native';
 import CustomMapView from '../components/CustomMapView';
-import FormModal from '../components/FormModal';
+import ModalForm from '../components/ModalForm';
 import styles from '../shared/styles';
 
 const MapScreen = () => {
@@ -34,7 +34,7 @@ const MapScreen = () => {
           />
         )}
       </View>
-      <FormModal
+      <ModalForm
         isModalVisible={isModalVisible}
         selectedRegion={selectedRegion}
         setIsModalVisible={setIsModalVisible}

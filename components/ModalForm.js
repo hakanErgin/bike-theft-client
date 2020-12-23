@@ -5,16 +5,18 @@ import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
 import DatePicker from './DatePicker';
 import styles from '../shared/styles';
-import {CREATE_THEFT} from '../shared/gql';
+import {CREATE_THEFT, GET_THEFTS} from '../shared/gql';
 
-const FormModal = ({
+const ModalForm = ({
   isModalVisible,
   selectedRegion,
   setIsModalVisible,
   setIsAddingNewTheft,
 }) => {
   const {longitude, latitude} = selectedRegion;
-  const [submitCreateMutation, {data, error}] = useMutation(CREATE_THEFT);
+  const [submitCreateMutation, {data, error}] = useMutation(CREATE_THEFT, {
+    refetchQueries: [{query: GET_THEFTS}],
+  });
 
   function submitTheft(values) {
     // console.log(values);
@@ -87,4 +89,4 @@ const FormModal = ({
   );
 };
 
-export default FormModal;
+export default ModalForm;
