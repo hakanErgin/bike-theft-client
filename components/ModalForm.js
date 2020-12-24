@@ -16,15 +16,25 @@ const ModalForm = ({
   const {longitude, latitude} = selectedRegion;
   const [submitCreateMutation, {error: create_error}] = useMutation(
     CREATE_THEFT,
+
     {
       refetchQueries: [{query: GET_THEFTS}],
+      onCompleted: (data) => console.log(data),
     },
   );
 
   function submitTheft(values) {
-    // console.log(values);
+    console.log(values.date);
     submitCreateMutation({
-      variables: {input: {region: {latitude, longitude}}},
+      variables: {
+        input: {
+          bike_description: values.bike_description,
+          comments: values.comments,
+          date: values.date,
+          region: {latitude, longitude},
+          created_at: new Date(),
+        },
+      },
     });
     setIsModalVisible(false);
     setIsAddingNewTheft(false);
@@ -50,36 +60,47 @@ const ModalForm = ({
             values,
             setFieldValue,
           }) => (
-            <View>
-              <Text>Selected coords:</Text>
-              <Text>longitude:{longitude}</Text>
-              <Text>latitude:{latitude}</Text>
-              <TextInput
-                style={styles.textArea}
-                onChangeText={handleChange('bike_description')}
-                onBlur={handleBlur('bike_description')}
-                value={values.bike_description}
-                multiline={true}
-                numberOfLines={3}
-                scrollEnabled={true}
-                placeholder={'bike_description'}
-              />
-              <TextInput
-                style={styles.textInput}
-                onChangeText={handleChange('comments')}
-                onBlur={handleBlur('comments')}
-                value={values.comments}
-                placeholder={'comments'}
-              />
-              {values.date && (
-                <View>
-                  <Text>Selected date:</Text>
-                  <Text>{values.date.toString()}</Text>
-                </View>
-              )}
-              <DatePicker setFieldValue={setFieldValue} />
-              <Button title="Submit" onPress={handleSubmit} />
-              <Button title="Cancel" onPress={cancelAdding} />
+            <View style={styles.form}>
+              <Text style={styles.header}>Report New Theft</Text>
+              <View>
+                <TextInput
+                  style={styles.textArea}
+                  onChangeText={handleChange('bike_description')}
+                  onBlur={handleBlur('bike_description')}
+                  value={values.bike_description}
+                  multiline={true}
+                  numberOfLines={4}
+                  scrollEnabled={true}
+                  placeholder={'Describe your bike here'}
+                />
+                <TextInput
+                  style={styles.textArea}
+                  onChangeText={handleChange('comments')}
+                  onBlur={handleBlur('comments')}
+                  value={values.comments}
+                  numberOfLines={4}
+                  placeholder={'Add other comments here'}
+                />
+                {values.date && (
+                  <View>
+                    <Text>Selected date:</Text>
+                    <Text>{values.date.toString()}</Text>
+                  </View>
+                )}
+                <DatePicker setFieldValue={setFieldValue} />
+              </View>
+              <View>
+                <Button
+                  style={styles.button}
+                  title="Submit"
+                  onPress={handleSubmit}
+                />
+                <Button
+                  style={styles.button}
+                  title="Cancel"
+                  onPress={cancelAdding}
+                />
+              </View>
             </View>
           )}
         </Formik>
