@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Text} from 'react-native';
 import MapView, {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useQuery, useMutation} from '@apollo/client';
-import styles from '../shared/styles';
+
+import TopBar from './TopBar';
 import Geolocation from 'react-native-geolocation-service';
 import {GET_THEFTS, DELETE_THEFT} from '../shared/gql';
+import styles from '../shared/styles';
 
 const CustomMapView = ({
   setSelectedRegion,
@@ -13,10 +15,14 @@ const CustomMapView = ({
   visibleMapLayer,
   setVisibleMapLayer,
 }) => {
+  const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [margin, setMargin] = useState(1);
   const [thefts, setThefts] = useState();
   const [initialRegion, setInitialRegion] = useState();
+  const [currentRegionBoundaries, setCurrentRegionBoundaries] = useState();
+  const [currentRegion, setCurrentRegion] = useState();
+  const [nrOfTheftsInRegion, setNrOfTheftsInRegion] = useState();
 
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(
     GET_THEFTS,
@@ -25,6 +31,17 @@ const CustomMapView = ({
     submitDeleteMutation,
     {error: delete_error},
   ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
+
+  useEffect(() => {
+    (async function () {
+      return (
+        mapRef.current != null &&
+        mapRef.current
+          .getMapBoundaries()
+          .then((region) => setCurrentRegionBoundaries(region))
+      );
+    })();
+  }, [currentRegion]);
 
   useEffect(() => {
     get_data && setThefts(get_data.findThefts.items);
@@ -46,6 +63,21 @@ const CustomMapView = ({
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   }, []);
+
+  useEffect(() => {
+    if (currentRegionBoundaries != null && thefts != null) {
+      const theftsInRegion = thefts.filter(
+        (theft) =>
+          theft.region.longitude >=
+            currentRegionBoundaries.southWest.longitude &&
+          theft.region.longitude <=
+            currentRegionBoundaries.northEast.longitude &&
+          theft.region.latitude >= currentRegionBoundaries.southWest.latitude &&
+          theft.region.latitude <= currentRegionBoundaries.northEast.latitude,
+      );
+      setNrOfTheftsInRegion(theftsInRegion.length);
+    }
+  }, [thefts, currentRegionBoundaries]);
 
   if (get_loading) {
     return <Text>Loading...</Text>;
@@ -71,6 +103,7 @@ const CustomMapView = ({
   };
 
   function getZoomLevel(region) {
+    setCurrentRegion(region);
     function roundThemUp(original) {
       return Math.round(original * 100) / 10;
     }
@@ -107,6 +140,7 @@ const CustomMapView = ({
 
   return (
     <>
+      <TopBar nr={nrOfTheftsInRegion} />
       <MapView
         style={{...styles.map, margin}}
         showsBuildings={false}
@@ -116,7 +150,8 @@ const CustomMapView = ({
         onMapReady={() => setMargin(0)}
         initialRegion={initialRegion}
         onPress={onMapPress}
-        onRegionChangeComplete={getZoomLevel}>
+        onRegionChangeComplete={getZoomLevel}
+        ref={mapRef}>
         {thefts && renderVisibleLayer()}
       </MapView>
     </>
