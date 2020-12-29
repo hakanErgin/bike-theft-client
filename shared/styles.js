@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   addBtnContainer: {position: 'absolute', top: 15, left: 15},
   header: {fontSize: 24, textAlign: 'center'},
-  button: {},
+  googleBtnContainer: {position: 'absolute', top: 15, right: 15},
 });
 
 export default styles;
