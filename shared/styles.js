@@ -30,6 +30,20 @@ const styles = StyleSheet.create({
   addBtnContainer: {position: 'absolute', top: 15, left: 15},
   header: {fontSize: 24, textAlign: 'center'},
   googleBtnContainer: {position: 'absolute', top: 15, right: 15},
+  topBarContainer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+  },
+  trafficLight: {
+    borderRadius: 10,
+    backgroundColor: 'red',
+    zIndex: 10,
+    marginLeft: 8,
+    width: 20,
+    height: 20,
+  },
 });
 
 export default styles;

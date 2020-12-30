@@ -5,13 +5,12 @@ import {
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
 
-GoogleSignin.configure();
 const GoogleButton = () => {
-  // Somewhere in your code
+  GoogleSignin.configure();
+
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      console.log('aa');
       const userInfo = await GoogleSignin.signIn();
       console.log({userInfo});
     } catch (error) {
