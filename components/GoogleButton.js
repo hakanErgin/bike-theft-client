@@ -4,9 +4,13 @@ import {
   statusCodes,
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
+import {WEB_CLIENT_ID} from '@env';
 
 const GoogleButton = () => {
-  GoogleSignin.configure();
+  GoogleSignin.configure({
+    webClientId: WEB_CLIENT_ID,
+    offlineAccess: true,
+  });
 
   const signIn = async () => {
     try {
