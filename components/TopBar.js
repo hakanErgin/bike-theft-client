@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
+import styles from '../shared/styles';
 
 const TopBar = ({nr}) => {
   const getColor = () => {
@@ -12,27 +13,11 @@ const TopBar = ({nr}) => {
     return 'green';
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.topBarContainer}>
       <Text>{`${nr} theft${nr > 1 ? 's' : ''} in this area`}</Text>
       <View style={[styles.trafficLight, {backgroundColor: getColor()}]} />
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    padding: 8,
-    paddingBottom: 22,
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexDirection: 'row',
-  },
-  trafficLight: {
-    borderRadius: 10,
-    backgroundColor: 'red',
-    zIndex: 10,
-    marginLeft: 8,
-    width: 20,
-    height: 20,
-  },
-});
+
 export default TopBar;
