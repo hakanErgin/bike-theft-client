@@ -12,8 +12,6 @@ const CustomMapView = ({
   setSelectedRegion,
   isAddingNewTheft,
   setIsModalVisible,
-  visibleMapLayer,
-  setVisibleMapLayer,
 }) => {
   const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
@@ -23,6 +21,7 @@ const CustomMapView = ({
   const [currentRegionBoundaries, setCurrentRegionBoundaries] = useState();
   const [currentRegion, setCurrentRegion] = useState();
   const [nrOfTheftsInRegion, setNrOfTheftsInRegion] = useState();
+  const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
 
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(
     GET_THEFTS,
