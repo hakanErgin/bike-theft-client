@@ -21,11 +21,7 @@ const CustomDrawerContent = ({navigation}) => {
     <View style={styles.drawerContainer}>
       <Text>your name</Text>
       <GoogleButton />
-      <Button
-        title={isAddingNewTheft ? 'choose location' : 'add new'}
-        onPress={isAddingNewTheftController}
-        color={isAddingNewTheft ? 'red' : '#2196F3'}
-      />
+      <Button title={'add new'} onPress={isAddingNewTheftController} />
     </View>
   );
 };
