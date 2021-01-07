@@ -1,6 +1,15 @@
 import React from 'react';
 import MapScreen from './screens/MapScreen';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+import CustomDrawerContent from './components/CustomDrawerContent';
+import {AddingTheftProvider} from './shared/AddingTheftContext';
+
+const Drawer = createDrawerNavigator();
 
 const client = new ApolloClient({
   uri: 'http://192.168.1.2:4000/graphql',
@@ -10,7 +19,21 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <MapScreen />
+      <AddingTheftProvider>
+        <NavigationContainer>
+          <Drawer.Navigator
+            initialRouteName="Map"
+            drawerContent={(props) => {
+              return (
+                <DrawerContentScrollView {...props}>
+                  <CustomDrawerContent {...props} />
+                </DrawerContentScrollView>
+              );
+            }}>
+            <Drawer.Screen name="Map" component={MapScreen} />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </AddingTheftProvider>
     </ApolloProvider>
   );
 };

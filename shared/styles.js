@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  addBtnContainer: {position: 'absolute', top: 15, left: 15},
+  menuBtnContainer: {position: 'absolute', top: 15, left: 15},
   header: {fontSize: 24, textAlign: 'center'},
   googleBtnContainer: {position: 'absolute', top: 15, right: 15},
   topBarContainer: {
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  drawerContainer: {padding: 10},
 });
 
 export default styles;

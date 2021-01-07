@@ -7,14 +7,9 @@ import TopBar from './TopBar';
 import Geolocation from 'react-native-geolocation-service';
 import {GET_THEFTS, DELETE_THEFT} from '../shared/gql';
 import styles from '../shared/styles';
+import {useAddingTheft} from '../shared/AddingTheftContext';
 
-const CustomMapView = ({
-  setSelectedRegion,
-  isAddingNewTheft,
-  setIsModalVisible,
-  visibleMapLayer,
-  setVisibleMapLayer,
-}) => {
+const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [margin, setMargin] = useState(1);
@@ -23,6 +18,7 @@ const CustomMapView = ({
   const [currentRegionBoundaries, setCurrentRegionBoundaries] = useState();
   const [currentRegion, setCurrentRegion] = useState();
   const [nrOfTheftsInRegion, setNrOfTheftsInRegion] = useState();
+  const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
 
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(
     GET_THEFTS,
@@ -31,6 +27,8 @@ const CustomMapView = ({
     submitDeleteMutation,
     {error: delete_error},
   ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
+
+  const isAddingNewTheft = useAddingTheft();
 
   useEffect(() => {
     (async function () {

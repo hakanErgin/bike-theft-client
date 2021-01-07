@@ -32,3 +32,11 @@ export const DELETE_THEFT = gql`
     }
   }
 `;
+
+export const CREATE_USER_OR_SIGN_IN = gql`
+  mutation($id_token: String!) {
+    createUserOrSignIn(id_token: $id_token) {
+      google_id
+    }
+  }
+`;
