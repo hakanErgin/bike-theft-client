@@ -7,12 +7,9 @@ import TopBar from './TopBar';
 import Geolocation from 'react-native-geolocation-service';
 import {GET_THEFTS, DELETE_THEFT} from '../shared/gql';
 import styles from '../shared/styles';
+import {useAddingTheft} from '../shared/AddingTheftContext';
 
-const CustomMapView = ({
-  setSelectedRegion,
-  isAddingNewTheft,
-  setIsModalVisible,
-}) => {
+const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [margin, setMargin] = useState(1);
@@ -30,6 +27,8 @@ const CustomMapView = ({
     submitDeleteMutation,
     {error: delete_error},
   ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
+
+  const isAddingNewTheft = useAddingTheft();
 
   useEffect(() => {
     (async function () {

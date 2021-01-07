@@ -25,8 +25,6 @@ const GoogleButton = () => {
       createUserOrSignInMutation({
         variables: {id_token: userInfo.idToken},
       }).then((result) => console.log(result));
-      // console.log({userInfo});
-      // console.log(userInfo.idToken);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log({error});
@@ -45,7 +43,7 @@ const GoogleButton = () => {
   };
   return (
     <GoogleSigninButton
-      size={GoogleSigninButton.Size.Icon}
+      size={GoogleSigninButton.Size.Standard}
       color={GoogleSigninButton.Color.Dark}
       onPress={signIn}
     />
