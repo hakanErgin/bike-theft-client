@@ -4,11 +4,13 @@ import {
   statusCodes,
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
+import {Text, View, Button} from 'react-native';
+
 import {WEB_CLIENT_ID} from '@env';
 import {CREATE_USER_OR_SIGN_IN} from '../shared/gql';
 import {useMutation} from '@apollo/client';
 
-const GoogleButton = () => {
+export const SignInButton = () => {
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
     offlineAccess: true,
@@ -50,4 +52,24 @@ const GoogleButton = () => {
   );
 };
 
-export default GoogleButton;
+export const LogoutButton = () => {
+  const signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return <Button title={'logout'} onPress={signOut} />;
+};
+
+export const CheckUserButton = () => {
+  async function checkUser() {
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    console.log({isSignedIn});
+    const currentUser = await GoogleSignin.getCurrentUser();
+    console.log({currentUser});
+  }
+  return <Button title={'status'} onPress={checkUser} />;
+};
