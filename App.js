@@ -8,6 +8,7 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import CustomDrawerContent from './components/CustomDrawerContent';
 import {AddingTheftProvider} from './shared/AddingTheftContext';
+import {IsUserLoggedInProvider} from './shared/IsUserLoggedInContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,21 +20,23 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <AddingTheftProvider>
-        <NavigationContainer>
-          <Drawer.Navigator
-            initialRouteName="Map"
-            drawerContent={(props) => {
-              return (
-                <DrawerContentScrollView {...props}>
-                  <CustomDrawerContent {...props} />
-                </DrawerContentScrollView>
-              );
-            }}>
-            <Drawer.Screen name="Map" component={MapScreen} />
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </AddingTheftProvider>
+      <IsUserLoggedInProvider>
+        <AddingTheftProvider>
+          <NavigationContainer>
+            <Drawer.Navigator
+              initialRouteName="Map"
+              drawerContent={(props) => {
+                return (
+                  <DrawerContentScrollView {...props}>
+                    <CustomDrawerContent {...props} />
+                  </DrawerContentScrollView>
+                );
+              }}>
+              <Drawer.Screen name="Map" component={MapScreen} />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </AddingTheftProvider>
+      </IsUserLoggedInProvider>
     </ApolloProvider>
   );
 };

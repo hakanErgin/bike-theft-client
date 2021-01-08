@@ -4,11 +4,18 @@ import {
   statusCodes,
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
+import {Button} from 'react-native';
 import {WEB_CLIENT_ID} from '@env';
 import {CREATE_USER_OR_SIGN_IN} from '../shared/gql';
 import {useMutation} from '@apollo/client';
+import {
+  useIsUserLoggedIn,
+  useToggleIsUserLoggedIn,
+} from '../shared/IsUserLoggedInContext';
 
-const GoogleButton = () => {
+export const SignInButton = () => {
+  const setIsUserLoggedIn = useToggleIsUserLoggedIn();
+
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
     offlineAccess: true,
@@ -24,7 +31,10 @@ const GoogleButton = () => {
       const userInfo = await GoogleSignin.signIn();
       createUserOrSignInMutation({
         variables: {id_token: userInfo.idToken},
-      }).then((result) => console.log(result));
+      }).then((result) => {
+        setIsUserLoggedIn(true);
+        console.log({result});
+      });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log({error});
@@ -50,4 +60,32 @@ const GoogleButton = () => {
   );
 };
 
-export default GoogleButton;
+export const LogoutButton = () => {
+  const setIsUserLoggedIn = useToggleIsUserLoggedIn();
+
+  const signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut().then(() => setIsUserLoggedIn(false));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return <Button title={'logout'} onPress={signOut} />;
+};
+
+export const CheckUserButton = (isUserLoggedIn) => {
+  async function checkUser() {
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    console.log({isSignedIn});
+    const currentUser = await GoogleSignin.getCurrentUser();
+    console.log({currentUser});
+    console.log(isUserLoggedIn);
+  }
+  return <Button title={'status'} onPress={checkUser} />;
+};
+
+// helper function
+export async function isSignedInToGoogle() {
+  return await GoogleSignin.isSignedIn();
+}
