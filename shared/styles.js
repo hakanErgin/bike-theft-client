@@ -31,7 +31,12 @@ const styles = StyleSheet.create({
   header: {fontSize: 24, textAlign: 'center'},
   googleBtnContainer: {position: 'absolute', top: 15, right: 15},
   topBarContainer: {
+    position: 'absolute',
+    left: 100,
+    right: 100,
+    bottom: 15,
     padding: 10,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'row',
@@ -45,6 +50,13 @@ const styles = StyleSheet.create({
     height: 20,
   },
   drawerContainer: {padding: 10},
+  searchBoxContainer: {
+    zIndex: 10,
+    flex: 1,
+    position: 'absolute',
+    top: 100,
+    width: '100%',
+  },
 });
 
 export default styles;

@@ -1,13 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import MapView, {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useQuery, useMutation} from '@apollo/client';
-
 import TopBar from './TopBar';
 import Geolocation from 'react-native-geolocation-service';
 import {GET_THEFTS, DELETE_THEFT} from '../shared/gql';
 import styles from '../shared/styles';
 import {useAddingTheft} from '../shared/AddingTheftContext';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {GOOGLE_API_KEY} from '@env';
 
 const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   const mapRef = useRef();
@@ -29,6 +30,8 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
 
   const isAddingNewTheft = useAddingTheft();
+
+  //#region effects
 
   useEffect(() => {
     (async function () {
@@ -84,7 +87,9 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   if (delete_error || get_error) {
     console.log(delete_error || get_error);
   }
+  //#endregion
 
+  //#region functions
   function onMapPress(theft) {
     if (isAddingNewTheft === true) {
       const {latitude, longitude} = theft.nativeEvent.coordinate;
@@ -100,7 +105,7 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
     });
   };
 
-  function getZoomLevel(region) {
+  function updateStateAndMapLayers(region) {
     setCurrentRegion(region);
     function roundThemUp(original) {
       return Math.round(original * 100) / 10;
@@ -135,10 +140,10 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
       });
     }
   }
+  //#endregion
 
   return (
     <>
-      <TopBar nr={nrOfTheftsInRegion} />
       <MapView
         style={{...styles.map, margin}}
         showsBuildings={false}
@@ -148,10 +153,35 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
         onMapReady={() => setMargin(0)}
         initialRegion={initialRegion}
         onPress={onMapPress}
-        onRegionChangeComplete={getZoomLevel}
+        onRegionChangeComplete={updateStateAndMapLayers}
         ref={mapRef}>
         {thefts && renderVisibleLayer()}
       </MapView>
+      <View style={styles.searchBoxContainer}>
+        <GooglePlacesAutocomplete
+          placeholder="Search"
+          onPress={(data, details) => {
+            // 'details' is provided when fetchDetails = true
+            console.log(data, details.geometry.location);
+            mapRef.current != null &&
+              mapRef.current.animateToRegion(
+                {
+                  latitude: details.geometry.location.lat,
+                  longitude: details.geometry.location.lng,
+                  latitudeDelta: 2,
+                  longitudeDelta: 2,
+                },
+                2000,
+              );
+          }}
+          fetchDetails={true}
+          query={{
+            key: GOOGLE_API_KEY,
+            language: 'en',
+          }}
+        />
+      </View>
+      <TopBar nr={nrOfTheftsInRegion} />
     </>
   );
 };
