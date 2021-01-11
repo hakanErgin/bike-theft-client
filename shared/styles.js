@@ -27,6 +27,16 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
+  crosshair: {
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontSize: 50,
+    color: 'white',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
   menuBtnContainer: {position: 'absolute', top: 15, left: 15},
   header: {fontSize: 24, textAlign: 'center'},
   googleBtnContainer: {position: 'absolute', top: 15, right: 15},

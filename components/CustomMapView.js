@@ -92,7 +92,7 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   //#region functions
   function onMapPress(theft) {
     if (isAddingNewTheft === true) {
-      const {latitude, longitude} = theft.nativeEvent.coordinate;
+      const {latitude, longitude} = currentRegion;
       const region = {latitude, longitude};
       setSelectedRegion(region);
       setIsModalVisible(true);
@@ -157,11 +157,11 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
         ref={mapRef}>
         {thefts && renderVisibleLayer()}
       </MapView>
+      {isAddingNewTheft && <Text style={styles.crosshair}>+</Text>}
       <View style={styles.searchBoxContainer}>
         <GooglePlacesAutocomplete
           placeholder="Search"
           onPress={(data, details) => {
-            // 'details' is provided when fetchDetails = true
             console.log(data, details.geometry.location);
             mapRef.current != null &&
               mapRef.current.animateToRegion(
