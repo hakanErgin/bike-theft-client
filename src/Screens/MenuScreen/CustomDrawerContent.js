@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, Button} from 'react-native';
-import styles from '../shared/styles';
-import {SignInButton, LogoutButton, CheckUserButton} from './GoogleButtons';
+import styles from '../../styles';
+import {
+  SignInButton,
+  LogoutButton,
+  CheckUserButton,
+  isSignedInToGoogle,
+} from './Components/GoogleButtons';
 import {
   useToggleAddingTheft,
   useAddingTheft,
-} from '../shared/AddingTheftContext';
+} from '../../ContextProviders/AddingTheftContext';
 import {
   useIsUserLoggedIn,
   useToggleIsUserLoggedIn,
-} from '../shared/IsUserLoggedInContext';
-import {isSignedInToGoogle} from './GoogleButtons';
+} from '../../ContextProviders/IsUserLoggedInContext';
 
 const CustomDrawerContent = ({navigation}) => {
   const setIsAddingNewTheft = useToggleAddingTheft();

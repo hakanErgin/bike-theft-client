@@ -1,14 +1,15 @@
 import React from 'react';
-import MapScreen from './screens/MapScreen';
+import MapScreen from './Screens/MapScreen/MapScreen';
+import CustomDrawerContent from './Screens/MenuScreen/CustomDrawerContent';
+import {AddingTheftProvider} from './ContextProviders/AddingTheftContext';
+import {IsUserLoggedInProvider} from './ContextProviders/IsUserLoggedInContext';
+
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import CustomDrawerContent from './components/CustomDrawerContent';
-import {AddingTheftProvider} from './shared/AddingTheftContext';
-import {IsUserLoggedInProvider} from './shared/IsUserLoggedInContext';
 
 const Drawer = createDrawerNavigator();
 

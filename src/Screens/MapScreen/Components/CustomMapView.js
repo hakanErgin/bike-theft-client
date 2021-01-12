@@ -2,13 +2,13 @@ import React, {useState, useEffect, useRef} from 'react';
 import {Text, View} from 'react-native';
 import MapView, {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useQuery, useMutation} from '@apollo/client';
-import TopBar from './TopBar';
 import Geolocation from 'react-native-geolocation-service';
-import {GET_THEFTS, DELETE_THEFT} from '../shared/gql';
-import styles from '../shared/styles';
-import {useAddingTheft} from '../shared/AddingTheftContext';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {GOOGLE_API_KEY} from '@env';
+import TopBar from './TopBar';
+import {GET_THEFTS, DELETE_THEFT} from '../../../Utils/gql';
+import styles from '../../../styles';
+import {useAddingTheft} from '../../../ContextProviders/AddingTheftContext';
 
 const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   const mapRef = useRef();

@@ -6,12 +6,12 @@ import {
 } from '@react-native-community/google-signin';
 import {Button} from 'react-native';
 import {WEB_CLIENT_ID} from '@env';
-import {CREATE_USER_OR_SIGN_IN} from '../shared/gql';
 import {useMutation} from '@apollo/client';
+import {CREATE_USER_OR_SIGN_IN} from '../../../Utils/gql';
 import {
   useIsUserLoggedIn,
   useToggleIsUserLoggedIn,
-} from '../shared/IsUserLoggedInContext';
+} from '../../../ContextProviders/IsUserLoggedInContext';
 
 export const SignInButton = () => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();

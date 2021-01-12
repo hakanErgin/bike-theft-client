@@ -3,10 +3,10 @@ import {Button, Text, View, TextInput} from 'react-native';
 import Modal from 'react-native-modal';
 import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
-import DatePicker from './DatePicker';
-import styles from '../shared/styles';
-import {CREATE_THEFT, GET_THEFTS} from '../shared/gql';
-import {useToggleAddingTheft} from '../shared/AddingTheftContext';
+import styles from '../../styles';
+import DatePicker from './Components/DatePicker';
+import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
+import {useToggleAddingTheft} from '../../ContextProviders/AddingTheftContext';
 
 const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
   const {longitude, latitude} = selectedRegion;
