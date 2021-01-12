@@ -92,7 +92,7 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   //#region functions
   function onMapPress(theft) {
     if (isAddingNewTheft === true) {
-      const {latitude, longitude} = currentRegion;
+      const {latitude, longitude} = currentRegion; // theft.nativeEvent.coordinate;
       const region = {latitude, longitude};
       setSelectedRegion(region);
       setIsModalVisible(true);
