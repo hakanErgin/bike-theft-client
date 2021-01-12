@@ -30,7 +30,7 @@ const CustomDrawerContent = ({navigation}) => {
   function isAddingNewTheftController() {
     navigation.toggleDrawer();
     // add setState(old=>!old)
-    !isAddingNewTheft && setIsAddingNewTheft();
+    setIsAddingNewTheft();
   }
 
   return (
