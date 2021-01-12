@@ -6,7 +6,7 @@ import {Formik} from 'formik';
 import styles from '../../styles';
 import DatePicker from './Components/DatePicker';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
-import {useToggleAddingTheft} from '../../ContextProviders/AddingTheftContext';
+import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 
 const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
   const {longitude, latitude} = selectedRegion;
@@ -19,7 +19,7 @@ const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
     },
   );
 
-  const setIsAddingNewTheft = useToggleAddingTheft();
+  const setIsAddingNewTheft = useToggleIsAddingNewTheft();
 
   function submitTheft(values) {
     console.log(values.date);

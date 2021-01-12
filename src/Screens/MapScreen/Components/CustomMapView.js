@@ -8,7 +8,7 @@ import {GOOGLE_API_KEY} from '@env';
 import TopBar from './TopBar';
 import {GET_THEFTS, DELETE_THEFT} from '../../../Utils/gql';
 import styles from '../../../styles';
-import {useAddingTheft} from '../../../ContextProviders/AddingTheftContext';
+import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 
 const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   const mapRef = useRef();
@@ -29,7 +29,7 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
     {error: delete_error},
   ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
 
-  const isAddingNewTheft = useAddingTheft();
+  const isAddingNewTheft = useIsAddingNewTheft();
 
   //#region effects
 

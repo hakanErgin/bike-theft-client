@@ -1,24 +1,47 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, Button} from 'react-native';
 import styles from '../../styles';
 import {
   SignInButton,
   LogoutButton,
-  CheckUserButton,
+  // CheckUserButton,
   isSignedInToGoogle,
 } from './Components/GoogleButtons';
-import {
-  useToggleAddingTheft,
-  useAddingTheft,
-} from '../../ContextProviders/AddingTheftContext';
+import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 import {
   useIsUserLoggedIn,
   useToggleIsUserLoggedIn,
 } from '../../ContextProviders/IsUserLoggedInContext';
+// import {DrawerContentScrollView} from '@react-navigation/drawer';
+
+function DrawerContent(props) {
+  return (
+    // <DrawerContentScrollView {...props}>
+    <CustomDrawerContent {...props} />
+    // </DrawerContentScrollView>
+  );
+}
+
+function LoggedInContent({navigation}) {
+  const setIsAddingNewTheft = useToggleIsAddingNewTheft();
+
+  function isAddingNewTheftController() {
+    navigation.toggleDrawer();
+    setIsAddingNewTheft();
+  }
+
+  return (
+    <View>
+      <LogoutButton />
+      <Button title={'add new'} onPress={isAddingNewTheftController} />
+    </View>
+  );
+}
+function LoggedOutContent() {
+  return <SignInButton />;
+}
 
 const CustomDrawerContent = ({navigation}) => {
-  const setIsAddingNewTheft = useToggleAddingTheft();
-  const isAddingNewTheft = useAddingTheft();
   const isUserLoggedIn = useIsUserLoggedIn();
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
 
@@ -31,26 +54,17 @@ const CustomDrawerContent = ({navigation}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUserLoggedIn]);
 
-  function isAddingNewTheftController() {
-    navigation.toggleDrawer();
-    // add setState(old=>!old)
-    setIsAddingNewTheft();
-  }
-
   return (
     <View style={styles.drawerContainer}>
+      <Text>Welcome</Text>
       {isUserLoggedIn ? (
-        <>
-          <Text>your name</Text>
-          <LogoutButton />
-          <Button title={'add new'} onPress={isAddingNewTheftController} />
-        </>
+        <LoggedInContent navigation={navigation} />
       ) : (
-        <SignInButton />
+        <LoggedOutContent />
       )}
-      <CheckUserButton isUserLoggedIn={isUserLoggedIn} />
+      {/* <CheckUserButton isUserLoggedIn={isUserLoggedIn} /> */}
     </View>
   );
 };
 
-export default CustomDrawerContent;
+export default DrawerContent;
