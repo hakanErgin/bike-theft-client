@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import MapScreen from './Screens/MapContent/MapScreen';
-import DrawerContent from './Screens/MenuContent/CustomDrawerContent';
+import React from 'react';
+import MapScreen from './Views/MapContent/MapScreen';
+import DrawerContent from './Views/MenuContent/CustomDrawerContent';
 import CombinedProviders from './ContextProviders/CombinedProviders';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
