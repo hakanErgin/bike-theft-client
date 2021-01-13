@@ -3,15 +3,10 @@ import {Button, View} from 'react-native';
 import CustomMapView from './Components/CustomMapView';
 import ModalForm from '../ModalContent/ModalForm';
 import styles from '../../styles';
-import {
-  useIsModalVisible,
-  useToggleIsModalVisible,
-} from '../../ContextProviders/IsModalVisibleContext';
 
 const MapScreen = ({navigation}) => {
   const [selectedRegion, setSelectedRegion] = useState({});
-  const isModalVisible = useIsModalVisible();
-  const setIsModalVisible = useToggleIsModalVisible();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <>
