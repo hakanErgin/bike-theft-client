@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, View} from 'react-native';
 import CustomMapView from './Components/CustomMapView';
-import ModalForm from '../ModalScreen/ModalForm';
+import ModalForm from '../ModalContent/ModalForm';
 import styles from '../../styles';
 import {
   useIsModalVisible,
