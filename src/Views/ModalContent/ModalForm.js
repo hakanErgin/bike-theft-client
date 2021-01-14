@@ -3,10 +3,10 @@ import {Button, Text, View, TextInput} from 'react-native';
 import Modal from 'react-native-modal';
 import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
-import DatePicker from './DatePicker';
-import styles from '../shared/styles';
-import {CREATE_THEFT, GET_THEFTS} from '../shared/gql';
-import {useToggleAddingTheft} from '../shared/AddingTheftContext';
+import styles from './modalStyles';
+import DatePicker from './Components/DatePicker';
+import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
+import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 
 const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
   const {longitude, latitude} = selectedRegion;
@@ -19,7 +19,7 @@ const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
     },
   );
 
-  const setIsAddingNewTheft = useToggleAddingTheft();
+  const setIsAddingNewTheft = useToggleIsAddingNewTheft();
 
   function submitTheft(values) {
     console.log(values.date);
@@ -88,16 +88,8 @@ const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
                 <DatePicker setFieldValue={setFieldValue} />
               </View>
               <View>
-                <Button
-                  style={styles.button}
-                  title="Submit"
-                  onPress={handleSubmit}
-                />
-                <Button
-                  style={styles.button}
-                  title="Cancel"
-                  onPress={cancelAdding}
-                />
+                <Button title="Submit" onPress={handleSubmit} />
+                <Button title="Cancel" onPress={cancelAdding} />
               </View>
             </View>
           )}

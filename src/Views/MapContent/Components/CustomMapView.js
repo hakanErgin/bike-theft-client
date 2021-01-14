@@ -1,45 +1,35 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {Text} from 'react-native';
-import MapView, {Marker, Heatmap, Callout} from 'react-native-maps';
-import {useQuery, useMutation} from '@apollo/client';
-
-import TopBar from './TopBar';
+import {useQuery} from '@apollo/client';
 import Geolocation from 'react-native-geolocation-service';
-import {GET_THEFTS, DELETE_THEFT} from '../shared/gql';
-import styles from '../shared/styles';
-import {useAddingTheft} from '../shared/AddingTheftContext';
+import TopBar from './TopBar';
+import {GET_THEFTS} from '../../../Utils/gql';
+import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
+import CrosshairOverlay from './CrosshairOverlay';
+import SearchBar from './SearchBar';
+import MenuButton from './MenuButton';
+import MapView from 'react-native-maps';
+import MapLayerOverlay from './MapLayerOverlay';
+import styles from '../mapStyles';
 
-const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
+const CustomMapView = ({setSelectedRegion, setIsModalVisible, navigation}) => {
   const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
-  const [margin, setMargin] = useState(1);
   const [thefts, setThefts] = useState();
   const [initialRegion, setInitialRegion] = useState();
   const [currentRegionBoundaries, setCurrentRegionBoundaries] = useState();
-  const [currentRegion, setCurrentRegion] = useState();
   const [nrOfTheftsInRegion, setNrOfTheftsInRegion] = useState();
+  const [currentRegion, setCurrentRegion] = useState();
+  const [margin, setMargin] = useState(1);
   const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
 
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(
     GET_THEFTS,
   );
-  const [
-    submitDeleteMutation,
-    {error: delete_error},
-  ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
 
-  const isAddingNewTheft = useAddingTheft();
+  const isAddingNewTheft = useIsAddingNewTheft();
 
-  useEffect(() => {
-    (async function () {
-      return (
-        mapRef.current != null &&
-        mapRef.current
-          .getMapBoundaries()
-          .then((region) => setCurrentRegionBoundaries(region))
-      );
-    })();
-  }, [currentRegion]);
+  //#region effects
 
   useEffect(() => {
     get_data && setThefts(get_data.findThefts.items);
@@ -63,6 +53,17 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
   }, []);
 
   useEffect(() => {
+    (async function () {
+      return (
+        mapRef.current != null &&
+        mapRef.current
+          .getMapBoundaries()
+          .then((region) => setCurrentRegionBoundaries(region))
+      );
+    })();
+  }, [currentRegion]);
+
+  useEffect(() => {
     if (currentRegionBoundaries != null && thefts != null) {
       const theftsInRegion = thefts.filter(
         (theft) =>
@@ -77,30 +78,19 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
     }
   }, [thefts, currentRegionBoundaries]);
 
-  if (get_loading) {
-    return <Text>Loading...</Text>;
-  }
+  //#endregion
 
-  if (delete_error || get_error) {
-    console.log(delete_error || get_error);
-  }
-
+  //#region
   function onMapPress(theft) {
     if (isAddingNewTheft === true) {
-      const {latitude, longitude} = theft.nativeEvent.coordinate;
+      const {latitude, longitude} = currentRegion; // theft.nativeEvent.coordinate;
       const region = {latitude, longitude};
       setSelectedRegion(region);
       setIsModalVisible(true);
     }
   }
 
-  const deleteTheft = (theftId) => () => {
-    submitDeleteMutation({
-      variables: {input: {_id: theftId}},
-    });
-  };
-
-  function getZoomLevel(region) {
+  function updateStateAndMapLayers(region) {
     setCurrentRegion(region);
     function roundThemUp(original) {
       return Math.round(original * 100) / 10;
@@ -112,33 +102,18 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
     }
   }
 
-  function renderVisibleLayer() {
-    if (visibleMapLayer === 'heatmap') {
-      return <Heatmap points={thefts.map((t) => t.region)} />;
-    } else if (visibleMapLayer === 'markers') {
-      return thefts.map((theft, index) => {
-        const theftId = theft._id;
-        return (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: theft.region.latitude,
-              longitude: theft.region.longitude,
-            }}>
-            <Callout onPress={deleteTheft(theftId)}>
-              <Text>id: {theftId}</Text>
-              <Text>stuff that happened here</Text>
-              <Text>Tap for details</Text>
-            </Callout>
-          </Marker>
-        );
-      });
-    }
+  //#endregion
+
+  if (get_loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (get_error) {
+    console.log(get_error);
   }
 
   return (
     <>
-      <TopBar nr={nrOfTheftsInRegion} />
       <MapView
         style={{...styles.map, margin}}
         showsBuildings={false}
@@ -148,10 +123,16 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible}) => {
         onMapReady={() => setMargin(0)}
         initialRegion={initialRegion}
         onPress={onMapPress}
-        onRegionChangeComplete={getZoomLevel}
+        onRegionChangeComplete={updateStateAndMapLayers}
         ref={mapRef}>
-        {thefts && renderVisibleLayer()}
+        {thefts && (
+          <MapLayerOverlay visibleMapLayer={visibleMapLayer} thefts={thefts} />
+        )}
       </MapView>
+      {isAddingNewTheft && <CrosshairOverlay />}
+      <MenuButton navigation={navigation} />
+      <SearchBar mapRef={mapRef} />
+      <TopBar nr={nrOfTheftsInRegion} />
     </>
   );
 };

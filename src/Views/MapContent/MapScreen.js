@@ -1,22 +1,18 @@
 import React, {useState} from 'react';
-import {Button, View} from 'react-native';
-import CustomMapView from '../components/CustomMapView';
-import ModalForm from '../components/ModalForm';
-import styles from '../shared/styles';
+import CustomMapView from './Components/CustomMapView';
+import ModalForm from '../ModalContent/ModalForm';
 
-const MapScreen = ({navigation}) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+const MapScreen = (props) => {
   const [selectedRegion, setSelectedRegion] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <>
       <CustomMapView
+        {...props}
         setSelectedRegion={setSelectedRegion}
         setIsModalVisible={setIsModalVisible}
       />
-      <View style={styles.menuBtnContainer}>
-        <Button title={'menu'} onPress={() => navigation.toggleDrawer()} />
-      </View>
       <ModalForm
         isModalVisible={isModalVisible}
         selectedRegion={selectedRegion}

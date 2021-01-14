@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import styles from '../shared/styles';
+import styles from '../mapStyles';
 
 const TopBar = ({nr}) => {
   const getColor = () => {
@@ -13,7 +13,7 @@ const TopBar = ({nr}) => {
     return 'green';
   };
   return (
-    <View style={styles.topBarContainer}>
+    <View style={styles.statusBarContainer}>
       <Text>{`${nr} theft${nr > 1 ? 's' : ''} in this area`}</Text>
       <View style={[styles.trafficLight, {backgroundColor: getColor()}]} />
     </View>
