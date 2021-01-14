@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
-const ModalScreen = () => {
+const ViewModal = ({theft}) => {
   return <></>;
 };
 
-export default ModalScreen;
+export default ViewModal;

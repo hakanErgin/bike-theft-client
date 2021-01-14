@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import CustomMapView from './Components/CustomMapView';
-import ModalForm from '../ModalContent/ModalForm';
+import FormModal from '../ModalContent/FormModal';
 
 const MapScreen = (props) => {
   const [selectedRegion, setSelectedRegion] = useState({});
@@ -13,7 +13,7 @@ const MapScreen = (props) => {
         setSelectedRegion={setSelectedRegion}
         setIsModalVisible={setIsModalVisible}
       />
-      <ModalForm
+      <FormModal
         isModalVisible={isModalVisible}
         selectedRegion={selectedRegion}
         setIsModalVisible={setIsModalVisible}
