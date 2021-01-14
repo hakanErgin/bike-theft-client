@@ -7,8 +7,10 @@ import {GET_THEFTS} from '../../../Utils/gql';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 import CrosshairOverlay from './CrosshairOverlay';
 import SearchBar from './SearchBar';
-import Map from './Map';
 import MenuButton from './MenuButton';
+import MapView from 'react-native-maps';
+import MapLayerOverlay from './MapLayerOverlay';
+import styles from '../mapStyles';
 
 const CustomMapView = ({setSelectedRegion, setIsModalVisible, navigation}) => {
   const mapRef = useRef();
@@ -18,6 +20,8 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible, navigation}) => {
   const [currentRegionBoundaries, setCurrentRegionBoundaries] = useState();
   const [nrOfTheftsInRegion, setNrOfTheftsInRegion] = useState();
   const [currentRegion, setCurrentRegion] = useState();
+  const [margin, setMargin] = useState(1);
+  const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
 
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(
     GET_THEFTS,
@@ -76,6 +80,30 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible, navigation}) => {
 
   //#endregion
 
+  //#region
+  function onMapPress(theft) {
+    if (isAddingNewTheft === true) {
+      const {latitude, longitude} = currentRegion; // theft.nativeEvent.coordinate;
+      const region = {latitude, longitude};
+      setSelectedRegion(region);
+      setIsModalVisible(true);
+    }
+  }
+
+  function updateStateAndMapLayers(region) {
+    setCurrentRegion(region);
+    function roundThemUp(original) {
+      return Math.round(original * 100) / 10;
+    }
+    if (roundThemUp(region.longitudeDelta) >= 0.2) {
+      setVisibleMapLayer('heatmap');
+    } else if (roundThemUp(region.longitudeDelta) < 0.2) {
+      setVisibleMapLayer('markers');
+    }
+  }
+
+  //#endregion
+
   if (get_loading) {
     return <Text>Loading...</Text>;
   }
@@ -86,16 +114,21 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible, navigation}) => {
 
   return (
     <>
-      <Map
-        mapRef={mapRef}
+      <MapView
+        style={{...styles.map, margin}}
+        showsBuildings={false}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+        zoomControlEnabled={true}
+        onMapReady={() => setMargin(0)}
         initialRegion={initialRegion}
-        isAddingNewTheft={isAddingNewTheft}
-        setSelectedRegion={setSelectedRegion}
-        setIsModalVisible={setIsModalVisible}
-        currentRegion={currentRegion}
-        setCurrentRegion={setCurrentRegion}
-        thefts={thefts}
-      />
+        onPress={onMapPress}
+        onRegionChangeComplete={updateStateAndMapLayers}
+        ref={mapRef}>
+        {thefts && (
+          <MapLayerOverlay visibleMapLayer={visibleMapLayer} thefts={thefts} />
+        )}
+      </MapView>
       {isAddingNewTheft && <CrosshairOverlay />}
       <MenuButton navigation={navigation} />
       <SearchBar mapRef={mapRef} />
