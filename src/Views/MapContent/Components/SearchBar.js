@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {GOOGLE_API_KEY} from '@env';
-import styles from '../../../styles';
+import styles from '../mapStyles';
 
 export default function SearchBar({mapRef}) {
   return (

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Text, View, Button} from 'react-native';
-import styles from '../../styles';
+import styles from './menuStyles';
 import {
   SignInButton,
   LogoutButton,

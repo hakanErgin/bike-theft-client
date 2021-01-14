@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import MapView from 'react-native-maps';
 import MapLayerOverlay from './MapLayerOverlay';
-import styles from '../../../styles';
+import styles from '../mapStyles';
 
 export default function Map({
   mapRef,

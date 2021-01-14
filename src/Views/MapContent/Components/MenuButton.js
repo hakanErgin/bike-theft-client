@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Button} from 'react-native';
-import styles from '../../../styles';
+import styles from '../mapStyles';
 
 export default function MenuButton({navigation}) {
   return (
