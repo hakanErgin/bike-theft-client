@@ -12,7 +12,11 @@ import MapView from 'react-native-maps';
 import MapLayerOverlay from './MapLayerOverlay';
 import styles from '../mapStyles';
 
-const CustomMapView = ({setSelectedRegion, setIsModalVisible, navigation}) => {
+const CustomMapView = ({
+  setSelectedRegion,
+  setIsFormModalVisible,
+  navigation,
+}) => {
   const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
   const [thefts, setThefts] = useState();
@@ -86,7 +90,7 @@ const CustomMapView = ({setSelectedRegion, setIsModalVisible, navigation}) => {
       const {latitude, longitude} = currentRegion; // theft.nativeEvent.coordinate;
       const region = {latitude, longitude};
       setSelectedRegion(region);
-      setIsModalVisible(true);
+      setIsFormModalVisible(true);
     }
   }
 
