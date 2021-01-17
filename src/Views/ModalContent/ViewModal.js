@@ -24,6 +24,7 @@ const ViewModal = ({
     submitDeleteMutation({
       variables: {input: {_id: selectedTheftId}},
     });
+    setIsViewModalVisible(false);
   };
 
   if (delete_error || get_error) {
