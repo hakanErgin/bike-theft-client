@@ -13,9 +13,11 @@ import MapLayerOverlay from './MapLayerOverlay';
 import styles from '../mapStyles';
 
 const CustomMapView = ({
+  navigation,
   setSelectedRegion,
   setIsFormModalVisible,
-  navigation,
+  setSelectedTheftId,
+  setIsViewModalVisible,
 }) => {
   const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
@@ -84,7 +86,7 @@ const CustomMapView = ({
 
   //#endregion
 
-  //#region
+  //#region funcs
   function onMapPress(theft) {
     if (isAddingNewTheft === true) {
       const {latitude, longitude} = currentRegion; // theft.nativeEvent.coordinate;
@@ -130,7 +132,12 @@ const CustomMapView = ({
         onRegionChangeComplete={updateStateAndMapLayers}
         ref={mapRef}>
         {thefts && (
-          <MapLayerOverlay visibleMapLayer={visibleMapLayer} thefts={thefts} />
+          <MapLayerOverlay
+            visibleMapLayer={visibleMapLayer}
+            thefts={thefts}
+            setSelectedTheftId={setSelectedTheftId}
+            setIsViewModalVisible={setIsViewModalVisible}
+          />
         )}
       </MapView>
       {isAddingNewTheft && <CrosshairOverlay />}
