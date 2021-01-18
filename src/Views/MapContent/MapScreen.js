@@ -18,16 +18,20 @@ const MapScreen = (props) => {
         setSelectedTheftId={setSelectedTheftId}
         setIsViewModalVisible={setIsViewModalVisible}
       />
-      <FormModal
-        selectedRegion={selectedRegion}
-        isFormModalVisible={isFormModalVisible}
-        setIsFormModalVisible={setIsFormModalVisible}
-      />
-      <ViewModal
-        isViewModalVisible={isViewModalVisible}
-        setIsViewModalVisible={setIsViewModalVisible}
-        selectedTheftId={selectedTheftId}
-      />
+      {isFormModalVisible && (
+        <FormModal
+          selectedRegion={selectedRegion}
+          isFormModalVisible={isFormModalVisible}
+          setIsFormModalVisible={setIsFormModalVisible}
+        />
+      )}
+      {isViewModalVisible && (
+        <ViewModal
+          isViewModalVisible={isViewModalVisible}
+          setIsViewModalVisible={setIsViewModalVisible}
+          selectedTheftId={selectedTheftId}
+        />
+      )}
     </>
   );
 };

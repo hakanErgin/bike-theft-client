@@ -28,7 +28,7 @@ const ViewModal = ({
   };
 
   if (delete_error || get_error) {
-    console.log(delete_error);
+    console.log(delete_error || get_error);
   }
 
   // onPress={deleteTheft(theftId)}
