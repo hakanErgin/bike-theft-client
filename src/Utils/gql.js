@@ -25,6 +25,18 @@ export const GET_THEFTS = gql`
   }
 `;
 
+export const GET_THEFT = gql`
+  query($id: GraphbackObjectID!) {
+    getTheft(id: $id) {
+      _id
+      region {
+        latitude
+        longitude
+      }
+    }
+  }
+`;
+
 export const DELETE_THEFT = gql`
   mutation($input: MutateTheftInput!) {
     deleteTheft(input: $input) {

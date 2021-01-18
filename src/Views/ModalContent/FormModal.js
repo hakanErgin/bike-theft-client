@@ -8,7 +8,11 @@ import DatePicker from './Components/DatePicker';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 
-const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
+const FormModal = ({
+  isFormModalVisible,
+  selectedRegion,
+  setIsFormModalVisible,
+}) => {
   const {longitude, latitude} = selectedRegion;
   const [submitCreateMutation, {error: create_error}] = useMutation(
     CREATE_THEFT,
@@ -34,19 +38,19 @@ const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
         },
       },
     });
-    setIsModalVisible(false);
+    setIsFormModalVisible(false);
     setIsAddingNewTheft(false);
   }
 
   create_error && console.log(create_error);
 
   function cancelAdding() {
-    setIsModalVisible(false);
+    setIsFormModalVisible(false);
     setIsAddingNewTheft(false);
   }
 
   return (
-    <Modal isVisible={isModalVisible}>
+    <Modal isVisible={isFormModalVisible}>
       <View style={styles.modal}>
         <Formik
           initialValues={{bike_description: '', comments: '', date: undefined}}
@@ -99,4 +103,4 @@ const ModalForm = ({isModalVisible, selectedRegion, setIsModalVisible}) => {
   );
 };
 
-export default ModalForm;
+export default FormModal;
