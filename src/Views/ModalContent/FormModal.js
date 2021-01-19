@@ -7,7 +7,7 @@ import styles from './modalStyles';
 import DatePicker from './Components/DatePicker';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
-import Carousel from './Carousel';
+import FormCarousel from './FormCarousel';
 
 const FormModal = ({
   isFormModalVisible,
@@ -53,21 +53,7 @@ const FormModal = ({
   return (
     <Modal isVisible={isFormModalVisible}>
       <View style={styles.modal}>
-        <Carousel
-          style="slide"
-          items={[
-            {
-              title: 'Welcome, swipe to continue.',
-            },
-            {
-              title: 'About feature X.',
-            },
-            {
-              title: 'About feature Y.',
-            },
-          ]}
-        />
-
+        <FormCarousel />
         <View>
           <Button title="Cancel" onPress={cancelAdding} />
         </View>

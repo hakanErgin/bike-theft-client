@@ -3,9 +3,7 @@ import {View, ScrollView, Text} from 'react-native';
 import {Slide} from './Components/Slide';
 import styles from './modalStyles';
 
-export const Carousel = (props) => {
-  const {items, style} = props;
-
+export const FormCarousel = (props) => {
   const [interval, setInterval] = React.useState(1);
   const [width, setWidth] = React.useState(0);
 
@@ -57,13 +55,13 @@ export const Carousel = (props) => {
         scrollEventThrottle={200}
         pagingEnabled
         decelerationRate="fast">
-        {items.map((item, index) => {
-          return <Slide key={index} title={item.title} />;
-        })}
+        <Slide title={1} />
+        <Slide title={2} />
+        <Slide title={3} />
       </ScrollView>
       <View style={styles.bullets}>{bullets}</View>
     </View>
   );
 };
 
-export default Carousel;
+export default FormCarousel;

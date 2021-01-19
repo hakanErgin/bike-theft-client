@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   container: {
-    width: '100%',
+    marginBottom: 10,
+    flex: 1,
     backgroundColor: '#fbfbfb',
     borderColor: '#ebebeb',
     borderWidth: 1,
     borderRadius: 8,
     shadowColor: '#fcfcfc',
     shadowOpacity: 1,
-    marginTop: 10,
     shadowOffset: {
       width: 0,
       height: 5,
@@ -39,13 +39,8 @@ const styles = StyleSheet.create({
   },
   bullets: {
     position: 'absolute',
-    top: 0,
-    right: 0,
-    display: 'flex',
-    justifyContent: 'flex-start',
+    bottom: 0,
     flexDirection: 'row',
-    paddingHorizontal: 10,
-    paddingTop: 5,
   },
   bullet: {
     paddingHorizontal: 5,
