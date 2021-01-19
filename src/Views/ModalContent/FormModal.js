@@ -7,6 +7,7 @@ import styles from './modalStyles';
 import DatePicker from './Components/DatePicker';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
+import Carousel from './Carousel';
 
 const FormModal = ({
   isFormModalVisible,
@@ -52,52 +53,24 @@ const FormModal = ({
   return (
     <Modal isVisible={isFormModalVisible}>
       <View style={styles.modal}>
-        <Formik
-          initialValues={{bike_description: '', comments: '', date: undefined}}
-          onSubmit={submitTheft}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            setFieldValue,
-          }) => (
-            <View style={styles.form}>
-              <Text style={styles.header}>Report New Theft</Text>
-              <View>
-                <TextInput
-                  style={styles.textArea}
-                  onChangeText={handleChange('bike_description')}
-                  onBlur={handleBlur('bike_description')}
-                  value={values.bike_description}
-                  multiline={true}
-                  numberOfLines={4}
-                  scrollEnabled={true}
-                  placeholder={'Describe your bike here'}
-                />
-                <TextInput
-                  style={styles.textArea}
-                  onChangeText={handleChange('comments')}
-                  onBlur={handleBlur('comments')}
-                  value={values.comments}
-                  numberOfLines={4}
-                  placeholder={'Add other comments here'}
-                />
-                {values.date && (
-                  <View>
-                    <Text>Selected date:</Text>
-                    <Text>{values.date.toString()}</Text>
-                  </View>
-                )}
-                <DatePicker setFieldValue={setFieldValue} />
-              </View>
-              <View>
-                <Button title="Submit" onPress={handleSubmit} />
-                <Button title="Cancel" onPress={cancelAdding} />
-              </View>
-            </View>
-          )}
-        </Formik>
+        <Carousel
+          style="slide"
+          items={[
+            {
+              title: 'Welcome, swipe to continue.',
+            },
+            {
+              title: 'About feature X.',
+            },
+            {
+              title: 'About feature Y.',
+            },
+          ]}
+        />
+
+        <View>
+          <Button title="Cancel" onPress={cancelAdding} />
+        </View>
       </View>
     </Modal>
   );
