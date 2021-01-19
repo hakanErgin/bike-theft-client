@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     paddingBottom: 10,
     marginBottom: 10,
+    width: '100%',
   },
   container: {
     marginBottom: 10,

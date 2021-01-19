@@ -4,7 +4,6 @@ import Modal from 'react-native-modal';
 import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
 import styles from './modalStyles';
-import DatePicker from './Components/DatePicker';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 import FormCarousel from './FormCarousel';
@@ -53,10 +52,31 @@ const FormModal = ({
   return (
     <Modal isVisible={isFormModalVisible}>
       <View style={styles.modal}>
-        <FormCarousel />
-        <View>
-          <Button title="Cancel" onPress={cancelAdding} />
-        </View>
+        <Formik
+          initialValues={{bike_description: '', comments: '', date: undefined}}
+          onSubmit={submitTheft}>
+          {({
+            handleChange,
+            handleBlur,
+            values,
+            handleSubmit,
+            setFieldValue,
+          }) => (
+            <View style={styles.form}>
+              <Text style={styles.header}>Report New Theft</Text>
+              <FormCarousel
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                values={values}
+                setFieldValue={setFieldValue}
+              />
+              <View>
+                <Button title="Submit" onPress={handleSubmit} />
+                <Button title="Cancel" onPress={cancelAdding} />
+              </View>
+            </View>
+          )}
+        </Formik>
       </View>
     </Modal>
   );
