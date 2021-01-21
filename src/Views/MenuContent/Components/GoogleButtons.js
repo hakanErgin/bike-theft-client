@@ -77,7 +77,8 @@ export const CheckUserButton = (isUserLoggedIn) => {
     console.log({isSignedIn});
     const currentUser = await GoogleSignin.getCurrentUser();
     console.log({currentUser});
-    console.log(isUserLoggedIn);
+    const userInfo = await GoogleSignin.signInSilently();
+    console.log({userInfo});
   }
   return <Button title={'status'} onPress={checkUser} />;
 };

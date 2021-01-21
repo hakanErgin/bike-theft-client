@@ -4,9 +4,10 @@ import Modal from 'react-native-modal';
 import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
 import styles from './modalStyles';
-import DatePicker from './Components/DatePicker';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
+import FormCarousel from './FormCarousel';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
 const FormModal = ({
   isFormModalVisible,
@@ -16,7 +17,6 @@ const FormModal = ({
   const {longitude, latitude} = selectedRegion;
   const [submitCreateMutation, {error: create_error}] = useMutation(
     CREATE_THEFT,
-
     {
       refetchQueries: [{query: GET_THEFTS}],
       onCompleted: (data) => console.log(data),
@@ -25,8 +25,16 @@ const FormModal = ({
 
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
 
-  function submitTheft(values) {
-    console.log(values.date);
+  async function submitTheft(values) {
+    const currentToken = await GoogleSignin.getTokens();
+    console.log(currentToken.idToken);
+    // const deletedToken = await GoogleSignin.clearCachedAccessToken(
+    //   currentToken.idToken,
+    // );
+    // console.log({deletedToken});
+    // const newToken = await GoogleSignin.getTokens();
+    // console.log(newToken.idToken);
+
     submitCreateMutation({
       variables: {
         input: {
@@ -36,6 +44,7 @@ const FormModal = ({
           region: {latitude, longitude},
           created_at: new Date(),
         },
+        id_token: currentToken.idToken,
       },
     });
     setIsFormModalVisible(false);
@@ -58,39 +67,18 @@ const FormModal = ({
           {({
             handleChange,
             handleBlur,
-            handleSubmit,
             values,
+            handleSubmit,
             setFieldValue,
           }) => (
             <View style={styles.form}>
               <Text style={styles.header}>Report New Theft</Text>
-              <View>
-                <TextInput
-                  style={styles.textArea}
-                  onChangeText={handleChange('bike_description')}
-                  onBlur={handleBlur('bike_description')}
-                  value={values.bike_description}
-                  multiline={true}
-                  numberOfLines={4}
-                  scrollEnabled={true}
-                  placeholder={'Describe your bike here'}
-                />
-                <TextInput
-                  style={styles.textArea}
-                  onChangeText={handleChange('comments')}
-                  onBlur={handleBlur('comments')}
-                  value={values.comments}
-                  numberOfLines={4}
-                  placeholder={'Add other comments here'}
-                />
-                {values.date && (
-                  <View>
-                    <Text>Selected date:</Text>
-                    <Text>{values.date.toString()}</Text>
-                  </View>
-                )}
-                <DatePicker setFieldValue={setFieldValue} />
-              </View>
+              <FormCarousel
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                values={values}
+                setFieldValue={setFieldValue}
+              />
               <View>
                 <Button title="Submit" onPress={handleSubmit} />
                 <Button title="Cancel" onPress={cancelAdding} />

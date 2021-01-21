@@ -37,7 +37,7 @@ export default function MapLayerOverlay({
   setSelectedTheftId,
   setIsViewModalVisible,
 }) {
-  if (visibleMapLayer === 'heatmap') {
+  if (visibleMapLayer === 'heatmap' && thefts.length > 0) {
     return <Heatmap points={thefts.map((t) => t.region)} />;
   } else if (visibleMapLayer === 'markers') {
     return (
@@ -47,5 +47,7 @@ export default function MapLayerOverlay({
         setIsViewModalVisible={setIsViewModalVisible}
       />
     );
+  } else {
+    return null;
   }
 }

@@ -1,8 +1,8 @@
 import {gql} from '@apollo/client';
 
 export const CREATE_THEFT = gql`
-  mutation($input: CreateTheftInput!) {
-    createTheft(input: $input) {
+  mutation($id_token: String!, $input: CreateTheftInput!) {
+    createTheft(id_token: $id_token, input: $input) {
       _id
     }
   }
