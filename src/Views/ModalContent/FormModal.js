@@ -7,6 +7,7 @@ import styles from './modalStyles';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 import FormCarousel from './FormCarousel';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
 const FormModal = ({
   isFormModalVisible,
@@ -16,7 +17,6 @@ const FormModal = ({
   const {longitude, latitude} = selectedRegion;
   const [submitCreateMutation, {error: create_error}] = useMutation(
     CREATE_THEFT,
-
     {
       refetchQueries: [{query: GET_THEFTS}],
       onCompleted: (data) => console.log(data),
@@ -25,8 +25,16 @@ const FormModal = ({
 
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
 
-  function submitTheft(values) {
-    console.log(values.date);
+  async function submitTheft(values) {
+    const currentToken = await GoogleSignin.getTokens();
+    console.log(currentToken.idToken);
+    // const deletedToken = await GoogleSignin.clearCachedAccessToken(
+    //   currentToken.idToken,
+    // );
+    // console.log({deletedToken});
+    // const newToken = await GoogleSignin.getTokens();
+    // console.log(newToken.idToken);
+
     submitCreateMutation({
       variables: {
         input: {
@@ -36,6 +44,7 @@ const FormModal = ({
           region: {latitude, longitude},
           created_at: new Date(),
         },
+        id_token: currentToken.idToken,
       },
     });
     setIsFormModalVisible(false);
