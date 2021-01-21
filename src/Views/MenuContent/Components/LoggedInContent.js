@@ -16,7 +16,7 @@ function UsersReportedThefts({currentUser}) {
     <ScrollView>
       <Text>{currentUser.user.name}</Text>
       {currentUsersThefts &&
-        currentUsersThefts.length < 0 &&
+        currentUsersThefts.length > 0 &&
         currentUsersThefts.map((theft) => {
           return <Text key={theft._id}>{theft._id}</Text>;
         })}
