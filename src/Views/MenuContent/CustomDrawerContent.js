@@ -1,19 +1,17 @@
 import React, {useEffect} from 'react';
-import {Text, View, Button} from 'react-native';
+import {Text, View, Button, ScrollView} from 'react-native';
 import styles from './menuStyles';
 import {
   SignInButton,
-  LogoutButton,
   CheckUserButton,
   isSignedInToGoogle,
 } from './Components/GoogleButtons';
-import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 import {
   useIsUserLoggedIn,
   useToggleIsUserLoggedIn,
 } from '../../ContextProviders/IsUserLoggedInContext';
 // import {DrawerContentScrollView} from '@react-navigation/drawer';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import LoggedInContent from './Components/LoggedInContent';
 
 function DrawerContent(props) {
   return (
@@ -23,31 +21,6 @@ function DrawerContent(props) {
   );
 }
 
-function LoggedInContent({navigation}) {
-  const setIsAddingNewTheft = useToggleIsAddingNewTheft();
-  // if logged in, make sure token and all is up to date
-  useEffect(() => {
-    async function refreshUserInfo() {
-      return await GoogleSignin.signInSilently();
-    }
-    refreshUserInfo()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
-
-  function isAddingNewTheftController() {
-    navigation.toggleDrawer();
-    setIsAddingNewTheft();
-  }
-
-  return (
-    <View>
-      <LogoutButton />
-
-      <Button title={'add new'} onPress={isAddingNewTheftController} />
-    </View>
-  );
-}
 function LoggedOutContent() {
   return <SignInButton />;
 }
@@ -68,14 +41,13 @@ const CustomDrawerContent = ({navigation}) => {
   return (
     <View style={styles.drawerContainer}>
       <Text>Welcome</Text>
-      <CheckUserButton />
 
       {isUserLoggedIn ? (
         <LoggedInContent navigation={navigation} />
       ) : (
         <LoggedOutContent />
       )}
-      {/* <CheckUserButton isUserLoggedIn={isUserLoggedIn} /> */}
+      <CheckUserButton />
     </View>
   );
 };
