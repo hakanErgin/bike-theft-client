@@ -5,6 +5,7 @@ import {useToggleIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTh
 import {LogoutButton} from './GoogleButtons';
 import {GET_USERS_THEFTS} from '../../../Utils/gql';
 import {useQuery} from '@apollo/client';
+import UsersReportsList from './UsersReportsList';
 
 function UsersReportedThefts({currentUser}) {
   const [currentUsersThefts, setcurrentUsersThefts] = useState();
@@ -15,11 +16,9 @@ function UsersReportedThefts({currentUser}) {
   return (
     <ScrollView>
       <Text>{currentUser.user.name}</Text>
-      {currentUsersThefts &&
-        currentUsersThefts.length > 0 &&
-        currentUsersThefts.map((theft) => {
-          return <Text key={theft._id}>{theft._id}</Text>;
-        })}
+      {currentUsersThefts && currentUsersThefts.length > 0 && (
+        <UsersReportsList currentUsersThefts={currentUsersThefts} />
+      )}
     </ScrollView>
   );
 }
