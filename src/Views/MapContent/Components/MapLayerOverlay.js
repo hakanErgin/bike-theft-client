@@ -2,9 +2,11 @@ import React from 'react';
 import {Text} from 'react-native';
 import {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
+import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
 
-const MarkersWithCallouts = ({thefts, setIsViewModalVisible}) => {
+const MarkersWithCallouts = ({thefts}) => {
   const setSelectedTheftId = useSetSelectedTheftId();
+  const setIsViewModalVisible = useToggleIsViewModalVisible();
 
   const onCalloutPress = (theftId) => () => {
     setSelectedTheftId(theftId);
@@ -30,20 +32,11 @@ const MarkersWithCallouts = ({thefts, setIsViewModalVisible}) => {
   });
 };
 
-export default function MapLayerOverlay({
-  visibleMapLayer,
-  thefts,
-  setIsViewModalVisible,
-}) {
+export default function MapLayerOverlay({visibleMapLayer, thefts}) {
   if (visibleMapLayer === 'heatmap' && thefts.length > 0) {
     return <Heatmap points={thefts.map((t) => t.region)} />;
   } else if (visibleMapLayer === 'markers') {
-    return (
-      <MarkersWithCallouts
-        thefts={thefts}
-        setIsViewModalVisible={setIsViewModalVisible}
-      />
-    );
+    return <MarkersWithCallouts thefts={thefts} />;
   } else {
     return null;
   }

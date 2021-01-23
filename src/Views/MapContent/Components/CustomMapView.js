@@ -16,7 +16,6 @@ const CustomMapView = ({
   navigation,
   setSelectedRegion,
   setIsFormModalVisible,
-  setIsViewModalVisible,
 }) => {
   const mapRef = useRef();
   //https://github.com/react-native-maps/react-native-maps/issues/2010
@@ -131,11 +130,7 @@ const CustomMapView = ({
         onRegionChangeComplete={updateStateAndMapLayers}
         ref={mapRef}>
         {thefts && (
-          <MapLayerOverlay
-            visibleMapLayer={visibleMapLayer}
-            thefts={thefts}
-            setIsViewModalVisible={setIsViewModalVisible}
-          />
+          <MapLayerOverlay visibleMapLayer={visibleMapLayer} thefts={thefts} />
         )}
       </MapView>
       {isAddingNewTheft && <CrosshairOverlay />}

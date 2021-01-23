@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import CustomMapView from './Components/CustomMapView';
 import FormModal from '../ModalContent/FormModal';
 import ViewModal from '../ModalContent/ViewModal';
+import {useIsViewModalVisible} from '../../ContextProviders/IsViewModalVisibleContext';
 
 const MapScreen = (props) => {
   const [selectedRegion, setSelectedRegion] = useState({});
   const [isFormModalVisible, setIsFormModalVisible] = useState(false);
-  const [isViewModalVisible, setIsViewModalVisible] = useState(false);
+  const isViewModalVisible = useIsViewModalVisible();
 
   return (
     <>
@@ -14,7 +15,6 @@ const MapScreen = (props) => {
         {...props}
         setSelectedRegion={setSelectedRegion}
         setIsFormModalVisible={setIsFormModalVisible}
-        setIsViewModalVisible={setIsViewModalVisible}
       />
       {isFormModalVisible && (
         <FormModal
@@ -23,12 +23,7 @@ const MapScreen = (props) => {
           setIsFormModalVisible={setIsFormModalVisible}
         />
       )}
-      {isViewModalVisible && (
-        <ViewModal
-          isViewModalVisible={isViewModalVisible}
-          setIsViewModalVisible={setIsViewModalVisible}
-        />
-      )}
+      {isViewModalVisible && <ViewModal />}
     </>
   );
 };
