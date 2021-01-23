@@ -4,12 +4,11 @@ import styles from './modalStyles';
 import Modal from 'react-native-modal';
 import {useQuery, useMutation} from '@apollo/client';
 import {GET_THEFTS, DELETE_THEFT, GET_THEFT} from '../../Utils/gql';
+import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
 
-const ViewModal = ({
-  isViewModalVisible,
-  setIsViewModalVisible,
-  selectedTheftId,
-}) => {
+const ViewModal = ({isViewModalVisible, setIsViewModalVisible}) => {
+  const selectedTheftId = useSelectedTheftId();
+
   //#region
   const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
     variables: {id: selectedTheftId},

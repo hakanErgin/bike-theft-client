@@ -5,7 +5,6 @@ import ViewModal from '../ModalContent/ViewModal';
 
 const MapScreen = (props) => {
   const [selectedRegion, setSelectedRegion] = useState({});
-  const [selectedTheftId, setSelectedTheftId] = useState({});
   const [isFormModalVisible, setIsFormModalVisible] = useState(false);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
 
@@ -15,7 +14,6 @@ const MapScreen = (props) => {
         {...props}
         setSelectedRegion={setSelectedRegion}
         setIsFormModalVisible={setIsFormModalVisible}
-        setSelectedTheftId={setSelectedTheftId}
         setIsViewModalVisible={setIsViewModalVisible}
       />
       {isFormModalVisible && (
@@ -29,7 +27,6 @@ const MapScreen = (props) => {
         <ViewModal
           isViewModalVisible={isViewModalVisible}
           setIsViewModalVisible={setIsViewModalVisible}
-          selectedTheftId={selectedTheftId}
         />
       )}
     </>

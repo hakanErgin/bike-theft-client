@@ -16,7 +16,6 @@ const CustomMapView = ({
   navigation,
   setSelectedRegion,
   setIsFormModalVisible,
-  setSelectedTheftId,
   setIsViewModalVisible,
 }) => {
   const mapRef = useRef();
@@ -135,7 +134,6 @@ const CustomMapView = ({
           <MapLayerOverlay
             visibleMapLayer={visibleMapLayer}
             thefts={thefts}
-            setSelectedTheftId={setSelectedTheftId}
             setIsViewModalVisible={setIsViewModalVisible}
           />
         )}

@@ -35,6 +35,7 @@ function IconGroup({viewReport, editReport, deleteReport}) {
 export default function UsersReportsList({currentUsersThefts}) {
   return (
     <View>
+      <Text>Your reports:</Text>
       {currentUsersThefts.map((theft, index) => {
         return (
           <View key={theft._id} style={{flexDirection: 'row'}}>
