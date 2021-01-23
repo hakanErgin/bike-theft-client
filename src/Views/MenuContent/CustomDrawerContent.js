@@ -32,7 +32,8 @@ const CustomDrawerContent = ({navigation}) => {
   useEffect(() => {
     isSignedInToGoogle().then((res) => {
       if (res === !isUserLoggedIn) {
-        setIsUserLoggedIn();
+        console.log({res});
+        setIsUserLoggedIn(res);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

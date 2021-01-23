@@ -13,8 +13,8 @@ export function useToggleIsAddingNewTheft() {
 export function IsAddingNewTheftProvider({children}) {
   const [isAddingNewTheft, setIsAddingNewTheft] = useState(false);
 
-  function toggleIsAddingNewTheft() {
-    setIsAddingNewTheft((current) => !current);
+  function toggleIsAddingNewTheft(boolean) {
+    setIsAddingNewTheft(boolean);
   }
 
   return (

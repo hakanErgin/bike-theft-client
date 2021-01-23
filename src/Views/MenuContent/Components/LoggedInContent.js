@@ -37,11 +37,9 @@ export default function LoggedInContent({navigation}) {
       .catch((err) => console.log('refreshUserInfo' + err));
   }, []);
 
-  useEffect(() => {}, []);
-
   function isAddingNewTheftController() {
     navigation.toggleDrawer();
-    setIsAddingNewTheft();
+    setIsAddingNewTheft((val) => !val);
   }
 
   return (

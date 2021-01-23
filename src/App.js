@@ -8,6 +8,11 @@ import {NavigationContainer} from '@react-navigation/native';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+  // an idea for composition
+  // function realMap() {
+  //   return <MapScreen />;
+  // }
+
   return (
     <CombinedProviders>
       <NavigationContainer>
