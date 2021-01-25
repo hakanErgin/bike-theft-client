@@ -37,6 +37,18 @@ export const GET_THEFT = gql`
   }
 `;
 
+export const GET_USERS_THEFTS = gql`
+  query($id_token: String!) {
+    getUsersReportedThefts(id_token: $id_token) {
+      _id
+      region {
+        latitude
+        longitude
+      }
+    }
+  }
+`;
+
 export const DELETE_THEFT = gql`
   mutation($input: MutateTheftInput!) {
     deleteTheft(input: $input) {

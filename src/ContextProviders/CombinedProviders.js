@@ -4,6 +4,8 @@ import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 
 import {IsAddingNewTheftProvider} from './IsAddingNewTheftContext';
 import {IsUserLoggedInProvider} from './IsUserLoggedInContext';
+import {SelectedTheftIdProvider} from './SelectedTheftIdContext';
+import {IsViewModalVisibleProvider} from './IsViewModalVisibleContext';
 
 const client = new ApolloClient({
   uri: GRAPHQL_URI,
@@ -14,7 +16,11 @@ const CombinedProviders = ({children}) => {
   return (
     <ApolloProvider client={client}>
       <IsUserLoggedInProvider>
-        <IsAddingNewTheftProvider>{children}</IsAddingNewTheftProvider>
+        <SelectedTheftIdProvider>
+          <IsViewModalVisibleProvider>
+            <IsAddingNewTheftProvider>{children}</IsAddingNewTheftProvider>
+          </IsViewModalVisibleProvider>
+        </SelectedTheftIdProvider>
       </IsUserLoggedInProvider>
     </ApolloProvider>
   );

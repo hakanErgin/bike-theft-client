@@ -13,8 +13,8 @@ export function useToggleIsUserLoggedIn() {
 export function IsUserLoggedInProvider({children}) {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  function toggleIsUserLoggedIn() {
-    setIsUserLoggedIn((current) => !current);
+  function toggleIsUserLoggedIn(boolean) {
+    setIsUserLoggedIn(boolean);
   }
 
   return (
