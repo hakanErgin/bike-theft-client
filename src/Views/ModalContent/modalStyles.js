@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
-    height: 200,
   },
   slideText: {
     width: '100%',
