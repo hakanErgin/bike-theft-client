@@ -11,6 +11,7 @@ export const FormCarousel = ({
   values,
   setFieldValue,
 }) => {
+  //#region interval logic
   const [interval, setInterval] = React.useState(1);
   const [width, setWidth] = React.useState(0);
 
@@ -44,6 +45,7 @@ export const FormCarousel = ({
       </Text>,
     );
   }
+  //#endregion
 
   return (
     <View style={styles.container}>
