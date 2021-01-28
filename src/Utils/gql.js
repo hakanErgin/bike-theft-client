@@ -64,3 +64,14 @@ export const CREATE_USER_OR_SIGN_IN = gql`
     }
   }
 `;
+
+export const SINGLE_FILE_UPLOAD = gql`
+  mutation($file: Upload!) {
+    singleUpload(file: $file) {
+      filename
+      mimetype
+      encoding
+      url
+    }
+  }
+`;
