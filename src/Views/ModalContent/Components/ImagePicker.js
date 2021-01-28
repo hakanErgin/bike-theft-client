@@ -6,6 +6,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {useMutation} from '@apollo/client';
 import {SINGLE_FILE_UPLOAD} from '../../../Utils/gql';
 import {mediaClient} from '../../../ContextProviders/CombinedProviders';
+import {ReactNativeFile} from 'apollo-upload-client';
 
 const ImagePickerComponent = () => {
   const [filePath, setFilePath] = useState({});
@@ -43,14 +44,12 @@ const ImagePickerComponent = () => {
         alert(response.errorMessage);
         return;
       }
-      // console.log('base64 -> ', response.base64);
-      // console.log('uri -> ', response.uri);
-      // console.log('width -> ', response.width);
-      // console.log('height -> ', response.height);
-      // console.log('fileSize -> ', response.fileSize);
-      // console.log('type -> ', response.type);
-      // console.log('fileName -> ', response.fileName);
-      setFilePath(response);
+      const file = new ReactNativeFile({
+        uri: response.uri,
+        name: response.fileName,
+        type: response.type,
+      });
+      setFilePath(file);
     });
   };
 
