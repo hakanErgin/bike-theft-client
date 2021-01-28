@@ -9,7 +9,7 @@ import {mediaClient} from '../../../ContextProviders/CombinedProviders';
 import {ReactNativeFile} from 'apollo-upload-client';
 
 const ImagePickerComponent = () => {
-  const [filePath, setFilePath] = useState({});
+  const [pickedImage, setPickedImage] = useState({});
   const [lastUploaded, setLastUploaded] = useState({});
   const [mutate, {loading, error, data}] = useMutation(SINGLE_FILE_UPLOAD, {
     client: mediaClient,
@@ -17,16 +17,14 @@ const ImagePickerComponent = () => {
   });
 
   const onUpload = () => {
-    console.log(filePath);
-    mutate({variables: {file: filePath}});
+    mutate({variables: {file: pickedImage}});
   };
 
   const chooseFile = (type) => {
     let options = {
       mediaType: type,
-      maxWidth: 300,
-      maxHeight: 550,
-      quality: 1,
+      maxWidth: 1024,
+      maxHeight: 1024,
     };
     launchImageLibrary(options, (response) => {
       console.log('Response = ', response);
@@ -49,15 +47,15 @@ const ImagePickerComponent = () => {
         name: response.fileName,
         type: response.type,
       });
-      setFilePath(file);
+      setPickedImage(file);
     });
   };
 
   return (
     <ScrollView style={{flex: 1}}>
       <View style={styles.container}>
-        <Image source={{uri: filePath.uri}} style={styles.imageStyle} />
-        <Text style={styles.textStyle}>{filePath.uri}</Text>
+        <Image source={{uri: pickedImage.uri}} style={styles.imageStyle} />
+        <Text style={styles.textStyle}>{pickedImage.uri}</Text>
         <TouchableOpacity
           activeOpacity={0.5}
           style={styles.buttonStyle}
