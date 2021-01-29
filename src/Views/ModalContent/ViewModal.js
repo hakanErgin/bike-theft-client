@@ -1,7 +1,5 @@
 import React from 'react';
-import {Button, Text, View} from 'react-native';
-import styles from './modalStyles';
-import Modal from 'react-native-modal';
+import {Button, Text, View, StyleSheet} from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
 import {GET_THEFTS, DELETE_THEFT, GET_THEFT} from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
@@ -9,11 +7,11 @@ import {
   useIsViewModalVisible,
   useToggleIsViewModalVisible,
 } from '../../ContextProviders/IsViewModalVisibleContext';
+import Modal from 'react-native-modal';
 
 const ViewModal = () => {
   const isViewModalVisible = useIsViewModalVisible();
   const setIsViewModalVisible = useToggleIsViewModalVisible();
-
   const selectedTheftId = useSelectedTheftId();
 
   //#region
@@ -60,3 +58,15 @@ const ViewModal = () => {
 };
 
 export default ViewModal;
+
+const styles = StyleSheet.create({
+  modal: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+    padding: 30,
+  },
+  form: {flex: 1, justifyContent: 'space-around'},
+  header: {fontSize: 24, textAlign: 'center'},
+});
