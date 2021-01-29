@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import EditIcon from 'react-native-vector-icons/Feather';
 import ViewIcon from 'react-native-vector-icons/Entypo';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
+
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
 
@@ -19,7 +20,7 @@ function IconGroup({editReport, deleteReport, theftId}) {
   }
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={styles.container}>
       <ViewIcon
         name="magnifying-glass"
         size={iconSize}
@@ -48,7 +49,7 @@ export default function UsersReportsList({currentUsersThefts}) {
       <Text>Your reports:</Text>
       {currentUsersThefts.map((theft, index) => {
         return (
-          <View key={theft._id} style={{flexDirection: 'row'}}>
+          <View key={theft._id} style={styles.container}>
             <Text>{theft._id}</Text>
             <IconGroup theftId={theft._id} />
           </View>
@@ -57,3 +58,7 @@ export default function UsersReportsList({currentUsersThefts}) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {flexDirection: 'row'},
+});
