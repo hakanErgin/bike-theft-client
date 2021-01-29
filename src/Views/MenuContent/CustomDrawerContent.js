@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
-import {Text, View, Button, ScrollView} from 'react-native';
-import styles from './menuStyles';
+import {Text, View, StyleSheet} from 'react-native';
 import {
   SignInButton,
-  CheckUserButton,
+  // CheckUserButton,
   isSignedInToGoogle,
 } from './Components/GoogleButtons';
 import {
@@ -22,7 +21,12 @@ function DrawerContent(props) {
 }
 
 function LoggedOutContent() {
-  return <SignInButton />;
+  return (
+    <View style={styles.drawerContainer}>
+      <Text>Pls sign in to do stuff</Text>
+      <SignInButton />
+    </View>
+  );
 }
 
 const CustomDrawerContent = ({navigation}) => {
@@ -48,9 +52,13 @@ const CustomDrawerContent = ({navigation}) => {
       ) : (
         <LoggedOutContent />
       )}
-      <CheckUserButton />
+      {/* <CheckUserButton /> */}
     </View>
   );
 };
 
 export default DrawerContent;
+
+const styles = StyleSheet.create({
+  drawerContainer: {padding: 10},
+});

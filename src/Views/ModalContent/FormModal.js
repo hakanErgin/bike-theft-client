@@ -1,13 +1,12 @@
 import React from 'react';
-import {Button, Text, View, TextInput} from 'react-native';
-import Modal from 'react-native-modal';
-import {useMutation} from '@apollo/client';
-import {Formik} from 'formik';
-import styles from './modalStyles';
-import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
-import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
-import FormCarousel from './FormCarousel';
+import {Button, Text, View, StyleSheet} from 'react-native';
 import {GoogleSignin} from '@react-native-community/google-signin';
+import {useMutation} from '@apollo/client';
+import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
+import {Formik} from 'formik';
+import Modal from 'react-native-modal';
+import FormCarousel from './FormCarousel';
+import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 
 const FormModal = ({
   isFormModalVisible,
@@ -27,7 +26,7 @@ const FormModal = ({
 
   async function submitTheft(values) {
     const currentToken = await GoogleSignin.getTokens();
-    console.log(currentToken.idToken);
+    // console.log(currentToken.idToken);
     // const deletedToken = await GoogleSignin.clearCachedAccessToken(
     //   currentToken.idToken,
     // );
@@ -92,3 +91,15 @@ const FormModal = ({
 };
 
 export default FormModal;
+
+const styles = StyleSheet.create({
+  modal: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+    padding: 30,
+  },
+  form: {flex: 1, justifyContent: 'space-around'},
+  header: {fontSize: 24, textAlign: 'center'},
+});

@@ -1,9 +1,8 @@
 import React from 'react';
-import {View, ScrollView, Text} from 'react-native';
+import {View, ScrollView, Text, StyleSheet} from 'react-native';
 import {FirstInterval} from './Components/Intervals/First';
 import {SecondInterval} from './Components/Intervals/Second';
 import {ThirdInterval} from './Components/Intervals/Third';
-import styles from './modalStyles';
 
 export const FormCarousel = ({
   handleChange,
@@ -82,3 +81,34 @@ export const FormCarousel = ({
 };
 
 export default FormCarousel;
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 10,
+    flex: 1,
+    backgroundColor: '#fbfbfb',
+    borderColor: '#ebebeb',
+    borderWidth: 1,
+    borderRadius: 8,
+    shadowColor: '#fcfcfc',
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+  },
+  scrollView: {
+    display: 'flex',
+    flexDirection: 'row',
+    overflow: 'hidden',
+  },
+  bullets: {
+    position: 'absolute',
+    bottom: 0,
+    flexDirection: 'row',
+  },
+  bullet: {
+    paddingHorizontal: 5,
+    fontSize: 20,
+  },
+});

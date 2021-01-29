@@ -2,7 +2,6 @@ import React from 'react';
 import {View} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {GOOGLE_API_KEY} from '@env';
-import styles from '../mapStyles';
 
 export default function SearchBar({mapRef}) {
   return (
@@ -31,3 +30,15 @@ export default function SearchBar({mapRef}) {
     </View>
   );
 }
+
+import {StyleSheet} from 'react-native';
+
+const styles = StyleSheet.create({
+  searchBoxContainer: {
+    zIndex: 10,
+    flex: 1,
+    position: 'absolute',
+    top: 100,
+    width: '100%',
+  },
+});

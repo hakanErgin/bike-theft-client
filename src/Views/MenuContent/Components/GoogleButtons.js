@@ -1,10 +1,10 @@
 import React from 'react';
+import {Button} from 'react-native';
 import {
   GoogleSignin,
   statusCodes,
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
-import {Button} from 'react-native';
 import {WEB_CLIENT_ID} from '@env';
 import {useMutation} from '@apollo/client';
 import {CREATE_USER_OR_SIGN_IN} from '../../../Utils/gql';
@@ -71,17 +71,18 @@ export const LogoutButton = () => {
   return <Button title={'logout'} onPress={signOut} />;
 };
 
-export const CheckUserButton = (isUserLoggedIn) => {
-  async function checkUser() {
-    const isSignedIn = await GoogleSignin.isSignedIn();
-    console.log({isSignedIn});
-    const currentUser = await GoogleSignin.getCurrentUser();
-    console.log({currentUser});
-    const userInfo = await GoogleSignin.signInSilently();
-    console.log({userInfo});
-  }
-  return <Button title={'status'} onPress={checkUser} />;
-};
+// status button for dev
+// export const CheckUserButton = (isUserLoggedIn) => {
+//   async function checkUser() {
+//     const isSignedIn = await GoogleSignin.isSignedIn();
+//     console.log({isSignedIn});
+//     const currentUser = await GoogleSignin.getCurrentUser();
+//     console.log({currentUser});
+//     const userInfo = await GoogleSignin.signInSilently();
+//     console.log({userInfo});
+//   }
+//   return <Button title={'status'} onPress={checkUser} />;
+// };
 
 // helper function
 export async function isSignedInToGoogle() {
