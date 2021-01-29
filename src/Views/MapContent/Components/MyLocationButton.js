@@ -23,5 +23,11 @@ export default function MyLocationButton({usersLocation, mapRef}) {
 }
 
 const styles = StyleSheet.create({
-  gpsIconContainer: {position: 'absolute', top: 15, right: 15},
+  gpsIconContainer: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
 });

@@ -7,6 +7,7 @@ import {Formik} from 'formik';
 import Modal from 'react-native-modal';
 import FormCarousel from './FormCarousel';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
+import CloseButton from 'react-native-vector-icons/FontAwesome';
 
 const FormModal = ({
   isFormModalVisible,
@@ -72,6 +73,10 @@ const FormModal = ({
           }) => (
             <View style={styles.form}>
               <Text style={styles.header}>Report New Theft</Text>
+              <View style={styles.closeButton}>
+                <CloseButton name="close" onPress={cancelAdding} size={25} />
+              </View>
+
               <FormCarousel
                 handleChange={handleChange}
                 handleBlur={handleBlur}
@@ -80,7 +85,6 @@ const FormModal = ({
               />
               <View>
                 <Button title="Submit" onPress={handleSubmit} />
-                <Button title="Cancel" onPress={cancelAdding} />
               </View>
             </View>
           )}
@@ -98,8 +102,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'space-between',
     borderRadius: 20,
-    padding: 30,
+    padding: 5,
   },
   form: {flex: 1, justifyContent: 'space-around'},
   header: {fontSize: 24, textAlign: 'center'},
+  closeButton: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
 });

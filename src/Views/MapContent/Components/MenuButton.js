@@ -19,5 +19,11 @@ export default function MenuButton({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  menuBtnContainer: {position: 'absolute', top: 15, left: 15},
+  menuBtnContainer: {
+    position: 'absolute',
+    top: 15,
+    left: 15,
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
 });

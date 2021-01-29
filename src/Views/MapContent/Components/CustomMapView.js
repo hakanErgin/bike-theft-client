@@ -109,16 +109,15 @@ const CustomMapView = ({
     <>
       <MapView
         style={styles.map}
+        customMapStyle={!isAddingNewTheft ? normalMapStyle : greyedMapStyle}
         showsBuildings={false}
         showsTraffic={false}
         showsIndoors={false}
         showsUserLocation={true}
         showsMyLocationButton={false}
-        zoomControlEnabled={true}
         pitchEnabled={false}
         rotateEnabled={false}
         initialRegion={usersLocation}
-        mapPadding={{bottom: 50, top: 50}} // for hiding google logo only
         onPress={onMapPress}
         onRegionChangeComplete={updateStateAndMapLayers}
         ref={mapRef}>
@@ -145,3 +144,50 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const normalMapStyle = [
+  {
+    featureType: 'poi.business',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels.text',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+];
+
+const greyedMapStyle = [
+  {
+    stylers: [
+      {
+        saturation: -100,
+      },
+    ],
+  },
+  {
+    featureType: 'poi.business',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels.text',
+    stylers: [
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+];
