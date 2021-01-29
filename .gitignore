@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 debug.log
 .env
-.vscode/settings.json
+.vscode/

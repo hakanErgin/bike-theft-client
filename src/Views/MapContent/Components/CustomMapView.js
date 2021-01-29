@@ -10,7 +10,13 @@ import CrosshairOverlay from './CrosshairOverlay';
 import SearchBar from './SearchBar';
 import MenuButton from './MenuButton';
 import MapLayerOverlay from './MapLayerOverlay';
+import MyLocationButton from './MyLocationButton';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
+
+/*
+ * if onscreen buttons are necessary:
+ * htps://github.com/react-native-maps/react-native-maps/issues/2010
+ */
 
 const CustomMapView = ({
   navigation,
@@ -19,12 +25,10 @@ const CustomMapView = ({
 }) => {
   const mapRef = useRef();
   const [thefts, setThefts] = useState();
-  const [initialRegion, setInitialRegion] = useState();
+  const [usersLocation, setUsersLocation] = useState();
   const [currentRegionBoundaries, setCurrentRegionBoundaries] = useState();
   const [currentRegion, setCurrentRegion] = useState();
   const [visibleMapLayer, setVisibleMapLayer] = useState('heatmap');
-  //https://github.com/react-native-maps/react-native-maps/issues/2010
-  const [margin, setMargin] = useState(1);
 
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(
     GET_THEFTS,
@@ -43,7 +47,7 @@ const CustomMapView = ({
   useEffect(() => {
     Geolocation.getCurrentPosition(
       (position) => {
-        setInitialRegion({
+        setUsersLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           latitudeDelta: MY_POSITION_ZOOM_LEVEL,
@@ -104,13 +108,17 @@ const CustomMapView = ({
   return (
     <>
       <MapView
-        style={{...styles.map, margin}}
+        style={styles.map}
         showsBuildings={false}
+        showsTraffic={false}
+        showsIndoors={false}
         showsUserLocation={true}
-        showsMyLocationButton={true}
+        showsMyLocationButton={false}
         zoomControlEnabled={true}
-        onMapReady={() => setMargin(0)}
-        initialRegion={initialRegion}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        initialRegion={usersLocation}
+        mapPadding={{bottom: 50, top: 50}} // for hiding google logo only
         onPress={onMapPress}
         onRegionChangeComplete={updateStateAndMapLayers}
         ref={mapRef}>
@@ -125,6 +133,7 @@ const CustomMapView = ({
         thefts={thefts}
         currentRegionBoundaries={currentRegionBoundaries}
       />
+      <MyLocationButton mapRef={mapRef} usersLocation={usersLocation} />
     </>
   );
 };
