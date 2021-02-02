@@ -12,6 +12,7 @@ import MenuButton from './MenuButton';
 import MapLayerOverlay from './MapLayerOverlay';
 import MyLocationButton from './MyLocationButton';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
+import commonVariables from '../../../Utils/commonVariables';
 
 /*
  * if onscreen buttons are necessary:
@@ -35,8 +36,10 @@ const CustomMapView = ({
   );
 
   const isAddingNewTheft = useIsAddingNewTheft();
-  const VISIBLE_LAYER_DEFINING_VALUE = 0.2;
-  const MY_POSITION_ZOOM_LEVEL = 0.01;
+  const {
+    VISIBLE_LAYER_DEFINING_VALUE,
+    MY_POSITION_ZOOM_LEVEL,
+  } = commonVariables;
 
   // fetch thefts and set them to state
   useEffect(() => {
@@ -45,7 +48,7 @@ const CustomMapView = ({
 
   // set initial location to my location
   useEffect(() => {
-    setCurrentPosition(setUsersLocation, MY_POSITION_ZOOM_LEVEL);
+    setCurrentPosition(setUsersLocation);
   }, [usersLocation]);
 
   // set boundaries on region change

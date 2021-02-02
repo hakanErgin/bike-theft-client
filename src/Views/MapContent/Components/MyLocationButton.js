@@ -5,16 +5,13 @@ import setCurrentPosition from '../../../Utils/currentPositionHandler';
 import commonStyles from '../../../Utils/commonStyles';
 
 const MyLocationButton = React.forwardRef(
-  ({MY_POSITION_ZOOM_LEVEL, usersLocation, setUsersLocation}, mapRef) => {
+  ({usersLocation, setUsersLocation}, mapRef) => {
     const ANIMATION_SPEED = 1000;
 
     function goToLocation() {
       if (mapRef.current != null) {
         if (usersLocation === undefined) {
-          setCurrentPosition(
-            setUsersLocation,
-            MY_POSITION_ZOOM_LEVEL,
-          ).then(() =>
+          setCurrentPosition(setUsersLocation).then(() =>
             mapRef.current.animateToRegion(usersLocation, ANIMATION_SPEED),
           );
         } else {
