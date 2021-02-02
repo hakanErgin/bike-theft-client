@@ -1,13 +1,11 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import GpsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import setCurrentPosition from '../../../Utils/locationPermissions';
+import setCurrentPosition from '../../../Utils/currentPositionHandler';
+import commonStyles from '../../../Utils/commonStyles';
 
 const MyLocationButton = React.forwardRef(
   ({MY_POSITION_ZOOM_LEVEL, usersLocation, setUsersLocation}, mapRef) => {
-    const iconSize = 42;
-    const iconColor = '#900';
-
     const ANIMATION_SPEED = 1000;
 
     function goToLocation() {
@@ -25,14 +23,15 @@ const MyLocationButton = React.forwardRef(
       }
     }
     return (
-      <View style={styles.gpsIconContainer}>
+      <TouchableOpacity
+        style={styles.gpsIconContainer}
+        onPress={() => goToLocation()}>
         <GpsIcon
           name="crosshairs-gps"
-          size={iconSize}
-          color={iconColor}
-          onPress={() => goToLocation()}
+          size={commonStyles.iconSize.xl}
+          color={commonStyles.iconColor.darkRed}
         />
-      </View>
+      </TouchableOpacity>
     );
   },
 );

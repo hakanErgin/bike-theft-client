@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useQuery} from '@apollo/client';
 import {GET_THEFTS} from '../../../Utils/gql';
-import Geolocation from 'react-native-geolocation-service';
+import setCurrentPosition from '../../../Utils/currentPositionHandler';
 
-import {Text, StyleSheet, Platform, PermissionsAndroid} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 import InfoBar from './InfoBar';
 import CrosshairOverlay from './CrosshairOverlay';
@@ -12,7 +12,6 @@ import MenuButton from './MenuButton';
 import MapLayerOverlay from './MapLayerOverlay';
 import MyLocationButton from './MyLocationButton';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
-import setCurrentPosition from '../../../Utils/locationPermissions';
 
 /*
  * if onscreen buttons are necessary:

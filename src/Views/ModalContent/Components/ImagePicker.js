@@ -35,15 +35,15 @@ const ImagePickerComponent = () => {
       console.log('Response = ', response);
 
       if (response.didCancel) {
+        // eslint-disable-next-line no-alert
         alert('User cancelled camera picker');
         return;
-      } else if (response.errorCode == 'camera_unavailable') {
-        alert('Camera not available on device');
-        return;
-      } else if (response.errorCode == 'permission') {
+      } else if (response.errorCode === 'permission') {
+        // eslint-disable-next-line no-alert
         alert('Permission not satisfied');
         return;
-      } else if (response.errorCode == 'others') {
+      } else if (response.errorCode === 'others') {
+        // eslint-disable-next-line no-alert
         alert(response.errorMessage);
         return;
       }

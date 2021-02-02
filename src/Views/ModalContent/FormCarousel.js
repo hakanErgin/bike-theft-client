@@ -37,6 +37,7 @@ export const FormCarousel = ({
     bullets.push(
       <Text
         key={i}
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           ...styles.bullet,
           opacity: interval === i ? 0.5 : 0.1,

@@ -1,6 +1,8 @@
 const commonStyles = {
-  BORDER_RADIUS: 10,
-  TEXT_SIZE: 14,
+  borderRadius: {normal: 10},
+  textSize: {normal: 14},
+  iconSize: {normal: 15, xl: 42},
+  iconColor: {darkRed: '#900'},
 };
 
 export default commonStyles;

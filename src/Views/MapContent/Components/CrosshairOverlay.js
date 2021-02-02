@@ -1,11 +1,16 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Crosshair from 'react-native-vector-icons/MaterialCommunityIcons';
+import commonStyles from '../../../Utils/commonStyles';
 
 export default function CrosshairOverlay() {
   return (
     <View style={styles.crosshairContainer}>
-      <Crosshair name="crosshairs" size={50} />
+      <Crosshair
+        name="crosshairs"
+        size={commonStyles.iconSize.xl}
+        color={commonStyles.iconColor.darkRed}
+      />
     </View>
   );
 }

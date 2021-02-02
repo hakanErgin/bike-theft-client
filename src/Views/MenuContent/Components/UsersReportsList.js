@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import EditIcon from 'react-native-vector-icons/Feather';
 import ViewIcon from 'react-native-vector-icons/Entypo';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
+import commonStyles from '../../../Utils/commonStyles';
 
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
@@ -11,8 +12,8 @@ function IconGroup({editReport, deleteReport, theftId}) {
   const setIsViewModalVisible = useToggleIsViewModalVisible();
   const selectedTheftId = useSetSelectedTheftId();
 
-  const iconSize = 15;
-  const iconColor = '#900';
+  const iconSize = commonStyles.iconSize.normal;
+  const iconColor = commonStyles.iconColor.darkRed;
 
   function viewReport() {
     setIsViewModalVisible(true);
