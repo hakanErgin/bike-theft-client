@@ -75,3 +75,14 @@ export const SINGLE_FILE_UPLOAD = gql`
     }
   }
 `;
+
+export const MULTI_FILE_UPLOAD = gql`
+  mutation($files: [Upload!]!) {
+    multipleUpload(files: $files) {
+      filename
+      mimetype
+      encoding
+      url
+    }
+  }
+`;

@@ -3,6 +3,7 @@ import {View, ScrollView, Text, StyleSheet} from 'react-native';
 import {FirstInterval} from './Components/Intervals/First';
 import {SecondInterval} from './Components/Intervals/Second';
 import {ThirdInterval} from './Components/Intervals/Third';
+import ImagePickerComponent from './Components/ImagePicker';
 
 export const FormCarousel = ({
   handleChange,
@@ -14,7 +15,7 @@ export const FormCarousel = ({
   const [interval, setInterval] = React.useState(1);
   const [width, setWidth] = React.useState(0);
 
-  const intervals = 3;
+  const intervals = 4;
   const init = (w) => {
     // initialise width
     setWidth(w);
@@ -51,7 +52,7 @@ export const FormCarousel = ({
       <ScrollView
         horizontal={true}
         contentContainerStyle={{
-          ...styles.scrollView,
+          ...styles.horizontalScrollView,
           width: `${100 * intervals}%`,
         }}
         showsHorizontalScrollIndicator={false}
@@ -63,6 +64,7 @@ export const FormCarousel = ({
         scrollEventThrottle={200}
         pagingEnabled
         decelerationRate="fast">
+        <ImagePickerComponent />
         <FirstInterval
           handleChange={handleChange}
           handleBlur={handleBlur}
@@ -84,20 +86,9 @@ export default FormCarousel;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10,
     flex: 1,
-    backgroundColor: '#fbfbfb',
-    borderColor: '#ebebeb',
-    borderWidth: 1,
-    borderRadius: 8,
-    shadowColor: '#fcfcfc',
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
   },
-  scrollView: {
+  horizontalScrollView: {
     display: 'flex',
     flexDirection: 'row',
     overflow: 'hidden',

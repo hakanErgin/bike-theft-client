@@ -1,12 +1,10 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
-import ImagePickerComponent from '../ImagePicker';
 
 export const FirstInterval = ({handleChange, handleBlur, values}) => {
   return (
     <View style={styles.slide}>
-      <ImagePickerComponent />
-      {/* <TextInput
+      <TextInput
         style={styles.textArea}
         onChangeText={handleChange('bike_description')}
         onBlur={handleBlur('bike_description')}
@@ -15,7 +13,7 @@ export const FirstInterval = ({handleChange, handleBlur, values}) => {
         numberOfLines={4}
         scrollEnabled={true}
         placeholder={'Describe your bike here'}
-      /> */}
+      />
     </View>
   );
 };

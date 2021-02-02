@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Text, View, StyleSheet} from 'react-native';
+import {Button, Text, View, StyleSheet, Pressable} from 'react-native';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {useMutation} from '@apollo/client';
 import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
@@ -84,7 +84,9 @@ const FormModal = ({
                 setFieldValue={setFieldValue}
               />
               <View>
-                <Button title="Submit" onPress={handleSubmit} />
+                <Pressable onPress={handleSubmit}>
+                  <Button title={'yes'} />
+                </Pressable>
               </View>
             </View>
           )}
@@ -101,11 +103,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'space-between',
-    borderRadius: 20,
+    borderRadius: 15,
     padding: 5,
   },
   form: {flex: 1, justifyContent: 'space-around'},
-  header: {fontSize: 24, textAlign: 'center'},
+  header: {fontSize: 20, textAlign: 'center'},
   closeButton: {
     flex: 1,
     position: 'absolute',
