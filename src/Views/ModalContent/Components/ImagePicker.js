@@ -7,6 +7,7 @@ import {useMutation} from '@apollo/client';
 import {SINGLE_FILE_UPLOAD, MULTI_FILE_UPLOAD} from '../../../Utils/gql';
 import {mediaClient} from '../../../ContextProviders/CombinedProviders';
 import {ReactNativeFile} from 'apollo-upload-client';
+import commonStyles from '../../../Utils/commonStyles';
 
 const ImagePickerComponent = () => {
   const [pickedImages, setPickedImages] = useState([]);
@@ -94,20 +95,10 @@ const ImagePickerComponent = () => {
 
 export default ImagePickerComponent;
 
+const {slide} = commonStyles;
+
 const styles = StyleSheet.create({
-  slide: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-    paddingTop: 30,
-    flexBasis: '100%',
-    maxWidth: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
+  slide: {...slide},
   container: {
     flex: 1,
     padding: 10,

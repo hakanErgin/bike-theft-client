@@ -9,7 +9,7 @@ import UsersReportsList from './UsersReportsList';
 
 function UsersReportedThefts({currentUser}) {
   const [currentUsersThefts, setcurrentUsersThefts] = useState();
-  const {error: get_error, data: get_data} = useQuery(GET_USERS_THEFTS, {
+  /* const {error: get_error, data: get_data} = */ useQuery(GET_USERS_THEFTS, {
     variables: {id_token: currentUser.idToken},
     onCompleted: (data) => setcurrentUsersThefts(data.getUsersReportedThefts),
   });

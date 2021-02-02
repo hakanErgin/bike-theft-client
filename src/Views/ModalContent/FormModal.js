@@ -8,6 +8,7 @@ import Modal from 'react-native-modal';
 import FormCarousel from './FormCarousel';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
 import CloseButton from 'react-native-vector-icons/FontAwesome';
+import commonStyles from '../../Utils/commonStyles';
 
 const FormModal = ({
   isFormModalVisible,
@@ -74,7 +75,11 @@ const FormModal = ({
             <View style={styles.form}>
               <Text style={styles.header}>Report New Theft</Text>
               <View style={styles.closeButton}>
-                <CloseButton name="close" onPress={cancelAdding} size={25} />
+                <CloseButton
+                  name="close"
+                  onPress={cancelAdding}
+                  size={commonStyles.iconSize.large}
+                />
               </View>
 
               <FormCarousel

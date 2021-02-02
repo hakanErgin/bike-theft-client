@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
+import commonStyles from '../../../../Utils/commonStyles';
 
 export const FirstInterval = ({handleChange, handleBlur, values}) => {
   return (
@@ -20,28 +21,10 @@ export const FirstInterval = ({handleChange, handleBlur, values}) => {
 
 export default FirstInterval;
 
+const {slide, textArea} = commonStyles;
 const styles = StyleSheet.create({
   textArea: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    textAlignVertical: 'top',
-    paddingBottom: 10,
-    marginBottom: 10,
-    width: '100%',
+    ...textArea,
   },
-  slide: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-    paddingTop: 30,
-    flexBasis: '100%',
-    flex: 1,
-    maxWidth: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
+  slide: {...slide},
 });
