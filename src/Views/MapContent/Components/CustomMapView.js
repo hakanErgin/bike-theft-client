@@ -3,7 +3,7 @@ import {useQuery} from '@apollo/client';
 import {GET_THEFTS} from '../../../Utils/gql';
 import Geolocation from 'react-native-geolocation-service';
 
-import {Text, StyleSheet} from 'react-native';
+import {Text, StyleSheet, Platform, PermissionsAndroid} from 'react-native';
 import MapView from 'react-native-maps';
 import InfoBar from './InfoBar';
 import CrosshairOverlay from './CrosshairOverlay';
@@ -12,6 +12,7 @@ import MenuButton from './MenuButton';
 import MapLayerOverlay from './MapLayerOverlay';
 import MyLocationButton from './MyLocationButton';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
+import setCurrentPosition from '../../../Utils/locationPermissions';
 
 /*
  * if onscreen buttons are necessary:
@@ -43,23 +44,10 @@ const CustomMapView = ({
     get_data && setThefts(get_data.findThefts.items);
   }, [get_data]);
 
-  // focus on my location
+  // set initial location to my location
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        setUsersLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: MY_POSITION_ZOOM_LEVEL,
-          longitudeDelta: MY_POSITION_ZOOM_LEVEL,
-        });
-      },
-      (error) => {
-        console.log(error.code, error.message);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
-  }, []);
+    setCurrentPosition(setUsersLocation, MY_POSITION_ZOOM_LEVEL);
+  }, [usersLocation]);
 
   // set boundaries on region change
   useEffect(() => {
@@ -132,7 +120,12 @@ const CustomMapView = ({
         thefts={thefts}
         currentRegionBoundaries={currentRegionBoundaries}
       />
-      <MyLocationButton mapRef={mapRef} usersLocation={usersLocation} />
+      <MyLocationButton
+        ref={mapRef}
+        usersLocation={usersLocation}
+        MY_POSITION_ZOOM_LEVEL={MY_POSITION_ZOOM_LEVEL}
+        setUsersLocation={setUsersLocation}
+      />
     </>
   );
 };

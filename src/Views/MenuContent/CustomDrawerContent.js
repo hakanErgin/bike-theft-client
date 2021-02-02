@@ -40,8 +40,7 @@ const CustomDrawerContent = ({navigation}) => {
         setIsUserLoggedIn(res);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUserLoggedIn]);
+  }, [isUserLoggedIn, setIsUserLoggedIn]);
 
   return (
     <View style={styles.drawerContainer}>
