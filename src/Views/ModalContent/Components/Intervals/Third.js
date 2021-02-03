@@ -10,7 +10,7 @@ export const ThirdInterval = ({setFieldValue, values}) => {
         {values.date && (
           <View>
             <Text>Selected date:</Text>
-            <Text>{values.date.toString()}</Text>
+            <Text>{values.date.toDateString()}</Text>
           </View>
         )}
         <DatePicker setFieldValue={setFieldValue} />
