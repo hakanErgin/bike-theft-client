@@ -6,7 +6,7 @@ import setCurrentPosition from '../../../Utils/currentPositionHandler';
 import {Text, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 import InfoBar from './InfoBar';
-import CrosshairOverlay from './CrosshairOverlay';
+import CrosshairOverlay from '../../ModalContent/Components/CrosshairOverlay';
 import SearchBar from './SearchBar';
 import MenuButton from './MenuButton';
 import MapLayerOverlay from './MapLayerOverlay';
@@ -63,15 +63,6 @@ const CustomMapView = ({
     })();
   }, [currentRegion]);
 
-  function onMapPress(theft) {
-    if (isAddingNewTheft === true) {
-      const {latitude, longitude} = currentRegion; // theft.nativeEvent.coordinate;
-      const region = {latitude, longitude};
-      setSelectedRegion(region);
-      setIsFormModalVisible(true);
-    }
-  }
-
   function updateStateAndMapLayers(region) {
     setCurrentRegion(region);
     function roundThemUp(original) {
@@ -108,14 +99,19 @@ const CustomMapView = ({
         pitchEnabled={false}
         rotateEnabled={false}
         initialRegion={usersLocation}
-        onPress={onMapPress}
         onRegionChangeComplete={updateStateAndMapLayers}
         ref={mapRef}>
         {thefts && (
           <MapLayerOverlay visibleMapLayer={visibleMapLayer} thefts={thefts} />
         )}
       </MapView>
-      {isAddingNewTheft && <CrosshairOverlay />}
+      {isAddingNewTheft && (
+        <CrosshairOverlay
+          currentRegion={currentRegion}
+          setSelectedRegion={setSelectedRegion}
+          setIsFormModalVisible={setIsFormModalVisible}
+        />
+      )}
       <MenuButton navigation={navigation} />
       <SearchBar mapRef={mapRef} />
       <InfoBar

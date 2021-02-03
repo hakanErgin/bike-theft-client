@@ -28,6 +28,16 @@ const commonStyles = {
     marginBottom: 10,
     width: '100%',
   },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    color: 'black',
+    borderColor: 'gray',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
 };
 
 export default commonStyles;

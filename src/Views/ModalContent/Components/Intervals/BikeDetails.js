@@ -1,8 +1,9 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import commonStyles from '../../../../Utils/commonStyles';
+import ImagePickerComponent from '../ImagePicker';
 
-export const FirstInterval = ({handleChange, handleBlur, values}) => {
+export const BikeDetails = ({handleChange, handleBlur, values}) => {
   return (
     <View style={styles.slide}>
       <TextInput
@@ -15,11 +16,12 @@ export const FirstInterval = ({handleChange, handleBlur, values}) => {
         scrollEnabled={true}
         placeholder={'Describe your bike here'}
       />
+      <ImagePickerComponent />
     </View>
   );
 };
 
-export default FirstInterval;
+export default BikeDetails;
 
 const {slide, textArea} = commonStyles;
 const styles = StyleSheet.create({

@@ -19,10 +19,13 @@ export const SecondInterval = ({handleChange, handleBlur, values}) => {
 
 export default SecondInterval;
 
-const {slide, textArea} = commonStyles;
+const {slide, textArea, inputAndroid} = commonStyles;
 const styles = StyleSheet.create({
   textArea: {
     ...textArea,
   },
   slide: {...slide},
+  inputAndroid: {
+    ...inputAndroid,
+  },
 });

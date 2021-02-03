@@ -65,7 +65,7 @@ const ImagePickerComponent = () => {
   };
 
   return (
-    <View style={styles.slide}>
+    <View>
       <ScrollView contentContainerStyle={styles.container}>
         {pickedImages &&
           pickedImages.length > 0 &&

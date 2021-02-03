@@ -81,7 +81,6 @@ const FormModal = ({
                   size={commonStyles.iconSize.large}
                 />
               </View>
-
               <FormCarousel
                 handleChange={handleChange}
                 handleBlur={handleBlur}

@@ -1,9 +1,8 @@
 import React from 'react';
 import {View, ScrollView, Text, StyleSheet} from 'react-native';
-import {FirstInterval} from './Components/Intervals/First';
+import {BikeDetails} from './Components/Intervals/BikeDetails';
 import {SecondInterval} from './Components/Intervals/Second';
-import {ThirdInterval} from './Components/Intervals/Third';
-import ImagePickerComponent from './Components/ImagePicker';
+import {DateDetails} from './Components/Intervals/DateDetails';
 
 export const FormCarousel = ({
   handleChange,
@@ -15,7 +14,7 @@ export const FormCarousel = ({
   const [interval, setInterval] = React.useState(1);
   const [width, setWidth] = React.useState(0);
 
-  const intervals = 4;
+  const intervals = 3;
   const init = (w) => {
     // initialise width
     setWidth(w);
@@ -65,8 +64,8 @@ export const FormCarousel = ({
         scrollEventThrottle={200}
         pagingEnabled
         decelerationRate="fast">
-        <ImagePickerComponent />
-        <FirstInterval
+        <DateDetails values={values} setFieldValue={setFieldValue} />
+        <BikeDetails
           handleChange={handleChange}
           handleBlur={handleBlur}
           values={values}
@@ -76,7 +75,6 @@ export const FormCarousel = ({
           handleBlur={handleBlur}
           values={values}
         />
-        <ThirdInterval values={values} setFieldValue={setFieldValue} />
       </ScrollView>
       <View style={styles.bullets}>{bullets}</View>
     </View>
