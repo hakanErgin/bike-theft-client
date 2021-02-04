@@ -1,32 +1,50 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import commonStyles from '../../../../Utils/commonStyles';
-import ImagePickerComponent from '../ImagePicker';
+import theftFields from '../../../../Utils/theftFields';
+import RNPickerSelect from 'react-native-picker-select';
 
-export const BikeDetails = ({handleChange, handleBlur, values}) => {
+export function BikeInputFields({setFieldValue}) {
+  return theftFields.bike.map((field) => {
+    // theres only 1 elem/key in each object
+    const fieldType = Object.keys(field)[0];
+    return (
+      <View style={styles.field} key={fieldType}>
+        <Text style={{}}>{field[fieldType].Question}</Text>
+        <RNPickerSelect
+          useNativeAndroidPickerStyle={false}
+          onValueChange={(value) =>
+            setFieldValue(`bike_details.${fieldType}`, value)
+          }
+          style={styles}
+          items={field[fieldType].Options.map((option) => {
+            option = typeof option === 'string' ? option : option.toString();
+            return {
+              label: option,
+              value: option.toLowerCase(),
+            };
+          })}
+        />
+      </View>
+    );
+  });
+}
+
+export const BikeDetails = ({children}) => {
   return (
     <View style={styles.slide}>
-      <TextInput
-        style={styles.textArea}
-        onChangeText={handleChange('bike_description')}
-        onBlur={handleBlur('bike_description')}
-        value={values.bike_description}
-        multiline={true}
-        numberOfLines={4}
-        scrollEnabled={true}
-        placeholder={'Describe your bike here'}
-      />
-      <ImagePickerComponent />
+      <ScrollView>{children}</ScrollView>
     </View>
   );
 };
 
 export default BikeDetails;
 
-const {slide, textArea} = commonStyles;
+const {slide, inputAndroid} = commonStyles;
 const styles = StyleSheet.create({
-  textArea: {
-    ...textArea,
+  field: {marginBottom: 20},
+  inputAndroid: {
+    ...inputAndroid,
   },
   slide: {...slide},
 });

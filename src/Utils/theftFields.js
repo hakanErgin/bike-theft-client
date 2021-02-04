@@ -71,13 +71,14 @@ const theftFields = {
         Question: 'Please choose production year/era',
         Options: [
           'Now-2015',
-          '2015-2010',
-          '2010-2005',
-          '2005-2000',
-          '2000-1995',
-          '1995-1990',
+          '2014-2010',
+          '2009-2005',
+          '2008-2000',
+          '1999-1995',
+          '1994-1990',
           '1980s',
           '1970s',
+          '1960s',
         ],
       },
     },
@@ -89,7 +90,7 @@ const theftFields = {
       },
     },
     {
-      'wheel size in inches': {
+      wheel_size: {
         required: false,
         Question: 'Please choose wheel size, in IN (inches)',
         Options: [16, 20, 24, 26, 27, 28, 29],
@@ -99,13 +100,13 @@ const theftFields = {
   date_time: {
     date: {
       required: true,
-      Question: 'Please choose the date your bike was stolen on',
+      Question: 'Please choose the date your bike was stolen at',
       Options: {},
     },
     time: {
       required: false,
       Question: 'Please choose the time of the day your bike was stolen at',
-      Options: ['day time', 'night time'],
+      Options: ['Day-time/During the day', 'Night-time/During the night'],
     },
   },
   location: {

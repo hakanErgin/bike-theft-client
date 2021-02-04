@@ -1,16 +1,10 @@
-import React from 'react';
+import React, {Children} from 'react';
 import {View, ScrollView, Text, StyleSheet} from 'react-native';
 import {BikeDetails} from './Components/Intervals/BikeDetails';
-import {SecondInterval} from './Components/Intervals/Second';
+import {OtherDetails} from './Components/Intervals/OtherDetails';
 import {DateDetails} from './Components/Intervals/DateDetails';
 
-export const FormCarousel = ({
-  handleChange,
-  handleBlur,
-  values,
-  setFieldValue,
-}) => {
-  //#region interval logic
+export const FormCarousel = ({children}) => {
   const [interval, setInterval] = React.useState(1);
   const [width, setWidth] = React.useState(0);
 
@@ -45,7 +39,6 @@ export const FormCarousel = ({
       </Text>,
     );
   }
-  //#endregion
 
   return (
     <View style={styles.container}>
@@ -64,17 +57,7 @@ export const FormCarousel = ({
         scrollEventThrottle={200}
         pagingEnabled
         decelerationRate="fast">
-        <DateDetails values={values} setFieldValue={setFieldValue} />
-        <BikeDetails
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          values={values}
-        />
-        <SecondInterval
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          values={values}
-        />
+        {children}
       </ScrollView>
       <View style={styles.bullets}>{bullets}</View>
     </View>

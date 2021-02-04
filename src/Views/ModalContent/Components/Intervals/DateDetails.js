@@ -3,29 +3,29 @@ import {View, Text, StyleSheet} from 'react-native';
 import DatePicker from '../DatePicker';
 import commonStyles from '../../../../Utils/commonStyles';
 import RNPickerSelect from 'react-native-picker-select';
-
+import theftFields from '../../../../Utils/theftFields';
 export const DateDetails = ({setFieldValue, values}) => {
+  const timeOfDayChange = (dateParam, setFieldValueParam) => {
+    setFieldValueParam('date_details.time', dateParam);
+  };
+
   return (
     <View style={styles.slide}>
-      <RNPickerSelect
-        useNativeAndroidPickerStyle={false}
-        onValueChange={(value) => console.log(value)}
-        style={styles}
-        items={[
-          {
-            label: 'Football',
-            value: 'football',
-          },
-          {label: 'Baseball', value: 'baseball'},
-          {label: 'Hockey', value: 'hockey'},
-        ]}
-      />
-      {values.date && (
-        <View>
-          <Text>{values.date.toDateString()}</Text>
-        </View>
-      )}
-      <DatePicker setFieldValue={setFieldValue} />
+      <View>
+        <Text style={{}}>{theftFields.date_time.date.Question}</Text>
+        <DatePicker setFieldValue={setFieldValue} values={values} />
+      </View>
+      <View>
+        <Text style={{}}>{theftFields.date_time.time.Question}</Text>
+        <RNPickerSelect
+          useNativeAndroidPickerStyle={false}
+          onValueChange={(value) => timeOfDayChange(value, setFieldValue)}
+          style={styles}
+          items={theftFields.date_time.time.Options.map((option) => {
+            return {label: option, value: option.toLowerCase()};
+          })}
+        />
+      </View>
     </View>
   );
 };

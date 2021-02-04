@@ -13,9 +13,6 @@ export const GET_THEFTS = gql`
     findThefts {
       items {
         _id
-        bike_description
-        comments
-        date
         region {
           latitude
           longitude

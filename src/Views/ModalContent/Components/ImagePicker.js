@@ -1,31 +1,12 @@
 // https://aboutreact.com/example-of-image-picker-in-react-native/
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import React from 'react';
+import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {useMutation} from '@apollo/client';
-import {SINGLE_FILE_UPLOAD, MULTI_FILE_UPLOAD} from '../../../Utils/gql';
-import {mediaClient} from '../../../ContextProviders/CombinedProviders';
 import {ReactNativeFile} from 'apollo-upload-client';
 import commonStyles from '../../../Utils/commonStyles';
+import AddPhotoIcon from 'react-native-vector-icons/MaterialIcons';
 
-const ImagePickerComponent = () => {
-  const [pickedImages, setPickedImages] = useState([]);
-  const [singleUpload] = useMutation(SINGLE_FILE_UPLOAD, {
-    client: mediaClient,
-    onCompleted: (res) => console.log(res),
-  });
-  const [multiUpload] = useMutation(MULTI_FILE_UPLOAD, {
-    client: mediaClient,
-    onCompleted: (res) => console.log(res),
-  });
-
-  const uploadImages = () => {
-    pickedImages.length > 1
-      ? multiUpload({variables: {files: pickedImages}})
-      : singleUpload({variables: {file: pickedImages[0]}});
-  };
-
+const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
   const chooseFile = (type) => {
     let options = {
       mediaType: type,
@@ -65,61 +46,61 @@ const ImagePickerComponent = () => {
   };
 
   return (
-    <View>
-      <ScrollView contentContainerStyle={styles.container}>
-        {pickedImages &&
-          pickedImages.length > 0 &&
-          pickedImages.map((img) => {
-            return (
-              <TouchableOpacity key={img.uri} onPress={() => removeFile(img)}>
-                <Image source={{uri: img.uri}} style={styles.imageStyle} />
-              </TouchableOpacity>
-            );
-          })}
+    <View style={styles.container}>
+      {pickedImages &&
+        pickedImages.length > 0 &&
+        pickedImages.map((img) => {
+          return (
+            <TouchableOpacity key={img.uri} onPress={() => removeFile(img)}>
+              <Image source={{uri: img.uri}} style={styles.imageStyle} />
+            </TouchableOpacity>
+          );
+        })}
+      {pickedImages.length < 3 && (
         <TouchableOpacity
+          style={styles.addPhotoIconContainer}
           activeOpacity={0.5}
-          style={styles.buttonStyle}
-          onPress={() => uploadImages()}>
-          <Text style={styles.textStyle}>Upload</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.buttonStyle}
           onPress={() => chooseFile('photo')}>
-          <Text style={styles.textStyle}>Choose Image</Text>
+          <AddPhotoIcon
+            name="add-photo-alternate"
+            style={styles.addPhotoIcon}
+          />
         </TouchableOpacity>
-      </ScrollView>
+      )}
     </View>
   );
 };
 
 export default ImagePickerComponent;
 
-const {slide} = commonStyles;
-
 const styles = StyleSheet.create({
-  slide: {...slide},
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#fff',
+  addPhotoIcon: {
+    fontSize: 50,
+    color: commonStyles.iconColor.darkRed,
+  },
+  addPhotoIconContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#DDDDDD',
+    margin: 5,
+    borderRadius: 10,
+    width: 75,
+    height: 75,
+  },
+  container: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
   },
   textStyle: {
     padding: 10,
     color: 'black',
     textAlign: 'center',
   },
-  buttonStyle: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 5,
-    marginVertical: 10,
-    width: 250,
-  },
   imageStyle: {
     width: 75,
     height: 75,
     margin: 5,
+    borderRadius: 10,
   },
 });

@@ -2,13 +2,12 @@ import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import commonStyles from '../../../../Utils/commonStyles';
 
-export const SecondInterval = ({handleChange, handleBlur, values}) => {
+export const OtherDetails = ({handleChange, values}) => {
   return (
     <View style={styles.slide}>
       <TextInput
         style={styles.textArea}
         onChangeText={handleChange('comments')}
-        onBlur={handleBlur('comments')}
         value={values.comments}
         numberOfLines={4}
         placeholder={'Add other comments here'}
@@ -17,7 +16,7 @@ export const SecondInterval = ({handleChange, handleBlur, values}) => {
   );
 };
 
-export default SecondInterval;
+export default OtherDetails;
 
 const {slide, textArea, inputAndroid} = commonStyles;
 const styles = StyleSheet.create({

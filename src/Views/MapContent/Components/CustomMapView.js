@@ -84,7 +84,7 @@ const CustomMapView = ({
     return <Text>Loading...</Text>;
   }
   if (get_error) {
-    console.log(get_error);
+    console.log({get_error});
   }
   return (
     <>
