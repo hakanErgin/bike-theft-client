@@ -36,52 +36,62 @@ const FormModal = ({
     CREATE_THEFT,
     {
       refetchQueries: [{query: GET_THEFTS}],
-      onCompleted: (data) => console.log(data),
+      onCompleted: (craeteTheftData) => console.log(craeteTheftData),
     },
   );
   const [singleUpload] = useMutation(SINGLE_FILE_UPLOAD, {
     client: mediaClient,
-    onCompleted: (res) => console.log(res),
   });
   const [multiUpload] = useMutation(MULTI_FILE_UPLOAD, {
     client: mediaClient,
-    onCompleted: (res) => console.log(res),
   });
   // #endregion
 
   //#region funcs
-  const uploadImages = () => {
-    pickedImages.length > 1
-      ? multiUpload({variables: {files: pickedImages}})
-      : singleUpload({variables: {file: pickedImages[0]}});
-  };
 
   async function submitTheft(values) {
-    console.log(values);
     const currentToken = await GoogleSignin.getTokens();
-    submitCreateMutation({
-      variables: {
-        input: {
-          region: {latitude, longitude},
-          bike: {
-            type: values.bike_details.type,
-            brand: values.bike_details.brand,
-            color: values.bike_details.color,
-            year: values.bike_details.year,
-            frame_size: values.bike_details.frame_size,
-            wheel_size: values.bike_details.wheel_size,
-            photos: [''],
+
+    pickedImages.length > 1
+      ? multiUpload({
+          variables: {files: pickedImages},
+        }).then((result) => submitWithImages(result))
+      : singleUpload({variables: {file: pickedImages[0]}}).then((result) =>
+          submitWithImages(result),
+        );
+
+    function submitWithImages(params) {
+      let photos = [];
+      const photoData = Object.keys(params.data)[0];
+      console.log({params});
+      console.log(photoData);
+      Array.isArray(params.data[photoData])
+        ? params.data[photoData].map((photo) => photos.push(photo.url))
+        : (photos = params.data[photoData].url);
+      submitCreateMutation({
+        variables: {
+          input: {
+            region: {latitude, longitude},
+            bike: {
+              type: values.bike_details.type,
+              brand: values.bike_details.brand,
+              color: values.bike_details.color,
+              year: values.bike_details.year,
+              frame_size: values.bike_details.frame_size,
+              wheel_size: values.bike_details.wheel_size,
+              photos: photos,
+            },
+            comments: values.comments,
+            date_time: {
+              date: values.date_details.date,
+              time: values.date_details.time,
+            },
+            created_at: new Date(),
           },
-          comments: values.comments,
-          date_time: {
-            date: values.date_details.date,
-            time: values.date_details.time,
-          },
-          created_at: new Date(),
+          id_token: currentToken.idToken,
         },
-        id_token: currentToken.idToken,
-      },
-    });
+      });
+    }
     setIsFormModalVisible(false);
     setIsAddingNewTheft(false);
   }
