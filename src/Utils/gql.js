@@ -49,6 +49,7 @@ export const GET_THEFT = gql`
   query($id: GraphbackObjectID!) {
     getTheft(id: $id) {
       _id
+      userId
       region {
         latitude
         longitude
@@ -57,9 +58,17 @@ export const GET_THEFT = gql`
   }
 `;
 
-export const DELETE_THEFT = gql`
-  mutation($input: MutateTheftInput!) {
-    deleteTheft(input: $input) {
+export const DELETE_THEFTT = gql`
+  mutation(
+    $id_token: String!
+    $theftId: GraphbackObjectID!
+    $theftUserId: GraphbackObjectID!
+  ) {
+    deleteTheft(
+      id_token: $id_token
+      theftId: $theftId
+      theftUserId: $theftUserId
+    ) {
       _id
     }
   }

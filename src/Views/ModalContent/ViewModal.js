@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button, Text, View, StyleSheet} from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
-import {GET_THEFTS, DELETE_THEFT, GET_THEFT} from '../../Utils/gql';
+import {GET_THEFTS, DELETE_THEFTT, GET_THEFT} from '../../Utils/gql';
+import {GoogleSignin} from '@react-native-community/google-signin';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
 import {
   useIsViewModalVisible,
@@ -17,25 +18,33 @@ const ViewModal = () => {
   //#region
   const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
     variables: {id: selectedTheftId},
+    onCompleted: (res) => console.log(res),
   });
 
-  const [
-    submitDeleteMutation,
-    {error: delete_error},
-  ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
+  const [submitDeleteMutation, {error: delete_error}] = useMutation(
+    DELETE_THEFTT,
+    {
+      refetchQueries: [{query: GET_THEFTS}],
+      onCompleted: (res) => console.log(res),
+    },
+  );
 
-  const deleteTheft = () => {
+  async function deleteTheft() {
+    const currentToken = await GoogleSignin.getTokens();
+    console.log({currentToken}, {selectedTheftId});
     submitDeleteMutation({
-      variables: {input: {_id: selectedTheftId}},
+      variables: {
+        id_token: currentToken.idToken,
+        theftId: selectedTheftId,
+        theftUserId: get_data && get_data.getTheft.userId,
+      },
     });
     setIsViewModalVisible(false);
-  };
+  }
 
   if (delete_error || get_error) {
     console.log(delete_error || get_error);
   }
-
-  // onPress={deleteTheft(theftId)}
 
   //#endregion
 
