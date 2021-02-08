@@ -28,7 +28,7 @@ const FormModal = ({
   setIsFormModalVisible,
 }) => {
   const [pickedImages, setPickedImages] = useState([]);
-  const {longitude, latitude} = selectedRegion;
+  const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
 
   //#region mutation/query
@@ -49,25 +49,30 @@ const FormModal = ({
 
   //#region funcs
 
-  async function submitTheft(values) {
+  async function submitForm(values) {
     const currentToken = await GoogleSignin.getTokens();
-
-    pickedImages.length > 1
-      ? multiUpload({
-          variables: {files: pickedImages},
-        }).then((result) => submitWithImages(result))
-      : singleUpload({variables: {file: pickedImages[0]}}).then((result) =>
-          submitWithImages(result),
-        );
+    console.log({pickedImages});
+    if (pickedImages.length > 1) {
+      multiUpload({
+        variables: {files: pickedImages},
+      }).then((result) => submitWithImages(result));
+    } else if (pickedImages.length === 1) {
+      singleUpload({variables: {file: pickedImages[0]}}).then((result) =>
+        submitWithImages(result),
+      );
+    } else {
+      submitWithImages();
+    }
 
     function submitWithImages(params) {
       let photos = [];
-      const photoData = Object.keys(params.data)[0];
-      console.log({params});
-      console.log(photoData);
-      Array.isArray(params.data[photoData])
-        ? params.data[photoData].map((photo) => photos.push(photo.url))
-        : (photos = params.data[photoData].url);
+      if (params) {
+        const photoData = Object.keys(params.data)[0];
+        console.log(photoData);
+        Array.isArray(params.data[photoData])
+          ? params.data[photoData].map((photo) => photos.push(photo.url))
+          : (photos = params.data[photoData].url);
+      }
       submitCreateMutation({
         variables: {
           input: {
@@ -120,7 +125,7 @@ const FormModal = ({
             },
             comments: '',
           }}
-          onSubmit={submitTheft}>
+          onSubmit={submitForm}>
           {({handleChange, values, handleSubmit, setFieldValue}) => (
             <View style={styles.form}>
               <Text style={styles.header}>Report a theft</Text>

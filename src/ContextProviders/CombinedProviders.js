@@ -1,5 +1,5 @@
 import React from 'react';
-import {GRAPHQL_URI, MEDIA_URI} from '@env';
+import {GRAPHQL_URI, MEDIA_REMOTE_URI} from '@env';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
 
@@ -14,7 +14,7 @@ const client = new ApolloClient({
 });
 export const mediaClient = new ApolloClient({
   link: createUploadLink({
-    uri: MEDIA_URI,
+    uri: MEDIA_REMOTE_URI,
   }),
   cache: new InMemoryCache(),
 });

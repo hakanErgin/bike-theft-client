@@ -11,6 +11,26 @@ export const CREATE_THEFT = gql`
   }
 `;
 
+export const CREATE_USER_OR_SIGN_IN = gql`
+  mutation($id_token: String!) {
+    createUserOrSignIn(id_token: $id_token) {
+      google_name
+    }
+  }
+`;
+
+export const GET_USERS_THEFTS = gql`
+  query($id_token: String!) {
+    getUsersReportedThefts(id_token: $id_token) {
+      _id
+      region {
+        latitude
+        longitude
+      }
+    }
+  }
+`;
+
 export const GET_THEFTS = gql`
   {
     findThefts {
@@ -37,30 +57,10 @@ export const GET_THEFT = gql`
   }
 `;
 
-export const GET_USERS_THEFTS = gql`
-  query($id_token: String!) {
-    getUsersReportedThefts(id_token: $id_token) {
-      _id
-      region {
-        latitude
-        longitude
-      }
-    }
-  }
-`;
-
 export const DELETE_THEFT = gql`
   mutation($input: MutateTheftInput!) {
     deleteTheft(input: $input) {
       _id
-    }
-  }
-`;
-
-export const CREATE_USER_OR_SIGN_IN = gql`
-  mutation($id_token: String!) {
-    createUserOrSignIn(id_token: $id_token) {
-      google_name
     }
   }
 `;
