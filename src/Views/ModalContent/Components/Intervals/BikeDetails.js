@@ -4,13 +4,16 @@ import commonStyles from '../../../../Utils/commonStyles';
 import theftFields from '../../../../Utils/theftFields';
 import RNPickerSelect from 'react-native-picker-select';
 
-export function BikeInputFields({setFieldValue}) {
+export function BikeInputFields({setFieldValue, errors}) {
   return theftFields.bike.map((field) => {
     // theres only 1 elem/key in each object
     const fieldType = Object.keys(field)[0];
     return (
       <View style={styles.field} key={fieldType}>
         <Text style={{}}>{field[fieldType].Question}</Text>
+        {field[fieldType].required && (
+          <Text style={styles.requiredText}>*required</Text>
+        )}
         <RNPickerSelect
           useNativeAndroidPickerStyle={false}
           onValueChange={(value) =>
@@ -47,4 +50,11 @@ const styles = StyleSheet.create({
     ...inputAndroid,
   },
   slide: {...slide},
+  requiredText: {
+    fontSize: 10,
+    color: 'black',
+    fontStyle: 'italic',
+    position: 'absolute',
+    right: 0,
+  },
 });
