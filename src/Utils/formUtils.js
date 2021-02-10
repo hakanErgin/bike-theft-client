@@ -1,0 +1,78 @@
+import {GoogleSignin} from '@react-native-community/google-signin';
+
+export async function submitForm(
+  values,
+  pickedImages,
+  singleUpload,
+  multiUpload,
+  submitCreateMutation,
+  selectedRegion,
+  setIsFormModalVisible,
+  setIsAddingNewTheft,
+) {
+  const currentToken = await GoogleSignin.getTokens();
+  const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
+
+  console.log({pickedImages});
+  if (pickedImages.length > 1) {
+    multiUpload({
+      variables: {files: pickedImages},
+    }).then((result) => submitWithImages(result));
+  } else if (pickedImages.length === 1) {
+    singleUpload({variables: {file: pickedImages[0]}}).then((result) =>
+      submitWithImages(result),
+    );
+  } else {
+    submitWithImages();
+  }
+
+  function submitWithImages(params) {
+    let photos = [];
+    if (params) {
+      const photoData = Object.keys(params.data)[0];
+      console.log(photoData);
+      Array.isArray(params.data[photoData])
+        ? params.data[photoData].map((photo) => photos.push(photo.url))
+        : (photos = params.data[photoData].url);
+    }
+    submitCreateMutation({
+      variables: {
+        input: {
+          region: {latitude, longitude},
+          bike: {
+            type: values.bike_details.type,
+            brand: values.bike_details.brand,
+            color: values.bike_details.color,
+            year: values.bike_details.year,
+            frame_size: values.bike_details.frame_size,
+            wheel_size: values.bike_details.wheel_size,
+            photos: photos,
+          },
+          comments: values.comments,
+          date_time: {
+            date: values.date_details.date,
+            time: values.date_details.time,
+          },
+          created_at: new Date(),
+        },
+        id_token: currentToken.idToken,
+      },
+    });
+  }
+  setIsFormModalVisible(false);
+  setIsAddingNewTheft(false);
+}
+
+export const initialValues = {
+  date_details: {date: new Date(), time: ''},
+  bike_details: {
+    type: '',
+    brand: '',
+    color: '',
+    year: '',
+    frame_size: '',
+    wheel_size: '',
+    photos: [''],
+  },
+  comments: '',
+};

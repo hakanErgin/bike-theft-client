@@ -32,7 +32,7 @@ export const DateDetails = ({setFieldValue, values}) => {
 
 export default DateDetails;
 
-const {slide, textArea, inputAndroid} = commonStyles;
+const {inputAndroid} = commonStyles;
 const styles = StyleSheet.create({
   slide: {
     paddingHorizontal: 20,

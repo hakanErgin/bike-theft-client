@@ -54,6 +54,19 @@ export const GET_THEFT = gql`
         latitude
         longitude
       }
+      bike {
+        type
+        brand
+        year
+        frame_size
+        wheel_size
+        photos
+      }
+      comments
+      date_time {
+        date
+        time
+      }
     }
   }
 `;
