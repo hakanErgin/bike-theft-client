@@ -20,7 +20,7 @@ import {OtherDetails} from './Components/Intervals/OtherDetails';
 import {DateDetails} from './Components/Intervals/DateDetails';
 import ImagePickerComponent from './Components/ImagePicker';
 import {BikeInputFields} from './Components/Intervals/BikeDetails';
-import {submitForm, initialValues} from '../../Utils/formUtils';
+import {submitForm, initialValues, validate} from '../../Utils/formUtils';
 
 const FormModal = ({
   isFormModalVisible,
@@ -59,6 +59,7 @@ const FormModal = ({
     <Modal isVisible={isFormModalVisible}>
       <View style={styles.modal}>
         <Formik
+          validate={validate}
           initialValues={initialValues}
           onSubmit={(values) =>
             submitForm(
@@ -72,7 +73,7 @@ const FormModal = ({
               setIsAddingNewTheft,
             )
           }>
-          {({handleChange, values, handleSubmit, setFieldValue}) => (
+          {({handleChange, values, handleSubmit, setFieldValue, errors}) => (
             <View style={styles.form}>
               <Text style={styles.header}>Report a theft</Text>
               <View style={styles.closeButton}>
@@ -83,6 +84,7 @@ const FormModal = ({
                 />
               </View>
               <FormCarousel>
+                {/* {(errors.type || errors.brand || errors.color) && alert('a')} */}
                 <DateDetails values={values} setFieldValue={setFieldValue} />
                 <BikeDetails>
                   <ImagePickerComponent

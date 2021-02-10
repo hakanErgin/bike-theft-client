@@ -4,7 +4,15 @@ const theftFields = {
       type: {
         required: true,
         Question: 'Please choose a type of bike',
-        Options: ['Road', 'City', 'Mountain', 'BMX', 'Foldable', 'Fixie'],
+        Options: [
+          'Road',
+          'City',
+          'Mountain',
+          'BMX',
+          'Foldable',
+          'Fixie',
+          'E-bike',
+        ],
         'E-bike': false,
       },
     },

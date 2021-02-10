@@ -63,6 +63,23 @@ export async function submitForm(
   setIsAddingNewTheft(false);
 }
 
+export function validate(values) {
+  console.log({values});
+  const errors = {};
+
+  if (!values.bike_details.type) {
+    errors.type = ' Bike type is required';
+  }
+  if (!values.bike_details.brand) {
+    errors.brand = 'Bike brand is required';
+  }
+  if (!values.bike_details.color) {
+    errors.color = 'Bike color is required';
+  }
+  console.log({errors});
+  return errors;
+}
+
 export const initialValues = {
   date_details: {date: new Date(), time: ''},
   bike_details: {
