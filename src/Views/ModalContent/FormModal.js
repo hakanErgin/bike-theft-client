@@ -93,7 +93,6 @@ const FormModal = ({
                   <BikeInputFields
                     values={values}
                     setFieldValue={setFieldValue}
-                    errors={errors}
                   />
                 </BikeDetails>
                 <OtherDetails handleChange={handleChange} values={values} />

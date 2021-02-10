@@ -4,7 +4,7 @@ import commonStyles from '../../../../Utils/commonStyles';
 import theftFields from '../../../../Utils/theftFields';
 import RNPickerSelect from 'react-native-picker-select';
 
-export function BikeInputFields({setFieldValue, errors}) {
+export function BikeInputFields({setFieldValue}) {
   return theftFields.bike.map((field) => {
     // theres only 1 elem/key in each object
     const fieldType = Object.keys(field)[0];
