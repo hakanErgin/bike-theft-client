@@ -10,8 +10,8 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
   const chooseFile = (type) => {
     let options = {
       mediaType: type,
-      maxWidth: 1024,
-      maxHeight: 1024,
+      maxWidth: 1280,
+      maxHeight: 1280,
     };
     launchImageLibrary(options, (response) => {
       console.log('Response = ', response);
