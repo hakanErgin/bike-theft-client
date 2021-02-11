@@ -57,11 +57,11 @@ export const SignInButton = () => {
   );
 };
 
-export const LogoutButton = () => {
+export const LogoutButton = ({setIsAddingNewTheft}) => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
-
   const signOut = async () => {
     try {
+      setIsAddingNewTheft(false);
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut().then(() => setIsUserLoggedIn(false));
     } catch (error) {

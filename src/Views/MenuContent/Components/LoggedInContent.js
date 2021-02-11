@@ -46,7 +46,7 @@ export default function LoggedInContent({navigation}) {
     <View>
       {currentUser && <UsersReportedThefts currentUser={currentUser} />}
       <Button title={'add new'} onPress={isAddingNewTheftController} />
-      <LogoutButton />
+      <LogoutButton setIsAddingNewTheft={setIsAddingNewTheft} />
     </View>
   );
 }
