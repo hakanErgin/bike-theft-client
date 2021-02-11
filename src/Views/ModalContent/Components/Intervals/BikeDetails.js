@@ -8,6 +8,7 @@ export function BikeInputFields({setFieldValue}) {
   return theftFields.bike.map((field) => {
     // theres only 1 elem/key in each object
     const fieldType = Object.keys(field)[0];
+
     return (
       <View style={styles.field} key={fieldType}>
         <Text style={{}}>{field[fieldType].Question}</Text>

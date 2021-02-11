@@ -20,7 +20,13 @@ import {OtherDetails} from './Components/Intervals/OtherDetails';
 import {DateDetails} from './Components/Intervals/DateDetails';
 import ImagePickerComponent from './Components/ImagePicker';
 import {BikeInputFields} from './Components/Intervals/BikeDetails';
-import {submitForm, initialValues, validate} from '../../Utils/formUtils';
+import {
+  submitForm,
+  initialValues,
+  validate,
+  showValidationWarning,
+} from '../../Utils/formUtils';
+import FlashMessage from 'react-native-flash-message';
 
 const FormModal = ({
   isFormModalVisible,
@@ -90,22 +96,26 @@ const FormModal = ({
                     pickedImages={pickedImages}
                     setPickedImages={setPickedImages}
                   />
-                  <BikeInputFields
-                    values={values}
-                    setFieldValue={setFieldValue}
-                  />
+                  <BikeInputFields setFieldValue={setFieldValue} />
                 </BikeDetails>
                 <OtherDetails handleChange={handleChange} values={values} />
               </FormCarousel>
               <View>
                 <Pressable>
-                  <Button title={'yes'} onPress={handleSubmit} />
+                  <Button
+                    title={'yes'}
+                    onPress={(vals) => {
+                      handleSubmit(vals);
+                      showValidationWarning(errors);
+                    }}
+                  />
                 </Pressable>
               </View>
             </View>
           )}
         </Formik>
       </View>
+      <FlashMessage position="top" />
     </Modal>
   );
 };

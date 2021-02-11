@@ -1,4 +1,5 @@
 import {GoogleSignin} from '@react-native-community/google-signin';
+import {showMessage} from 'react-native-flash-message';
 
 export async function submitForm(
   values,
@@ -64,19 +65,16 @@ export async function submitForm(
 }
 
 export function validate(values) {
-  console.log({values});
   const errors = {};
-
   if (!values.bike_details.type) {
-    errors.type = ' Bike type is required';
+    errors.type = 'Bike type';
   }
   if (!values.bike_details.brand) {
-    errors.brand = 'Bike brand is required';
+    errors.brand = 'Bike brand';
   }
   if (!values.bike_details.color) {
-    errors.color = 'Bike color is required';
+    errors.color = 'Bike color';
   }
-  console.log({errors});
   return errors;
 }
 
@@ -93,3 +91,15 @@ export const initialValues = {
   },
   comments: '',
 };
+
+export function showValidationWarning(errors) {
+  let errorDescription = [];
+  for (const [key, value] of Object.entries(errors)) {
+    errorDescription.push(` ${value}`);
+  }
+  showMessage({
+    message: 'Required:',
+    description: errorDescription.toString(),
+    type: 'warning',
+  });
+}
