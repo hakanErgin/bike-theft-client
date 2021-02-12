@@ -13,6 +13,7 @@ import {
 import LoggedInContent from './Components/LoggedInContent';
 import commonStyles from '../../Utils/commonStyles';
 
+// this needs to be a function
 function DrawerContent(props) {
   return (
     // <DrawerContentScrollView {...props}>
@@ -37,7 +38,6 @@ const CustomDrawerContent = ({navigation}) => {
   useEffect(() => {
     isSignedInToGoogle().then((res) => {
       if (res === !isUserLoggedIn) {
-        console.log({res});
         setIsUserLoggedIn(res);
       }
     });
@@ -59,5 +59,8 @@ const CustomDrawerContent = ({navigation}) => {
 export default DrawerContent;
 
 const styles = StyleSheet.create({
-  drawerContainer: {padding: commonStyles.gap[3]},
+  drawerContainer: {
+    padding: commonStyles.gap[3],
+    flex: 1,
+  },
 });

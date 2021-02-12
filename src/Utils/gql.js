@@ -23,6 +23,7 @@ export const GET_USERS_THEFTS = gql`
   query($id_token: String!) {
     getUsersReportedThefts(id_token: $id_token) {
       _id
+      created_at
       region {
         latitude
         longitude
@@ -36,6 +37,7 @@ export const GET_THEFTS = gql`
     findThefts {
       items {
         _id
+        created_at
         region {
           latitude
           longitude
