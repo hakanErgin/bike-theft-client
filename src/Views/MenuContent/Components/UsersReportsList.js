@@ -8,7 +8,7 @@ import commonStyles from '../../../Utils/commonStyles';
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
 
-function IconGroup({editReport, deleteReport, theftId}) {
+function IconGroup({theftId}) {
   const setIsViewModalVisible = useToggleIsViewModalVisible();
   const selectedTheftId = useSetSelectedTheftId();
 
@@ -28,7 +28,7 @@ function IconGroup({editReport, deleteReport, theftId}) {
         color={iconColor}
         onPress={viewReport}
       />
-      <EditIcon
+      {/* <EditIcon
         name="edit"
         size={iconSize}
         color={iconColor}
@@ -39,7 +39,7 @@ function IconGroup({editReport, deleteReport, theftId}) {
         size={iconSize}
         color={iconColor}
         onPress={deleteReport}
-      />
+      /> */}
     </View>
   );
 }

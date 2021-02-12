@@ -52,7 +52,7 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
         pickedImages.map((img) => {
           return (
             <TouchableOpacity key={img.uri} onPress={() => removeFile(img)}>
-              <Image source={{uri: img.uri}} style={styles.imageStyle} />
+              <Image source={{uri: img.uri}} style={styles.image} />
             </TouchableOpacity>
           );
         })}
@@ -75,32 +75,29 @@ export default ImagePickerComponent;
 
 const styles = StyleSheet.create({
   addPhotoIcon: {
-    fontSize: 50,
+    fontSize: commonStyles.iconSize.xxl,
+    marginLeft: commonStyles.gap[0],
+    marginBottom: commonStyles.gap[0],
     color: commonStyles.iconColor.darkRed,
   },
   addPhotoIconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#DDDDDD',
-    margin: 5,
-    borderRadius: 10,
+    borderRadius: commonStyles.borderRadius.normal,
     width: 75,
     height: 75,
   },
   container: {
+    marginBottom: commonStyles.gap[5],
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'center',
   },
-  textStyle: {
-    padding: 10,
-    color: 'black',
-    textAlign: 'center',
-  },
-  imageStyle: {
+  image: {
+    marginRight: commonStyles.gap[2],
     width: 75,
     height: 75,
-    margin: 5,
-    borderRadius: 10,
+    borderRadius: commonStyles.borderRadius.normal,
   },
 });

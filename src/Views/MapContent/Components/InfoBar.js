@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import commonStyles from '../../../Utils/commonStyles';
 
 const InfoBar = ({currentRegionBoundaries, thefts}) => {
   const [nrOfTheftsInRegion, setNrOfTheftsInRegion] = useState();
@@ -45,18 +46,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 100,
     right: 100,
-    bottom: 15,
-    padding: 10,
-    backgroundColor: 'white',
+    maxWidth: 250,
+    bottom: commonStyles.gap[2],
+    padding: commonStyles.gap[1],
+    backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'row',
+    borderRadius: commonStyles.borderRadius.normal,
   },
   trafficLight: {
-    borderRadius: 10,
+    borderRadius: commonStyles.borderRadius.normal,
     backgroundColor: 'red',
     zIndex: 10,
-    marginLeft: 8,
+    marginLeft: commonStyles.gap[4],
     width: 20,
     height: 20,
   },

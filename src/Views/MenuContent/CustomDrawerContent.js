@@ -11,6 +11,7 @@ import {
 } from '../../ContextProviders/IsUserLoggedInContext';
 // import {DrawerContentScrollView} from '@react-navigation/drawer';
 import LoggedInContent from './Components/LoggedInContent';
+import commonStyles from '../../Utils/commonStyles';
 
 function DrawerContent(props) {
   return (
@@ -22,8 +23,8 @@ function DrawerContent(props) {
 
 function LoggedOutContent() {
   return (
-    <View style={styles.drawerContainer}>
-      <Text>Pls sign in to do stuff</Text>
+    <View>
+      <Text>Sign in to report a bike theft!</Text>
       <SignInButton />
     </View>
   );
@@ -44,8 +45,7 @@ const CustomDrawerContent = ({navigation}) => {
 
   return (
     <View style={styles.drawerContainer}>
-      <Text>Welcome</Text>
-
+      <Text>Welcome,</Text>
       {isUserLoggedIn ? (
         <LoggedInContent navigation={navigation} />
       ) : (
@@ -59,5 +59,5 @@ const CustomDrawerContent = ({navigation}) => {
 export default DrawerContent;
 
 const styles = StyleSheet.create({
-  drawerContainer: {padding: 10},
+  drawerContainer: {padding: commonStyles.gap[3]},
 });

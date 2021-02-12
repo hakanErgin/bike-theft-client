@@ -3,11 +3,11 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import GpsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import setCurrentPosition from '../../../Utils/currentPositionHandler';
 import commonStyles from '../../../Utils/commonStyles';
+import commonVariables from '../../../Utils/commonVariables';
 
 const MyLocationButton = React.forwardRef(
   ({usersLocation, setUsersLocation}, mapRef) => {
-    const ANIMATION_SPEED = 1000;
-
+    const ANIMATION_SPEED = commonVariables.ANIMATION_SPEED;
     function goToLocation() {
       if (mapRef.current != null) {
         if (usersLocation === undefined) {
@@ -23,11 +23,7 @@ const MyLocationButton = React.forwardRef(
       <TouchableOpacity
         style={styles.gpsIconContainer}
         onPress={() => goToLocation()}>
-        <GpsIcon
-          name="crosshairs-gps"
-          size={commonStyles.iconSize.xl}
-          color={commonStyles.iconColor.darkRed}
-        />
+        <GpsIcon name="crosshairs-gps" style={styles.gpsIcon} />
       </TouchableOpacity>
     );
   },
@@ -36,10 +32,14 @@ const MyLocationButton = React.forwardRef(
 const styles = StyleSheet.create({
   gpsIconContainer: {
     position: 'absolute',
-    top: 15,
-    right: 15,
+    top: commonStyles.gap[2],
+    right: commonStyles.gap[2],
     backgroundColor: 'white',
     borderRadius: 5,
+  },
+  gpsIcon: {
+    fontSize: commonStyles.iconSize.xl,
+    color: commonStyles.iconColor.darkRed,
   },
 });
 

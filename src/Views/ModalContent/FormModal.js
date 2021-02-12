@@ -82,11 +82,11 @@ const FormModal = ({
           {({handleChange, values, handleSubmit, setFieldValue, errors}) => (
             <View style={styles.form}>
               <Text style={styles.header}>Report a theft</Text>
-              <View style={styles.closeButton}>
+              <View style={styles.closeButtonContainer}>
                 <CloseButton
                   name="close"
                   onPress={cancelAdding}
-                  size={commonStyles.iconSize.large}
+                  style={styles.closeButton}
                 />
               </View>
               <FormCarousel>
@@ -125,17 +125,21 @@ export default FormModal;
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
-    borderRadius: 15,
-    padding: 5,
+    borderRadius: commonStyles.borderRadius.large,
+    padding: commonStyles.gap[0],
   },
   form: {flex: 1, justifyContent: 'space-around'},
-  header: {fontSize: 20, textAlign: 'center'},
-  closeButton: {
+  header: {fontSize: commonStyles.fontSize.large, textAlign: 'center'},
+  closeButtonContainer: {
     flex: 1,
     position: 'absolute',
     top: 0,
     right: 0,
+  },
+  closeButton: {
+    fontSize: commonStyles.iconSize.large,
+    margin: commonStyles.gap[0],
   },
 });

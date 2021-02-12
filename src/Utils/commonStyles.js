@@ -1,43 +1,23 @@
 const commonStyles = {
   // globals
-  borderRadius: {normal: 10},
-  textSize: {normal: 14},
-  iconSize: {normal: 15, large: 25, xl: 42},
+  borderRadius: {small: 6, normal: 10, large: 15},
+  fontSize: {tiny: 7, small: 10, normal: 14, large: 20, xl: 24},
+  iconSize: {normal: 15, large: 20, xl: 42, xxl: 62},
   iconColor: {darkRed: '#900'},
-  // carousel slide shared components
-  slide: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-    paddingTop: 30,
-    flexBasis: '100%',
-    flex: 1,
-    maxWidth: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  textArea: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    textAlignVertical: 'top',
-    paddingBottom: 10,
-    marginBottom: 10,
-    width: '100%',
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    color: 'black',
-    borderColor: 'gray',
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
+  containerBackgroundColor: {light: 'white', dark: 'black'},
+  // can use for margin/padding
+  gap: [4, 8, 12, 16, 22, 28, 36],
 };
 
 export default commonStyles;
+
+export const inputAndroid = {
+  fontSize: commonStyles.fontSize.normal,
+  paddingHorizontal: commonStyles.gap[1],
+  paddingVertical: commonStyles.gap[1],
+  borderWidth: 1,
+  borderRadius: commonStyles.borderRadius.normal,
+  color: 'black',
+  borderColor: 'gray',
+  paddingRight: commonStyles.gap[5], // to ensure the text is never behind the icon
+};

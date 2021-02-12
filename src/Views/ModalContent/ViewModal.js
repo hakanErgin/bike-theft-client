@@ -9,6 +9,7 @@ import {
   useToggleIsViewModalVisible,
 } from '../../ContextProviders/IsViewModalVisibleContext';
 import Modal from 'react-native-modal';
+import commonStyles from '../../Utils/commonStyles';
 
 const ViewModal = () => {
   const isViewModalVisible = useIsViewModalVisible();
@@ -51,7 +52,7 @@ const ViewModal = () => {
   return get_data ? (
     <Modal isVisible={isViewModalVisible}>
       <View style={styles.modal}>
-        <Text>yes</Text>
+        <Text style={styles.header}>yes</Text>
         <Text>{get_data.getTheft.region.latitude}</Text>
         <Text>{get_data.getTheft.region.longitude}</Text>
         <Button
@@ -71,11 +72,10 @@ export default ViewModal;
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
-    borderRadius: 20,
-    padding: 30,
+    borderRadius: commonStyles.borderRadius.large,
+    padding: commonStyles.gap[3],
   },
-  form: {flex: 1, justifyContent: 'space-around'},
-  header: {fontSize: 24, textAlign: 'center'},
+  header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
 });

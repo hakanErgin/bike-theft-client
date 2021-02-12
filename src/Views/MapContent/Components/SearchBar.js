@@ -1,9 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {GOOGLE_API_KEY} from '@env';
+import commonStyles from '../../../Utils/commonStyles';
+import commonVariables from '../../../Utils/commonVariables';
 
 export default function SearchBar({mapRef}) {
+  console.log('hi');
   return (
     <View style={styles.searchBoxContainer}>
       <GooglePlacesAutocomplete
@@ -15,10 +18,10 @@ export default function SearchBar({mapRef}) {
               {
                 latitude: details.geometry.location.lat,
                 longitude: details.geometry.location.lng,
-                latitudeDelta: 2,
-                longitudeDelta: 2,
+                latitudeDelta: commonVariables.SEARCH_ZOOM_LEVEL,
+                longitudeDelta: commonVariables.SEARCH_ZOOM_LEVEL,
               },
-              2000,
+              commonVariables.SEARCH_ANIMATION_SPEED,
             );
         }}
         fetchDetails={true}
@@ -31,14 +34,13 @@ export default function SearchBar({mapRef}) {
   );
 }
 
-import {StyleSheet} from 'react-native';
-
 const styles = StyleSheet.create({
   searchBoxContainer: {
     zIndex: 10,
+    alignSelf: 'center',
     flex: 1,
     position: 'absolute',
-    top: 100,
-    width: '100%',
+    top: commonStyles.gap[2],
+    width: '60%',
   },
 });

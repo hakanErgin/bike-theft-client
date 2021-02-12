@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import DatePicker from '../DatePicker';
-import commonStyles from '../../../../Utils/commonStyles';
+import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import RNPickerSelect from 'react-native-picker-select';
 import theftFields from '../../../../Utils/theftFields';
+
 export const DateDetails = ({setFieldValue, values}) => {
   const timeOfDayChange = (dateParam, setFieldValueParam) => {
     setFieldValueParam('date_details.time', dateParam);
@@ -32,21 +33,20 @@ export const DateDetails = ({setFieldValue, values}) => {
 
 export default DateDetails;
 
-const {inputAndroid} = commonStyles;
 const styles = StyleSheet.create({
   slide: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-    paddingTop: 30,
+    paddingHorizontal: commonStyles.gap[4],
+    paddingBottom: commonStyles.gap[2],
+    paddingTop: commonStyles.gap[5],
     flexBasis: '100%',
     flex: 1,
     maxWidth: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
     alignContent: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
   },
   inputAndroid: {
     ...inputAndroid,

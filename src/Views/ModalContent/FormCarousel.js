@@ -1,8 +1,6 @@
-import React, {Children} from 'react';
+import React from 'react';
 import {View, ScrollView, Text, StyleSheet} from 'react-native';
-import {BikeDetails} from './Components/Intervals/BikeDetails';
-import {OtherDetails} from './Components/Intervals/OtherDetails';
-import {DateDetails} from './Components/Intervals/DateDetails';
+import commonStyles from '../../Utils/commonStyles';
 
 export const FormCarousel = ({children}) => {
   const [interval, setInterval] = React.useState(1);
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   bullet: {
-    paddingHorizontal: 5,
-    fontSize: 20,
+    paddingHorizontal: commonStyles.gap[0],
+    fontSize: commonStyles.iconSize.large,
   },
 });

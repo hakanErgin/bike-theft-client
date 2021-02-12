@@ -18,13 +18,28 @@ export const OtherDetails = ({handleChange, values}) => {
 
 export default OtherDetails;
 
-const {slide, textArea, inputAndroid} = commonStyles;
 const styles = StyleSheet.create({
   textArea: {
-    ...textArea,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: commonStyles.borderRadius.normal,
+    textAlignVertical: 'top',
+    paddingBottom: commonStyles.gap[2],
+    marginBottom: commonStyles.gap[2],
+    width: '100%',
   },
-  slide: {...slide},
-  inputAndroid: {
-    ...inputAndroid,
+  slide: {
+    paddingHorizontal: commonStyles.gap[4],
+    paddingBottom: commonStyles.gap[2],
+    paddingTop: commonStyles.gap[5],
+    flexBasis: '100%',
+    flex: 1,
+    maxWidth: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });

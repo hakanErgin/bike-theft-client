@@ -8,8 +8,7 @@ export default function MenuButton({navigation}) {
     <View style={styles.menuBtnContainer}>
       <MenuIcon
         name="menu"
-        size={commonStyles.iconSize.xl}
-        color={commonStyles.iconColor.darkRed}
+        style={styles.menuIcon}
         onPress={() => navigation.toggleDrawer()}
       />
     </View>
@@ -19,9 +18,13 @@ export default function MenuButton({navigation}) {
 const styles = StyleSheet.create({
   menuBtnContainer: {
     position: 'absolute',
-    top: 15,
-    left: 15,
-    backgroundColor: 'white',
-    borderRadius: 5,
+    top: commonStyles.gap[2],
+    left: commonStyles.gap[2],
+    backgroundColor: commonStyles.containerBackgroundColor.light,
+    borderRadius: commonStyles.borderRadius.small,
+  },
+  menuIcon: {
+    fontSize: commonStyles.iconSize.xl,
+    color: commonStyles.iconColor.darkRed,
   },
 });

@@ -28,7 +28,6 @@ const DatePicker = ({setFieldValue, values}) => {
         </Text>
         <CalendarIcon
           name="calendar"
-          size={20}
           onPress={showDatePicker}
           style={styles.calendarIcon}
         />
@@ -52,12 +51,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderWidth: 1,
     borderRadius: 8,
-    color: 'black',
     borderColor: 'gray',
   },
   calendarInputText: {
-    fontSize: 16,
+    fontSize: commonStyles.fontSize.normal,
     color: 'black',
   },
-  calendarIcon: {color: commonStyles.iconColor.darkRed},
+  calendarIcon: {
+    color: commonStyles.iconColor.darkRed,
+    fontSize: commonStyles.iconSize.large,
+  },
 });
