@@ -47,9 +47,11 @@ const CustomMapView = ({
   }, [get_data]);
 
   // set initial location to my location
+
   useEffect(() => {
     setCurrentPosition(setUsersLocation);
-  }, [usersLocation]);
+    // removing dependancy here prevented re-render loop!!
+  }, []);
 
   // set boundaries on region change
   useEffect(() => {

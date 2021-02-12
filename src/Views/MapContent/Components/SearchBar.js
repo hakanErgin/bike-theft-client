@@ -6,13 +6,14 @@ import commonStyles from '../../../Utils/commonStyles';
 import commonVariables from '../../../Utils/commonVariables';
 
 export default function SearchBar({mapRef}) {
-  console.log('hi');
   return (
     <View style={styles.searchBoxContainer}>
       <GooglePlacesAutocomplete
         placeholder="Search"
         onPress={(data, details) => {
-          console.log(data, details.geometry.location);
+          {
+            /* console.log(data, details.geometry.location); */
+          }
           mapRef.current != null &&
             mapRef.current.animateToRegion(
               {
