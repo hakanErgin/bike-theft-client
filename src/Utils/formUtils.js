@@ -66,30 +66,30 @@ export async function submitForm(
 
 export function validate(values) {
   const errors = {};
-  if (!values.bike_details.type) {
+  if (values.bike_details.type === 'Not Specified') {
     errors.type = 'Bike type';
   }
-  if (!values.bike_details.brand) {
+  if (values.bike_details.brand === 'Not Specified') {
     errors.brand = 'Bike brand';
   }
-  if (!values.bike_details.color) {
+  if (values.bike_details.color === 'Not Specified') {
     errors.color = 'Bike color';
   }
   return errors;
 }
 
 export const initialValues = {
-  date_details: {date: new Date(), time: ''},
+  date_details: {date: new Date(), time: 'Not Specified'},
   bike_details: {
-    type: '',
-    brand: '',
-    color: '',
-    year: '',
-    frame_size: '',
-    wheel_size: '',
-    photos: [''],
+    type: 'Not Specified',
+    brand: 'Not Specified',
+    color: 'Not Specified',
+    year: 'Not Specified',
+    frame_size: 'Not Specified',
+    wheel_size: 'Not Specified',
+    photos: ['Not Specified'],
   },
-  comments: '',
+  comments: 'Not Specified',
 };
 
 export function showValidationWarning(errors) {

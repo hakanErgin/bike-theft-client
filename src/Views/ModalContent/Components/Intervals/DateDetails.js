@@ -13,11 +13,11 @@ export const DateDetails = ({setFieldValue, values}) => {
   return (
     <View style={styles.slide}>
       <View>
-        <Text style={{}}>{theftFields.date_time.date.Question}</Text>
+        <Text>{theftFields.date_time.date.Question}</Text>
         <DatePicker setFieldValue={setFieldValue} values={values} />
       </View>
       <View>
-        <Text style={{}}>{theftFields.date_time.time.Question}</Text>
+        <Text>{theftFields.date_time.time.Question}</Text>
         <RNPickerSelect
           useNativeAndroidPickerStyle={false}
           onValueChange={(value) => timeOfDayChange(value, setFieldValue)}
@@ -44,9 +44,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignContent: 'space-around',
+    justifyContent: 'space-evenly',
   },
   inputAndroid: {
     ...inputAndroid,

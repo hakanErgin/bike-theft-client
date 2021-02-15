@@ -29,26 +29,27 @@ function ViewDateDetails({theftData}) {
 
   return (
     <View style={styles.detailsContainer}>
-      <FieldRow field={'Was reported on:'} value={dateCreated.toDateString()} />
+      <Text style={{flex: 1}}>Date info</Text>
+      <FieldRow field={'Reported on:'} value={dateCreated.toDateString()} />
       <FieldRow field={'Date stolen:'} value={dateStolen.toDateString()} />
-      <FieldRow
-        field={'Time of the day it was stolen on:'}
-        value={theftData.date_time.time}
-      />
+      <FieldRow field={'Time of the day:'} value={theftData.date_time.time} />
     </View>
   );
 }
 function ViewBikeDetails({theftData}) {
   return (
     <View style={styles.detailsContainer}>
-      <FieldRow field={'Bike type:'} value={theftData.bike.type} />
-      <FieldRow field={'Bike brand:'} value={theftData.bike.brand} />
-      <FieldRow field={'Bike manufacture year:'} value={theftData.bike.year} />
-      <FieldRow field={'Bike frame size:'} value={theftData.bike.frame_size} />
-      <FieldRow field={'Bike wheel size:'} value={theftData.bike.wheel_size} />
+      <Text style={{flex: 1}}>Bike info</Text>
+      <FieldRow field={'Type:'} value={theftData.bike.type} />
+      <FieldRow field={'Brand:'} value={theftData.bike.brand} />
+      <FieldRow field={'Manufacture year:'} value={theftData.bike.year} />
+      <FieldRow field={'Frame size:'} value={theftData.bike.frame_size} />
+      <FieldRow field={'Wheel size:'} value={theftData.bike.wheel_size} />
       {theftData.bike.photos.length > 0 &&
         theftData.bike.photos.map((img) => {
-          return <Image key={img} source={{uri: img}} style={styles.image} />;
+          return (
+            <Image key={img} source={{uri: img}} style={styles.imageSmall} />
+          );
         })}
     </View>
   );
@@ -56,7 +57,8 @@ function ViewBikeDetails({theftData}) {
 function ViewOtherDetails({theftData}) {
   return (
     <View style={styles.detailsContainer}>
-      <FieldRow field={'Other Comments:'} value={theftData.comments} />
+      <Text style={{flex: 1}}>Other</Text>
+      <FieldRow field={'Comments:'} value={theftData.comments} />
     </View>
   );
 }
@@ -136,6 +138,7 @@ export default ViewModal;
 
 const styles = StyleSheet.create({
   modal: {
+    flex: 1,
     backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
     borderRadius: commonStyles.borderRadius.large,
@@ -153,14 +156,16 @@ const styles = StyleSheet.create({
     margin: commonStyles.gap[0],
   },
   detailsContainer: {
+    flex: 1,
     backgroundColor: '#eff1f8',
     paddingVertical: 25,
-    borderRadius: 15,
+    borderRadius: commonStyles.borderRadius.normal,
     alignItems: 'center',
     marginVertical: 5,
+    paddingHorizontal: 10,
   },
-  image: {
-    marginRight: commonStyles.gap[2],
+  imageSmall: {
+    marginHorizontal: commonStyles.gap[2],
     width: 75,
     height: 75,
     borderRadius: commonStyles.borderRadius.normal,
