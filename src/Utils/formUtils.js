@@ -89,7 +89,7 @@ export const initialValues = {
     wheel_size: 'Not Specified',
     photos: ['Not Specified'],
   },
-  comments: 'Not Specified',
+  comments: '',
 };
 
 export function showValidationWarning(errors) {

@@ -23,7 +23,7 @@ export const DateDetails = ({setFieldValue, values}) => {
           onValueChange={(value) => timeOfDayChange(value, setFieldValue)}
           style={styles}
           items={theftFields.date_time.time.Options.map((option) => {
-            return {label: option, value: option.toLowerCase()};
+            return {label: option, value: option};
           })}
         />
       </View>

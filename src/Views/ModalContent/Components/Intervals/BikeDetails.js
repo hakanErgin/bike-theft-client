@@ -25,7 +25,7 @@ export function BikeInputFields({setFieldValue}) {
             option = typeof option === 'string' ? option : option.toString();
             return {
               label: option,
-              value: option.toLowerCase(),
+              value: option,
             };
           })}
         />
