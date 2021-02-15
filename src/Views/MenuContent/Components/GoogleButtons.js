@@ -88,3 +88,8 @@ export const LogoutButton = ({setIsAddingNewTheft}) => {
 export async function isSignedInToGoogle() {
   return await GoogleSignin.isSignedIn();
 }
+
+export async function getCurrentUser() {
+  const currentUser = await GoogleSignin.getCurrentUser();
+  return currentUser;
+}

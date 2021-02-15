@@ -51,7 +51,9 @@ export const GET_THEFT = gql`
   query($id: GraphbackObjectID!) {
     getTheft(id: $id) {
       _id
-      userId
+      user {
+        google_id
+      }
       region {
         latitude
         longitude
@@ -65,6 +67,7 @@ export const GET_THEFT = gql`
         photos
       }
       comments
+      created_at
       date_time {
         date
         time
