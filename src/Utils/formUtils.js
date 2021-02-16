@@ -62,16 +62,40 @@ export async function submitForm(
 
 export function validate(values) {
   const errors = {};
-  if (values.bike_details.type === 'Not Specified') {
+  if (
+    values.bike_details.type === 'Not Specified' ||
+    !values.bike_details.type
+  ) {
     errors.type = 'Bike type';
   }
-  if (values.bike_details.brand === 'Not Specified') {
+  if (
+    values.bike_details.brand === 'Not Specified' ||
+    !values.bike_details.brand
+  ) {
     errors.brand = 'Bike brand';
   }
-  if (values.bike_details.color === 'Not Specified') {
+  if (
+    values.bike_details.color === 'Not Specified' ||
+    !values.bike_details.color
+  ) {
     errors.color = 'Bike color';
   }
+  showValidationWarning(errors);
   return errors;
+}
+
+export function showValidationWarning(errors) {
+  console.log(errors);
+  let errorDescription = [];
+  for (const [key, value] of Object.entries(errors)) {
+    errorDescription.push(` ${value}`);
+  }
+  errorDescription.length > 0 &&
+    showMessage({
+      message: 'Required:',
+      description: errorDescription.toString(),
+      type: 'warning',
+    });
 }
 
 export const initialValues = {
@@ -87,16 +111,3 @@ export const initialValues = {
   },
   comments: '',
 };
-
-export function showValidationWarning(errors) {
-  let errorDescription = [];
-  for (const [key, value] of Object.entries(errors)) {
-    errorDescription.push(` ${value}`);
-  }
-  errorDescription.length > 0 &&
-    showMessage({
-      message: 'Required:',
-      description: errorDescription.toString(),
-      type: 'warning',
-    });
-}

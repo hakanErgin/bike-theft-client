@@ -98,7 +98,7 @@ const FormModal = ({
               setIsAddingNewTheft,
             )
           }>
-          {({handleChange, values, handleSubmit, setFieldValue, errors}) => (
+          {({handleChange, values, handleSubmit, setFieldValue}) => (
             <View style={styles.form}>
               <Text style={styles.header}>Report a theft</Text>
               <View style={styles.closeButtonContainer}>
@@ -121,13 +121,7 @@ const FormModal = ({
               </FormCarousel>
               <View>
                 <Pressable>
-                  <Button
-                    title={'yes'}
-                    onPress={(vals) => {
-                      handleSubmit(vals);
-                      showValidationWarning(errors);
-                    }}
-                  />
+                  <Button title={'yes'} onPress={handleSubmit} />
                 </Pressable>
               </View>
             </View>
