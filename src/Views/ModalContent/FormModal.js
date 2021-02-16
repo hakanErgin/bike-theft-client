@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button, Text, View, StyleSheet, Pressable} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
@@ -6,6 +6,7 @@ import {
   GET_THEFTS,
   SINGLE_FILE_UPLOAD,
   MULTI_FILE_UPLOAD,
+  GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {Formik} from 'formik';
 import Modal from 'react-native-modal';
@@ -14,6 +15,7 @@ import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheft
 import CloseButton from 'react-native-vector-icons/FontAwesome';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
 import {BikeDetails} from './Components/Intervals/BikeDetails';
 import {OtherDetails} from './Components/Intervals/OtherDetails';
@@ -37,13 +39,20 @@ const FormModal = ({
   // can use this to print location fetched from coords
   // const {longitude, latitude} = selectedRegion;
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
+  // const [token, setToken] = useState();
 
   //#region mutation/query
   const [submitCreateMutation, {error: create_error}] = useMutation(
     CREATE_THEFT,
     {
-      refetchQueries: [{query: GET_THEFTS}],
-      onCompleted: (craeteTheftData) => console.log(craeteTheftData),
+      refetchQueries: [
+        {query: GET_THEFTS},
+        // {
+        //   query: GET_USERS_THEFTS,
+        //   variables: {id_token: token && token},
+        // },
+      ],
+      onCompleted: () => finishAddingTheft(),
     },
   );
   const [singleUpload] = useMutation(SINGLE_FILE_UPLOAD, {
@@ -52,9 +61,19 @@ const FormModal = ({
   const [multiUpload] = useMutation(MULTI_FILE_UPLOAD, {
     client: mediaClient,
   });
+
+  // useEffect(() => {
+  //   (async function () {
+  //     GoogleSignin.getTokens().then((result) => {
+  //       console.log(result);
+  //       setToken(result.idToken);
+  //     });
+  //   })();
+  // }, []);
+
   // #endregion
 
-  function cancelAdding() {
+  function finishAddingTheft() {
     setIsFormModalVisible(false);
     setIsAddingNewTheft(false);
   }
@@ -85,7 +104,7 @@ const FormModal = ({
               <View style={styles.closeButtonContainer}>
                 <CloseButton
                   name="close"
-                  onPress={cancelAdding}
+                  onPress={finishAddingTheft}
                   style={styles.closeButton}
                 />
               </View>

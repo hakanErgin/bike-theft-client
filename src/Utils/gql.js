@@ -77,7 +77,7 @@ export const GET_THEFT = gql`
   }
 `;
 
-export const DELETE_THEFTT = gql`
+export const DELETE_THEFT = gql`
   mutation(
     $id_token: String!
     $theftId: GraphbackObjectID!

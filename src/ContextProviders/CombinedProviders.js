@@ -10,7 +10,15 @@ import {IsViewModalVisibleProvider} from './IsViewModalVisibleContext';
 
 const client = new ApolloClient({
   uri: GRAPHQL_REMOTE_URI,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache(/* {
+    typePolicies: {
+      Query: {
+        merge(existing, incoming) {
+          return incoming;
+        },
+      },
+    },
+  } */),
 });
 export const mediaClient = new ApolloClient({
   link: createUploadLink({

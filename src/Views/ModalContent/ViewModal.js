@@ -1,16 +1,26 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button, Text, View, StyleSheet, ScrollView, Image} from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
-import {GET_THEFTS, DELETE_THEFTT, GET_THEFT} from '../../Utils/gql';
+import {
+  GET_THEFTS,
+  DELETE_THEFT,
+  GET_THEFT,
+  GET_USERS_THEFTS,
+} from '../../Utils/gql';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
+import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
+
 import {
   useIsViewModalVisible,
   useToggleIsViewModalVisible,
 } from '../../ContextProviders/IsViewModalVisibleContext';
 import Modal from 'react-native-modal';
 import commonStyles from '../../Utils/commonStyles';
-import {getCurrentUser} from '../MenuContent/Components/GoogleButtons';
+import {
+  getCurrentUser,
+  getToken,
+} from '../MenuContent/Components/GoogleButtons';
 import CloseButton from 'react-native-vector-icons/FontAwesome';
 
 function FieldRow({field, value}) {
@@ -65,9 +75,20 @@ function ViewOtherDetails({theftData}) {
 
 const ViewModal = () => {
   const [viewingUserId, setViewingUserId] = useState();
+  // const [token, setToken] = useState();
   const isViewModalVisible = useIsViewModalVisible();
   const setIsViewModalVisible = useToggleIsViewModalVisible();
   const selectedTheftId = useSelectedTheftId();
+  const isUserLoggedIn = useIsUserLoggedIn();
+
+  // useEffect(() => {
+  //   (async function () {
+  //     GoogleSignin.getTokens().then((result) => {
+  //       console.log(result);
+  //       setToken(result.idToken);
+  //     });
+  //   })();
+  // }, []);
 
   //#region
   const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
@@ -76,34 +97,41 @@ const ViewModal = () => {
   });
 
   const [submitDeleteMutation, {error: delete_error}] = useMutation(
-    DELETE_THEFTT,
+    DELETE_THEFT,
     {
-      refetchQueries: [{query: GET_THEFTS}],
-      onCompleted: (res) => console.log(res),
+      refetchQueries: [
+        {query: GET_THEFTS},
+        // {
+        //   query: GET_USERS_THEFTS,
+        //   variables: {id_token: token && token},
+        // },
+      ],
+      onCompleted: () => setIsViewModalVisible(false),
     },
   );
 
   async function deleteTheft() {
     const currentToken = await GoogleSignin.getTokens();
-    console.log({currentToken}, {selectedTheftId});
     submitDeleteMutation({
       variables: {
         id_token: currentToken.idToken,
         theftId: selectedTheftId,
-        theftUserId: get_data && get_data.getTheft.userId,
+        theftUserId: get_data.getTheft.userId,
       },
     });
-    setIsViewModalVisible(false);
   }
 
   if (delete_error || get_error) {
     console.log(delete_error || get_error);
   }
+  useEffect(() => {
+    isUserLoggedIn &&
+      getCurrentUser().then((res) => setViewingUserId(res.user.id));
+  }, [isUserLoggedIn]);
   //#endregion
 
   if (get_data) {
     const theftData = get_data.getTheft;
-    getCurrentUser().then((res) => setViewingUserId(res.user.id));
 
     return (
       <Modal isVisible={isViewModalVisible}>
@@ -138,7 +166,6 @@ export default ViewModal;
 
 const styles = StyleSheet.create({
   modal: {
-    flex: 1,
     backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
     borderRadius: commonStyles.borderRadius.large,
@@ -158,7 +185,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     backgroundColor: '#eff1f8',
-    paddingVertical: 25,
+    paddingVertical: commonStyles.gap[2],
     borderRadius: commonStyles.borderRadius.normal,
     alignItems: 'center',
     marginVertical: 5,

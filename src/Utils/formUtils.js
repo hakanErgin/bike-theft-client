@@ -93,9 +93,10 @@ export function showValidationWarning(errors) {
   for (const [key, value] of Object.entries(errors)) {
     errorDescription.push(` ${value}`);
   }
-  showMessage({
-    message: 'Required:',
-    description: errorDescription.toString(),
-    type: 'warning',
-  });
+  errorDescription.length > 0 &&
+    showMessage({
+      message: 'Required:',
+      description: errorDescription.toString(),
+      type: 'warning',
+    });
 }

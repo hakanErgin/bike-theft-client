@@ -28,18 +28,17 @@ function IconGroup({theftId}) {
 }
 
 export function UsersReportedThefts({currentUser}) {
-  const [currentUsersThefts, setcurrentUsersThefts] = useState();
-  /* const {error: get_error, data: get_data} = */ useQuery(GET_USERS_THEFTS, {
+  const {error: get_error, data: get_data} = useQuery(GET_USERS_THEFTS, {
     variables: {id_token: currentUser.idToken},
-    onCompleted: (data) => setcurrentUsersThefts(data.getUsersReportedThefts),
+    // onCompleted: (data) => setcurrentUsersThefts(data.getUsersReportedThefts),
   });
   return (
     <View style={styles.container}>
       <Text style={styles.centeredText}>Your reports:</Text>
       <ScrollView>
-        {currentUsersThefts &&
-          currentUsersThefts.length > 0 &&
-          currentUsersThefts.map((theft, index) => {
+        {get_data &&
+          get_data.getUsersReportedThefts.length > 0 &&
+          get_data.getUsersReportedThefts.map((theft, index) => {
             // date gets converted to string when stored in state in the parent
             const dateCreated = new Date(theft.created_at);
             return (
