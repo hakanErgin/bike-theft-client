@@ -85,7 +85,6 @@ export function validate(values) {
 }
 
 export function showValidationWarning(errors) {
-  console.log(errors);
   let errorDescription = [];
   for (const [key, value] of Object.entries(errors)) {
     errorDescription.push(` ${value}`);

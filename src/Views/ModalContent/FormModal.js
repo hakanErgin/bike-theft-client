@@ -77,13 +77,13 @@ const FormModal = ({
     setIsFormModalVisible(false);
     setIsAddingNewTheft(false);
   }
-
   create_error && console.log(create_error);
 
   return (
     <Modal isVisible={isFormModalVisible}>
       <View style={styles.modal}>
         <Formik
+          validateOnChange={false}
           validate={validate}
           initialValues={initialValues}
           onSubmit={(values) =>
