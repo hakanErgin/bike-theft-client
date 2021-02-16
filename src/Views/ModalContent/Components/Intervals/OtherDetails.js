@@ -1,16 +1,17 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 import commonStyles from '../../../../Utils/commonStyles';
 
 export const OtherDetails = ({handleChange, values}) => {
   return (
     <View style={styles.slide}>
+      <Text>Anything else you like to add</Text>
       <TextInput
         style={styles.textArea}
         onChangeText={handleChange('comments')}
         value={values.comments}
         numberOfLines={4}
-        placeholder={'Add other comments here'}
+        placeholder={'Comments'}
       />
     </View>
   );

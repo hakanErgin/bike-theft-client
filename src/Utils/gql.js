@@ -54,6 +54,7 @@ export const GET_THEFT = gql`
       user {
         google_id
       }
+      userId
       region {
         latitude
         longitude

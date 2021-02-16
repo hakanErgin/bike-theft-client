@@ -93,3 +93,7 @@ export async function getCurrentUser() {
   const currentUser = await GoogleSignin.getCurrentUser();
   return currentUser;
 }
+
+export async function getToken() {
+  return await GoogleSignin.getTokens();
+}

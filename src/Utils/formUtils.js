@@ -8,8 +8,6 @@ export async function submitForm(
   multiUpload,
   submitCreateMutation,
   selectedRegion,
-  setIsFormModalVisible,
-  setIsAddingNewTheft,
 ) {
   const currentToken = await GoogleSignin.getTokens();
   const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
@@ -60,8 +58,6 @@ export async function submitForm(
       },
     });
   }
-  setIsFormModalVisible(false);
-  setIsAddingNewTheft(false);
 }
 
 export function validate(values) {
