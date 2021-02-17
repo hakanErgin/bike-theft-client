@@ -35,9 +35,9 @@ export default DateDetails;
 
 const styles = StyleSheet.create({
   slide: {
-    paddingHorizontal: commonStyles.gap[4],
-    paddingBottom: commonStyles.gap[2],
-    paddingTop: commonStyles.gap[5],
+    paddingHorizontal: commonStyles.gap[5],
+    paddingBottom: commonStyles.gap[3],
+    paddingTop: commonStyles.gap[6],
     flexBasis: '100%',
     flex: 1,
     maxWidth: '100%',

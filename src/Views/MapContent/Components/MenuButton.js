@@ -18,8 +18,8 @@ export default function MenuButton({navigation}) {
 const styles = StyleSheet.create({
   menuBtnContainer: {
     position: 'absolute',
-    top: commonStyles.gap[2],
-    left: commonStyles.gap[2],
+    top: commonStyles.gap[3],
+    left: commonStyles.gap[3],
     backgroundColor: commonStyles.containerBackgroundColor.light,
     borderRadius: commonStyles.borderRadius.small,
   },

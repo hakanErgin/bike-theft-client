@@ -5,7 +5,7 @@ import {
   GET_THEFTS,
   DELETE_THEFT,
   GET_THEFT,
-  GET_USERS_THEFTS,
+  // GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
@@ -19,7 +19,7 @@ import Modal from 'react-native-modal';
 import commonStyles from '../../Utils/commonStyles';
 import {
   getCurrentUser,
-  getToken,
+  // getToken,
 } from '../MenuContent/Components/GoogleButtons';
 import CloseButton from 'react-native-vector-icons/FontAwesome';
 
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
     borderRadius: commonStyles.borderRadius.large,
-    padding: commonStyles.gap[3],
+    padding: commonStyles.gap[4],
   },
   header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
   closeButtonContainer: {
@@ -180,19 +180,19 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     fontSize: commonStyles.iconSize.large,
-    margin: commonStyles.gap[0],
+    margin: commonStyles.gap[1],
   },
   detailsContainer: {
     flex: 1,
     backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
-    paddingVertical: commonStyles.gap[2],
+    paddingVertical: commonStyles.gap[3],
     borderRadius: commonStyles.borderRadius.normal,
     alignItems: 'center',
     marginVertical: 5,
     paddingHorizontal: 10,
   },
   imageSmall: {
-    marginHorizontal: commonStyles.gap[2],
+    marginHorizontal: commonStyles.gap[3],
     width: 75,
     height: 75,
     borderRadius: commonStyles.borderRadius.normal,

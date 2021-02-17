@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import ViewIcon from 'react-native-vector-icons/Entypo';
 import commonStyles from '../../../Utils/commonStyles';
@@ -27,7 +27,7 @@ function ViewButton({theftId}) {
 }
 
 export function UsersReportedThefts({currentUser}) {
-  const {error: get_error, data: get_data} = useQuery(GET_USERS_THEFTS, {
+  const {data: get_data} = useQuery(GET_USERS_THEFTS, {
     variables: {id_token: currentUser.idToken},
   });
   if (get_data) {
@@ -78,13 +78,13 @@ export function UsersReportedThefts({currentUser}) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
-    paddingVertical: commonStyles.gap[5],
+    paddingVertical: commonStyles.gap[6],
     borderRadius: commonStyles.borderRadius.large,
     minHeight: '50%',
     justifyContent: 'space-evenly',
   },
   header: {
-    marginBottom: commonStyles.gap[2],
+    marginBottom: commonStyles.gap[3],
     fontSize: 18,
     color: commonStyles.iconColor.darkRed,
   },

@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
     borderRadius: commonStyles.borderRadius.large,
-    padding: commonStyles.gap[0],
+    padding: commonStyles.gap[1],
   },
   form: {flex: 1, justifyContent: 'space-around'},
   header: {fontSize: commonStyles.fontSize.large, textAlign: 'center'},
@@ -153,6 +153,6 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     fontSize: commonStyles.iconSize.large,
-    margin: commonStyles.gap[0],
+    margin: commonStyles.gap[1],
   },
 });

@@ -32,8 +32,8 @@ const MyLocationButton = React.forwardRef(
 const styles = StyleSheet.create({
   gpsIconContainer: {
     position: 'absolute',
-    top: commonStyles.gap[2],
-    right: commonStyles.gap[2],
+    top: commonStyles.gap[3],
+    right: commonStyles.gap[3],
     backgroundColor: 'white',
     borderRadius: 5,
   },

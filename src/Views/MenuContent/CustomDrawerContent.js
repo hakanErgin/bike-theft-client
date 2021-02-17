@@ -60,7 +60,7 @@ export default DrawerContent;
 
 const styles = StyleSheet.create({
   drawerContainer: {
-    padding: commonStyles.gap[3],
+    padding: commonStyles.gap[4],
     flex: 1,
   },
 });

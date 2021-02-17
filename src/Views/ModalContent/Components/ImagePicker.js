@@ -76,8 +76,8 @@ export default ImagePickerComponent;
 const styles = StyleSheet.create({
   addPhotoIcon: {
     fontSize: commonStyles.iconSize.xxl,
-    marginLeft: commonStyles.gap[0],
-    marginBottom: commonStyles.gap[0],
+    marginLeft: commonStyles.gap[1],
+    marginBottom: commonStyles.gap[1],
     color: commonStyles.iconColor.darkRed,
   },
   addPhotoIconContainer: {
@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
     height: 75,
   },
   container: {
-    marginBottom: commonStyles.gap[5],
+    marginBottom: commonStyles.gap[6],
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'center',
   },
   image: {
-    marginRight: commonStyles.gap[2],
+    marginRight: commonStyles.gap[3],
     width: 75,
     height: 75,
     borderRadius: commonStyles.borderRadius.normal,

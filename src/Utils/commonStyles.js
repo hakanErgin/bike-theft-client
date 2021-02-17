@@ -11,18 +11,18 @@ const commonStyles = {
     lightBlue: '#eff1f8',
   },
   // can use for margin/padding
-  gap: [4, 8, 12, 16, 22, 28, 36],
+  gap: [2, 4, 8, 12, 16, 22, 28, 36],
 };
 
 export default commonStyles;
 
 export const inputAndroid = {
   fontSize: commonStyles.fontSize.normal,
-  paddingHorizontal: commonStyles.gap[1],
-  paddingVertical: commonStyles.gap[1],
+  paddingHorizontal: commonStyles.gap[2],
+  paddingVertical: commonStyles.gap[2],
   borderWidth: 1,
   borderRadius: commonStyles.borderRadius.normal,
   color: 'black',
   borderColor: 'gray',
-  paddingRight: commonStyles.gap[5], // to ensure the text is never behind the icon
+  paddingRight: commonStyles.gap[6], // to ensure the text is never behind the icon
 };
