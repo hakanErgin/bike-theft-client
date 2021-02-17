@@ -36,9 +36,9 @@ export default function SearchBar({mapRef}) {
           key: GOOGLE_API_KEY,
           language: 'en',
         }}
-        debounce={1000}
+        debounce={commonVariables.SEARCH_DEBOUNCE}
         enablePoweredByContainer={false}
-        minLength={3}
+        minLength={commonVariables.SEARCH_MIN_CHAR_TRIGGER}
         renderRightButton={() =>
           searchBarRef?.current?.getAddressText() ? (
             <ClearIcon

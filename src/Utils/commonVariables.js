@@ -4,6 +4,8 @@ const commonVariables = {
   ANIMATION_SPEED: 1000,
   SEARCH_ZOOM_LEVEL: 0.01,
   SEARCH_ANIMATION_SPEED: 1000,
+  SEARCH_DEBOUNCE: 500,
+  SEARCH_MIN_CHAR_TRIGGER: 3,
 };
 
 export default commonVariables;
