@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
-    backgroundColor: '#eff1f8',
+    backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
     paddingVertical: commonStyles.gap[2],
     borderRadius: commonStyles.borderRadius.normal,
     alignItems: 'center',

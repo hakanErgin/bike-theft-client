@@ -24,36 +24,42 @@ export default function LoggedInContent({navigation}) {
     navigation.toggleDrawer();
     setIsAddingNewTheft((val) => !val);
   }
-
-  return (
-    <View style={styles.loggedInContent}>
-      {currentUser && (
-        <Text style={styles.username}>{currentUser.user.name}</Text>
-      )}
-      {currentUser && <UsersReportedThefts currentUser={currentUser} />}
-      <View style={styles.btnContainer}>
-        <Button title={'REPORT THEFT'} onPress={isAddingNewTheftController} />
-        <LogoutButton
-          setIsAddingNewTheft={setIsAddingNewTheft}
-          color={commonStyles.iconColor.darkRed}
-        />
+  if (currentUser) {
+    return (
+      <View style={styles.loggedInContentContainer}>
+        <View style={styles.nameAndLogoutBtnContainer}>
+          <Text style={styles.username}>{currentUser.user.name}</Text>
+          <LogoutButton
+            setIsAddingNewTheft={setIsAddingNewTheft}
+            color={commonStyles.iconColor.darkRed}
+            size={commonStyles.iconSize.large}
+          />
+        </View>
+        <UsersReportedThefts currentUser={currentUser} />
+        <View style={styles.btnContainer}>
+          <Button title={'REPORT THEFT'} onPress={isAddingNewTheftController} />
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return null;
+  }
 }
 
 const styles = StyleSheet.create({
-  loggedInContent: {
+  loggedInContentContainer: {
     flex: 1,
     justifyContent: 'space-between',
   },
   username: {
-    flex: 0.1,
     fontSize: commonStyles.fontSize.large,
   },
   btnContainer: {
-    flex: 0.25,
     marginVertical: 5,
     paddingHorizontal: 20,
+  },
+  nameAndLogoutBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {
   GoogleSignin,
   statusCodes,
@@ -9,6 +9,7 @@ import {WEB_CLIENT_ID} from '@env';
 import {useMutation} from '@apollo/client';
 import {CREATE_USER_OR_SIGN_IN} from '../../../Utils/gql';
 import {useToggleIsUserLoggedIn} from '../../../ContextProviders/IsUserLoggedInContext';
+import SignOutIcon from 'react-native-vector-icons/Entypo';
 
 export const SignInButton = () => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
@@ -57,7 +58,7 @@ export const SignInButton = () => {
   );
 };
 
-export const LogoutButton = ({setIsAddingNewTheft}) => {
+export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
   const signOut = async () => {
     try {
@@ -68,7 +69,11 @@ export const LogoutButton = ({setIsAddingNewTheft}) => {
       console.log(error);
     }
   };
-  return <Button title={'logout'} onPress={signOut} />;
+  return (
+    <TouchableOpacity onPress={signOut}>
+      <SignOutIcon name={'log-out'} size={size} color={color} />
+    </TouchableOpacity>
+  );
 };
 
 // status button for dev
