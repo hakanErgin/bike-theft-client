@@ -4,7 +4,7 @@ import {
   SignInButton,
   // CheckUserButton,
   isSignedInToGoogle,
-} from './Components/GoogleButtons';
+} from '../../Utils/GoogleSignin';
 import {
   useIsUserLoggedIn,
   useToggleIsUserLoggedIn,

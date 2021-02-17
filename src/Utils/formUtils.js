@@ -47,7 +47,7 @@ export async function submitForm(
             wheel_size: values.bike_details.wheel_size,
             photos: photos,
           },
-          comments: values.comments,
+          comments: values.comments === '' ? 'Not Specified' : values.comments,
           date_time: {
             date: values.date_details.date,
             time: values.date_details.time,

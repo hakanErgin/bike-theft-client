@@ -11,7 +11,7 @@ export const OtherDetails = ({handleChange, values}) => {
         onChangeText={handleChange('comments')}
         value={values.comments}
         numberOfLines={4}
-        placeholder={'Comments'}
+        placeholder="Comments"
       />
     </View>
   );

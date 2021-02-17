@@ -7,8 +7,8 @@ import {
 } from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '@env';
 import {useMutation} from '@apollo/client';
-import {CREATE_USER_OR_SIGN_IN} from '../../../Utils/gql';
-import {useToggleIsUserLoggedIn} from '../../../ContextProviders/IsUserLoggedInContext';
+import {CREATE_USER_OR_SIGN_IN} from './gql';
+import {useToggleIsUserLoggedIn} from '../ContextProviders/IsUserLoggedInContext';
 import SignOutIcon from 'react-native-vector-icons/Entypo';
 
 export const SignInButton = () => {

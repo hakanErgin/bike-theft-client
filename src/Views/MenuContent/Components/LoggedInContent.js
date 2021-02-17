@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Button, Text, StyleSheet} from 'react-native';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {useToggleIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
-import {LogoutButton} from './GoogleButtons';
+import {LogoutButton} from '../../../Utils/GoogleSignin';
 import {UsersReportedThefts} from './UsersReportsList';
 import commonStyles from '../../../Utils/commonStyles';
 

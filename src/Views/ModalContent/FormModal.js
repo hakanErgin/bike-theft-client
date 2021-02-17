@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState /* , useEffect */} from 'react';
 import {Button, Text, View, StyleSheet, Pressable} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
@@ -6,28 +6,23 @@ import {
   GET_THEFTS,
   SINGLE_FILE_UPLOAD,
   MULTI_FILE_UPLOAD,
-  GET_USERS_THEFTS,
+  // GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {Formik} from 'formik';
 import Modal from 'react-native-modal';
 import FormCarousel from './FormCarousel';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
-import CloseButton from 'react-native-vector-icons/FontAwesome';
+import CloseButton from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
-import {GoogleSignin} from '@react-native-community/google-signin';
+// import {GoogleSignin} from '@react-native-community/google-signin';
 
 import {BikeDetails} from './Components/Intervals/BikeDetails';
 import {OtherDetails} from './Components/Intervals/OtherDetails';
 import {DateDetails} from './Components/Intervals/DateDetails';
 import ImagePickerComponent from './Components/ImagePicker';
 import {BikeInputFields} from './Components/Intervals/BikeDetails';
-import {
-  submitForm,
-  initialValues,
-  validate,
-  showValidationWarning,
-} from '../../Utils/formUtils';
+import {submitForm, initialValues, validate} from '../../Utils/formUtils';
 import FlashMessage from 'react-native-flash-message';
 
 const FormModal = ({
@@ -141,10 +136,10 @@ const styles = StyleSheet.create({
     backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
     borderRadius: commonStyles.borderRadius.large,
-    padding: commonStyles.gap[1],
+    padding: commonStyles.gap[3],
   },
   form: {flex: 1, justifyContent: 'space-around'},
-  header: {fontSize: commonStyles.fontSize.large, textAlign: 'center'},
+  header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
   closeButtonContainer: {
     flex: 1,
     position: 'absolute',
@@ -153,6 +148,5 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     fontSize: commonStyles.iconSize.large,
-    margin: commonStyles.gap[1],
   },
 });
