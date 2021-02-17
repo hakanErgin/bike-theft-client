@@ -30,14 +30,12 @@ function IconGroup({theftId}) {
 export function UsersReportedThefts({currentUser}) {
   const {error: get_error, data: get_data} = useQuery(GET_USERS_THEFTS, {
     variables: {id_token: currentUser.idToken},
-    // onCompleted: (data) => setcurrentUsersThefts(data.getUsersReportedThefts),
   });
   return (
     <View style={styles.container}>
       <Text style={styles.centeredText}>Your reports:</Text>
       <ScrollView>
-        {get_data &&
-          get_data.getUsersReportedThefts.length > 0 &&
+        {get_data && get_data.getUsersReportedThefts.length > 0 ? (
           get_data.getUsersReportedThefts.map((theft, index) => {
             // date gets converted to string when stored in state in the parent
             const dateCreated = new Date(theft.created_at);
@@ -47,7 +45,10 @@ export function UsersReportedThefts({currentUser}) {
                 <IconGroup theftId={theft._id} />
               </View>
             );
-          })}
+          })
+        ) : (
+          <Text style={styles.centeredText}>Nothing seems to be here.</Text>
+        )}
       </ScrollView>
       <Text style={styles.centeredText}>Thanks for contributing!</Text>
     </View>
@@ -56,10 +57,10 @@ export function UsersReportedThefts({currentUser}) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#eff1f8',
+    backgroundColor: commonStyles.containerBackgroundColor.gray,
     flex: 0.5,
-    paddingVertical: 25,
-    borderRadius: 15,
+    paddingVertical: commonStyles.gap[4],
+    borderRadius: commonStyles.borderRadius.large,
     alignItems: 'center',
   },
   reportRows: {

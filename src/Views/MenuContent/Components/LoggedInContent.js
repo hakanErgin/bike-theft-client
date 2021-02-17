@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   username: {
     flex: 0.1,
+    fontSize: commonStyles.fontSize.large,
   },
   btnContainer: {
     flex: 0.25,
