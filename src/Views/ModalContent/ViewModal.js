@@ -5,7 +5,7 @@ import {
   GET_THEFTS,
   DELETE_THEFT,
   GET_THEFT,
-  // GET_USERS_THEFTS,
+  GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
 import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
@@ -78,25 +78,23 @@ function OtherDetailsView({theftData}) {
 
 const ViewModal = () => {
   const [viewingUserId, setViewingUserId] = useState();
-  // const [token, setToken] = useState();
+  const [token, setToken] = useState();
   const isViewModalVisible = useIsViewModalVisible();
   const setIsViewModalVisible = useToggleIsViewModalVisible();
   const selectedTheftId = useSelectedTheftId();
   const isUserLoggedIn = useIsUserLoggedIn();
 
-  // useEffect(() => {
-  //   (async function () {
-  //     GoogleSignin.getTokens().then((result) => {
-  //       console.log(result);
-  //       setToken(result.idToken);
-  //     });
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async function () {
+      getToken().then((result) => {
+        setToken(result.idToken);
+      });
+    })();
+  }, []);
 
   //#region
   const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
     variables: {id: selectedTheftId},
-    onCompleted: (res) => console.log(res),
   });
 
   const [submitDeleteMutation, {error: delete_error}] = useMutation(
@@ -104,10 +102,10 @@ const ViewModal = () => {
     {
       refetchQueries: [
         {query: GET_THEFTS},
-        // {
-        //   query: GET_USERS_THEFTS,
-        //   variables: {id_token: token && token},
-        // },
+        {
+          query: GET_USERS_THEFTS,
+          variables: {id_token: token && token},
+        },
       ],
       onCompleted: () => setIsViewModalVisible(false),
     },

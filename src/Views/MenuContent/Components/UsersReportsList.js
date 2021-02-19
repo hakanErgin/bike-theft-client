@@ -29,6 +29,7 @@ function ViewButton({theftId}) {
 export function UsersReportedThefts({currentUser}) {
   const {data: get_data} = useQuery(GET_USERS_THEFTS, {
     variables: {id_token: currentUser.idToken},
+    onError: (err) => console.log(err),
   });
   if (get_data) {
     const usersReportedThefts = get_data.getUsersReportedThefts;

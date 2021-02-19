@@ -14,19 +14,14 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
       maxHeight: 1280,
     };
     launchImageLibrary(options, (response) => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
-        // eslint-disable-next-line no-alert
-        alert('User cancelled camera picker');
+        console.log('User cancelled camera picker');
         return;
       } else if (response.errorCode === 'permission') {
-        // eslint-disable-next-line no-alert
-        alert('Permission not satisfied');
+        console.log('Permission not satisfied');
         return;
       } else if (response.errorCode === 'others') {
-        // eslint-disable-next-line no-alert
-        alert(response.errorMessage);
+        console.log(response.errorMessage);
         return;
       }
       const file = new ReactNativeFile({
@@ -39,7 +34,6 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
   };
 
   const removeFile = (imageToDelete) => {
-    console.log(pickedImages);
     setPickedImages((images) => {
       return images.filter((image) => image.uri !== imageToDelete.uri);
     });

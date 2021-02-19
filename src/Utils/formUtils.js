@@ -12,7 +12,6 @@ export async function submitForm(
   const currentToken = await getToken();
   const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
 
-  console.log({pickedImages});
   if (pickedImages.length > 1) {
     multiUpload({
       variables: {files: pickedImages},
@@ -29,7 +28,6 @@ export async function submitForm(
     let photos = [];
     if (params) {
       const photoData = Object.keys(params.data)[0];
-      console.log(photoData);
       Array.isArray(params.data[photoData])
         ? params.data[photoData].map((photo) => photos.push(photo.url))
         : (photos = params.data[photoData].url);
