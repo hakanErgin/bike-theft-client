@@ -28,7 +28,7 @@ function FieldRow({field, value}) {
   );
 }
 
-function ViewDateDetails({theftData}) {
+function DateDetailsView({theftData}) {
   const dateCreated = new Date(theftData.created_at);
   const dateStolen = new Date(theftData.date_time.date);
 
@@ -41,7 +41,8 @@ function ViewDateDetails({theftData}) {
     </View>
   );
 }
-function ViewBikeDetails({theftData}) {
+
+function BikeDetailsView({theftData}) {
   return (
     <View style={styles.detailsContainer}>
       <Text style={styles.fieldHeader}>Bike info</Text>
@@ -66,7 +67,7 @@ function ViewBikeDetails({theftData}) {
     </View>
   );
 }
-function ViewOtherDetails({theftData}) {
+function OtherDetailsView({theftData}) {
   return (
     <View style={styles.detailsContainer}>
       <Text style={styles.fieldHeader}>Other</Text>
@@ -140,9 +141,9 @@ const ViewModal = () => {
         <View style={styles.modal}>
           <ScrollView>
             <Text style={styles.header}>Reported bike theft</Text>
-            <ViewDateDetails theftData={theftData} />
-            <ViewBikeDetails theftData={theftData} />
-            <ViewOtherDetails theftData={theftData} />
+            <DateDetailsView theftData={theftData} />
+            <BikeDetailsView theftData={theftData} />
+            <OtherDetailsView theftData={theftData} />
 
             {viewingUserId === theftData.user.google_id && (
               <Button title={'delete'} onPress={deleteTheft} />
