@@ -5,7 +5,7 @@ import {
   GET_THEFTS,
   DELETE_THEFT,
   GET_THEFT,
-  // GET_USERS_THEFTS,
+  GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
 import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
@@ -28,7 +28,7 @@ function FieldRow({field, value}) {
   );
 }
 
-function ViewDateDetails({theftData}) {
+function DateDetailsView({theftData}) {
   const dateCreated = new Date(theftData.created_at);
   const dateStolen = new Date(theftData.date_time.date);
 
@@ -41,7 +41,8 @@ function ViewDateDetails({theftData}) {
     </View>
   );
 }
-function ViewBikeDetails({theftData}) {
+
+function BikeDetailsView({theftData}) {
   return (
     <View style={styles.detailsContainer}>
       <Text style={styles.fieldHeader}>Bike info</Text>
@@ -66,7 +67,7 @@ function ViewBikeDetails({theftData}) {
     </View>
   );
 }
-function ViewOtherDetails({theftData}) {
+function OtherDetailsView({theftData}) {
   return (
     <View style={styles.detailsContainer}>
       <Text style={styles.fieldHeader}>Other</Text>
@@ -77,25 +78,23 @@ function ViewOtherDetails({theftData}) {
 
 const ViewModal = () => {
   const [viewingUserId, setViewingUserId] = useState();
-  // const [token, setToken] = useState();
+  const [token, setToken] = useState();
   const isViewModalVisible = useIsViewModalVisible();
   const setIsViewModalVisible = useToggleIsViewModalVisible();
   const selectedTheftId = useSelectedTheftId();
   const isUserLoggedIn = useIsUserLoggedIn();
 
-  // useEffect(() => {
-  //   (async function () {
-  //     GoogleSignin.getTokens().then((result) => {
-  //       console.log(result);
-  //       setToken(result.idToken);
-  //     });
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async function () {
+      getToken().then((result) => {
+        setToken(result.idToken);
+      });
+    })();
+  }, []);
 
   //#region
   const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
     variables: {id: selectedTheftId},
-    onCompleted: (res) => console.log(res),
   });
 
   const [submitDeleteMutation, {error: delete_error}] = useMutation(
@@ -103,10 +102,10 @@ const ViewModal = () => {
     {
       refetchQueries: [
         {query: GET_THEFTS},
-        // {
-        //   query: GET_USERS_THEFTS,
-        //   variables: {id_token: token && token},
-        // },
+        {
+          query: GET_USERS_THEFTS,
+          variables: {id_token: token && token},
+        },
       ],
       onCompleted: () => setIsViewModalVisible(false),
     },
@@ -140,9 +139,9 @@ const ViewModal = () => {
         <View style={styles.modal}>
           <ScrollView>
             <Text style={styles.header}>Reported bike theft</Text>
-            <ViewDateDetails theftData={theftData} />
-            <ViewBikeDetails theftData={theftData} />
-            <ViewOtherDetails theftData={theftData} />
+            <DateDetailsView theftData={theftData} />
+            <BikeDetailsView theftData={theftData} />
+            <OtherDetailsView theftData={theftData} />
 
             {viewingUserId === theftData.user.google_id && (
               <Button title={'delete'} onPress={deleteTheft} />
