@@ -1,5 +1,5 @@
 import React from 'react';
-import {GRAPHQL_URI, MEDIA_URI} from '@env';
+import {GRAPHQL_REMOTE_URI, MEDIA_REMOTE_URI} from '@env';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
 
@@ -9,12 +9,20 @@ import {SelectedTheftIdProvider} from './SelectedTheftIdContext';
 import {IsViewModalVisibleProvider} from './IsViewModalVisibleContext';
 
 const client = new ApolloClient({
-  uri: GRAPHQL_URI,
-  cache: new InMemoryCache(),
+  uri: GRAPHQL_REMOTE_URI,
+  cache: new InMemoryCache(/* {
+    typePolicies: {
+      Query: {
+        merge(existing, incoming) {
+          return incoming;
+        },
+      },
+    },
+  } */),
 });
 export const mediaClient = new ApolloClient({
   link: createUploadLink({
-    uri: MEDIA_URI,
+    uri: MEDIA_REMOTE_URI,
   }),
   cache: new InMemoryCache(),
 });

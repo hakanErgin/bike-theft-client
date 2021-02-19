@@ -4,14 +4,16 @@ import {
   SignInButton,
   // CheckUserButton,
   isSignedInToGoogle,
-} from './Components/GoogleButtons';
+} from '../../Utils/GoogleSignin';
 import {
   useIsUserLoggedIn,
   useToggleIsUserLoggedIn,
 } from '../../ContextProviders/IsUserLoggedInContext';
 // import {DrawerContentScrollView} from '@react-navigation/drawer';
 import LoggedInContent from './Components/LoggedInContent';
+import commonStyles from '../../Utils/commonStyles';
 
+// this needs to be a function
 function DrawerContent(props) {
   return (
     // <DrawerContentScrollView {...props}>
@@ -22,8 +24,8 @@ function DrawerContent(props) {
 
 function LoggedOutContent() {
   return (
-    <View style={styles.drawerContainer}>
-      <Text>Pls sign in to do stuff</Text>
+    <View>
+      <Text>Sign in to report a bike theft!</Text>
       <SignInButton />
     </View>
   );
@@ -36,17 +38,14 @@ const CustomDrawerContent = ({navigation}) => {
   useEffect(() => {
     isSignedInToGoogle().then((res) => {
       if (res === !isUserLoggedIn) {
-        console.log({res});
         setIsUserLoggedIn(res);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUserLoggedIn]);
+  }, [isUserLoggedIn, setIsUserLoggedIn]);
 
   return (
     <View style={styles.drawerContainer}>
-      <Text>Welcome</Text>
-
+      <Text>Welcome,</Text>
       {isUserLoggedIn ? (
         <LoggedInContent navigation={navigation} />
       ) : (
@@ -60,5 +59,8 @@ const CustomDrawerContent = ({navigation}) => {
 export default DrawerContent;
 
 const styles = StyleSheet.create({
-  drawerContainer: {padding: 10},
+  drawerContainer: {
+    padding: commonStyles.gap[4],
+    flex: 1,
+  },
 });

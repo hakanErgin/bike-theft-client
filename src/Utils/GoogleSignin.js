@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {
   GoogleSignin,
   statusCodes,
@@ -7,8 +7,9 @@ import {
 } from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '@env';
 import {useMutation} from '@apollo/client';
-import {CREATE_USER_OR_SIGN_IN} from '../../../Utils/gql';
-import {useToggleIsUserLoggedIn} from '../../../ContextProviders/IsUserLoggedInContext';
+import {CREATE_USER_OR_SIGN_IN} from './gql';
+import {useToggleIsUserLoggedIn} from '../ContextProviders/IsUserLoggedInContext';
+import SignOutIcon from 'react-native-vector-icons/Entypo';
 
 export const SignInButton = () => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
@@ -57,18 +58,22 @@ export const SignInButton = () => {
   );
 };
 
-export const LogoutButton = () => {
+export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
-
   const signOut = async () => {
     try {
+      setIsAddingNewTheft(false);
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut().then(() => setIsUserLoggedIn(false));
     } catch (error) {
       console.log(error);
     }
   };
-  return <Button title={'logout'} onPress={signOut} />;
+  return (
+    <TouchableOpacity onPress={signOut}>
+      <SignOutIcon name={'log-out'} size={size} color={color} />
+    </TouchableOpacity>
+  );
 };
 
 // status button for dev
@@ -87,4 +92,13 @@ export const LogoutButton = () => {
 // helper function
 export async function isSignedInToGoogle() {
   return await GoogleSignin.isSignedIn();
+}
+
+export async function getCurrentUser() {
+  const currentUser = await GoogleSignin.getCurrentUser();
+  return currentUser;
+}
+
+export async function getToken() {
+  return await GoogleSignin.getTokens();
 }

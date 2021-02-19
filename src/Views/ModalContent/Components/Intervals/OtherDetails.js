@@ -1,37 +1,38 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
+import commonStyles from '../../../../Utils/commonStyles';
 
-export const SecondInterval = ({handleChange, handleBlur, values}) => {
+export const OtherDetails = ({handleChange, values}) => {
   return (
     <View style={styles.slide}>
+      <Text>Anything else you like to add</Text>
       <TextInput
         style={styles.textArea}
         onChangeText={handleChange('comments')}
-        onBlur={handleBlur('comments')}
         value={values.comments}
         numberOfLines={4}
-        placeholder={'Add other comments here'}
+        placeholder="Comments"
       />
     </View>
   );
 };
 
-export default SecondInterval;
+export default OtherDetails;
 
 const styles = StyleSheet.create({
   textArea: {
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 5,
+    borderRadius: commonStyles.borderRadius.normal,
     textAlignVertical: 'top',
-    paddingBottom: 10,
-    marginBottom: 10,
+    paddingBottom: commonStyles.gap[3],
+    marginBottom: commonStyles.gap[3],
     width: '100%',
   },
   slide: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-    paddingTop: 30,
+    paddingHorizontal: commonStyles.gap[5],
+    paddingBottom: commonStyles.gap[3],
+    paddingTop: commonStyles.gap[6],
     flexBasis: '100%',
     flex: 1,
     maxWidth: '100%',

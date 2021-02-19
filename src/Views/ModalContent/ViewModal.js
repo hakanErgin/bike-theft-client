@@ -1,72 +1,220 @@
-import React from 'react';
-import {Button, Text, View, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Button, Text, View, StyleSheet, ScrollView, Image} from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
-import {GET_THEFTS, DELETE_THEFT, GET_THEFT} from '../../Utils/gql';
+import {
+  GET_THEFTS,
+  DELETE_THEFT,
+  GET_THEFT,
+  // GET_USERS_THEFTS,
+} from '../../Utils/gql';
+import {GoogleSignin} from '@react-native-community/google-signin';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
+import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
+
 import {
   useIsViewModalVisible,
   useToggleIsViewModalVisible,
 } from '../../ContextProviders/IsViewModalVisibleContext';
 import Modal from 'react-native-modal';
+import commonStyles from '../../Utils/commonStyles';
+import {
+  getCurrentUser,
+  // getToken,
+} from '../../Utils/GoogleSignin';
+import CloseButton from 'react-native-vector-icons/MaterialIcons';
+
+function FieldRow({field, value}) {
+  return (
+    <View style={styles.fieldRow}>
+      <Text style={styles.fieldName}>{field}</Text>
+      <Text style={styles.fieldValue}>{value}</Text>
+    </View>
+  );
+}
+
+function ViewDateDetails({theftData}) {
+  const dateCreated = new Date(theftData.created_at);
+  const dateStolen = new Date(theftData.date_time.date);
+
+  return (
+    <View style={styles.detailsContainer}>
+      <Text style={styles.fieldHeader}>Date info</Text>
+      <FieldRow field={'Reported on:'} value={dateCreated.toDateString()} />
+      <FieldRow field={'Date stolen:'} value={dateStolen.toDateString()} />
+      <FieldRow field={'Time of the day:'} value={theftData.date_time.time} />
+    </View>
+  );
+}
+function ViewBikeDetails({theftData}) {
+  return (
+    <View style={styles.detailsContainer}>
+      <Text style={styles.fieldHeader}>Bike info</Text>
+      <FieldRow field={'Type:'} value={theftData.bike.type} />
+      <FieldRow field={'Brand:'} value={theftData.bike.brand} />
+      <FieldRow field={'Manufacture year:'} value={theftData.bike.year} />
+      <FieldRow field={'Frame size:'} value={theftData.bike.frame_size} />
+      <FieldRow field={'Wheel size:'} value={theftData.bike.wheel_size} />
+      {theftData.bike.photos.length > 0 && (
+        <View style={styles.photosContainer}>
+          {theftData.bike.photos.map((img) => {
+            return (
+              <Image
+                key={img}
+                source={{uri: img}}
+                style={styles.imageThumbnail}
+              />
+            );
+          })}
+        </View>
+      )}
+    </View>
+  );
+}
+function ViewOtherDetails({theftData}) {
+  return (
+    <View style={styles.detailsContainer}>
+      <Text style={styles.fieldHeader}>Other</Text>
+      <FieldRow field={'Comments:'} value={theftData.comments} />
+    </View>
+  );
+}
 
 const ViewModal = () => {
+  const [viewingUserId, setViewingUserId] = useState();
+  // const [token, setToken] = useState();
   const isViewModalVisible = useIsViewModalVisible();
   const setIsViewModalVisible = useToggleIsViewModalVisible();
   const selectedTheftId = useSelectedTheftId();
+  const isUserLoggedIn = useIsUserLoggedIn();
+
+  // useEffect(() => {
+  //   (async function () {
+  //     GoogleSignin.getTokens().then((result) => {
+  //       console.log(result);
+  //       setToken(result.idToken);
+  //     });
+  //   })();
+  // }, []);
 
   //#region
   const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
     variables: {id: selectedTheftId},
+    onCompleted: (res) => console.log(res),
   });
 
-  const [
-    submitDeleteMutation,
-    {error: delete_error},
-  ] = useMutation(DELETE_THEFT, {refetchQueries: [{query: GET_THEFTS}]});
+  const [submitDeleteMutation, {error: delete_error}] = useMutation(
+    DELETE_THEFT,
+    {
+      refetchQueries: [
+        {query: GET_THEFTS},
+        // {
+        //   query: GET_USERS_THEFTS,
+        //   variables: {id_token: token && token},
+        // },
+      ],
+      onCompleted: () => setIsViewModalVisible(false),
+    },
+  );
 
-  const deleteTheft = () => {
+  async function deleteTheft() {
+    const currentToken = await GoogleSignin.getTokens();
     submitDeleteMutation({
-      variables: {input: {_id: selectedTheftId}},
+      variables: {
+        id_token: currentToken.idToken,
+        theftId: selectedTheftId,
+        theftUserId: get_data.getTheft.userId,
+      },
     });
-    setIsViewModalVisible(false);
-  };
+  }
 
   if (delete_error || get_error) {
     console.log(delete_error || get_error);
   }
-
-  // onPress={deleteTheft(theftId)}
-
+  useEffect(() => {
+    isUserLoggedIn &&
+      getCurrentUser().then((res) => setViewingUserId(res.user.id));
+  }, [isUserLoggedIn]);
   //#endregion
 
-  return get_data ? (
-    <Modal isVisible={isViewModalVisible}>
-      <View style={styles.modal}>
-        <Text>yes</Text>
-        <Text>{get_data.getTheft.region.latitude}</Text>
-        <Text>{get_data.getTheft.region.longitude}</Text>
-        <Button
-          title={'close'}
-          onPress={() => {
-            setIsViewModalVisible(false);
-          }}
-        />
-        <Button title={'delete'} onPress={deleteTheft} />
-      </View>
-    </Modal>
-  ) : null;
+  if (get_data) {
+    const theftData = get_data.getTheft;
+
+    return (
+      <Modal isVisible={isViewModalVisible}>
+        <View style={styles.modal}>
+          <ScrollView>
+            <Text style={styles.header}>Reported bike theft</Text>
+            <ViewDateDetails theftData={theftData} />
+            <ViewBikeDetails theftData={theftData} />
+            <ViewOtherDetails theftData={theftData} />
+
+            {viewingUserId === theftData.user.google_id && (
+              <Button title={'delete'} onPress={deleteTheft} />
+            )}
+          </ScrollView>
+          <View style={styles.closeButtonContainer}>
+            <CloseButton
+              name="close"
+              onPress={() => {
+                setIsViewModalVisible(false);
+              }}
+              style={styles.closeButton}
+            />
+          </View>
+        </View>
+      </Modal>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default ViewModal;
 
 const styles = StyleSheet.create({
   modal: {
-    flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
-    borderRadius: 20,
-    padding: 30,
+    borderRadius: commonStyles.borderRadius.large,
+    padding: commonStyles.gap[4],
   },
-  form: {flex: 1, justifyContent: 'space-around'},
-  header: {fontSize: 24, textAlign: 'center'},
+  header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
+  closeButtonContainer: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+  closeButton: {
+    fontSize: commonStyles.iconSize.large,
+    margin: commonStyles.gap[3],
+  },
+  detailsContainer: {
+    flex: 1,
+    backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
+    paddingVertical: commonStyles.gap[2],
+    borderRadius: commonStyles.borderRadius.normal,
+    alignItems: 'center',
+    marginVertical: 5,
+    paddingHorizontal: 10,
+  },
+  imageThumbnail: {
+    marginHorizontal: commonStyles.gap[3],
+    width: 75,
+    height: 75,
+    borderRadius: commonStyles.borderRadius.normal,
+  },
+  fieldName: {flex: 1, color: commonStyles.iconColor.darkRed},
+  fieldValue: {flex: 1},
+  fieldHeader: {
+    flex: 1,
+    marginBottom: commonStyles.gap[2],
+    fontSize: commonStyles.fontSize.large,
+    color: commonStyles.iconColor.darkRed,
+  },
+  fieldRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });

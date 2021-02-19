@@ -14,6 +14,7 @@ const MarkersWithCallouts = ({thefts}) => {
   };
 
   return thefts.map((theft, index) => {
+    const dateCreated = new Date(theft.created_at);
     const theftId = theft._id;
     return (
       <Marker
@@ -23,8 +24,7 @@ const MarkersWithCallouts = ({thefts}) => {
           longitude: theft.region.longitude,
         }}>
         <Callout onPress={onCalloutPress(theftId)}>
-          <Text>id: {theftId}</Text>
-          <Text>stuff that happened here</Text>
+          <Text>Reported on:{dateCreated.toDateString().substring(3)}</Text>
           <Text>Tap for details</Text>
         </Callout>
       </Marker>

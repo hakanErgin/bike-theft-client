@@ -1,91 +1,129 @@
-import React from 'react';
-import {Button, Text, View, StyleSheet} from 'react-native';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import React, {useState /* , useEffect */} from 'react';
+import {Button, Text, View, StyleSheet, Pressable} from 'react-native';
 import {useMutation} from '@apollo/client';
-import {CREATE_THEFT, GET_THEFTS} from '../../Utils/gql';
+import {
+  CREATE_THEFT,
+  GET_THEFTS,
+  SINGLE_FILE_UPLOAD,
+  MULTI_FILE_UPLOAD,
+  // GET_USERS_THEFTS,
+} from '../../Utils/gql';
 import {Formik} from 'formik';
 import Modal from 'react-native-modal';
 import FormCarousel from './FormCarousel';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
+import CloseButton from 'react-native-vector-icons/MaterialIcons';
+import commonStyles from '../../Utils/commonStyles';
+import {mediaClient} from '../../ContextProviders/CombinedProviders';
+// import {GoogleSignin} from '@react-native-community/google-signin';
+
+import {BikeDetails} from './Components/Intervals/BikeDetails';
+import {OtherDetails} from './Components/Intervals/OtherDetails';
+import {DateDetails} from './Components/Intervals/DateDetails';
+import ImagePickerComponent from './Components/ImagePicker';
+import {BikeInputFields} from './Components/Intervals/BikeDetails';
+import {submitForm, initialValues, validate} from '../../Utils/formUtils';
+import FlashMessage from 'react-native-flash-message';
 
 const FormModal = ({
   isFormModalVisible,
   selectedRegion,
   setIsFormModalVisible,
 }) => {
-  const {longitude, latitude} = selectedRegion;
+  const [pickedImages, setPickedImages] = useState([]);
+  // can use this to print location fetched from coords
+  // const {longitude, latitude} = selectedRegion;
+  const setIsAddingNewTheft = useToggleIsAddingNewTheft();
+  // const [token, setToken] = useState();
+
+  //#region mutation/query
   const [submitCreateMutation, {error: create_error}] = useMutation(
     CREATE_THEFT,
     {
-      refetchQueries: [{query: GET_THEFTS}],
-      onCompleted: (data) => console.log(data),
+      refetchQueries: [
+        {query: GET_THEFTS},
+        // {
+        //   query: GET_USERS_THEFTS,
+        //   variables: {id_token: token && token},
+        // },
+      ],
+      onCompleted: () => finishAddingTheft(),
     },
   );
+  const [singleUpload] = useMutation(SINGLE_FILE_UPLOAD, {
+    client: mediaClient,
+  });
+  const [multiUpload] = useMutation(MULTI_FILE_UPLOAD, {
+    client: mediaClient,
+  });
 
-  const setIsAddingNewTheft = useToggleIsAddingNewTheft();
+  // useEffect(() => {
+  //   (async function () {
+  //     GoogleSignin.getTokens().then((result) => {
+  //       console.log(result);
+  //       setToken(result.idToken);
+  //     });
+  //   })();
+  // }, []);
 
-  async function submitTheft(values) {
-    const currentToken = await GoogleSignin.getTokens();
-    // console.log(currentToken.idToken);
-    // const deletedToken = await GoogleSignin.clearCachedAccessToken(
-    //   currentToken.idToken,
-    // );
-    // console.log({deletedToken});
-    // const newToken = await GoogleSignin.getTokens();
-    // console.log(newToken.idToken);
+  // #endregion
 
-    submitCreateMutation({
-      variables: {
-        input: {
-          bike_description: values.bike_description,
-          comments: values.comments,
-          date: values.date,
-          region: {latitude, longitude},
-          created_at: new Date(),
-        },
-        id_token: currentToken.idToken,
-      },
-    });
+  function finishAddingTheft() {
     setIsFormModalVisible(false);
     setIsAddingNewTheft(false);
   }
-
   create_error && console.log(create_error);
-
-  function cancelAdding() {
-    setIsFormModalVisible(false);
-    setIsAddingNewTheft(false);
-  }
 
   return (
     <Modal isVisible={isFormModalVisible}>
       <View style={styles.modal}>
         <Formik
-          initialValues={{bike_description: '', comments: '', date: undefined}}
-          onSubmit={submitTheft}>
-          {({
-            handleChange,
-            handleBlur,
-            values,
-            handleSubmit,
-            setFieldValue,
-          }) => (
+          validateOnChange={false}
+          validate={validate}
+          initialValues={initialValues}
+          onSubmit={(values) =>
+            submitForm(
+              values,
+              pickedImages,
+              singleUpload,
+              multiUpload,
+              submitCreateMutation,
+              selectedRegion,
+              setIsFormModalVisible,
+              setIsAddingNewTheft,
+            )
+          }>
+          {({handleChange, values, handleSubmit, setFieldValue}) => (
             <View style={styles.form}>
-              <Text style={styles.header}>Report New Theft</Text>
-              <FormCarousel
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                values={values}
-                setFieldValue={setFieldValue}
-              />
+              <Text style={styles.header}>Report a theft</Text>
+              <View style={styles.closeButtonContainer}>
+                <CloseButton
+                  name="close"
+                  onPress={finishAddingTheft}
+                  style={styles.closeButton}
+                />
+              </View>
+              <FormCarousel>
+                <DateDetails values={values} setFieldValue={setFieldValue} />
+                <BikeDetails>
+                  <ImagePickerComponent
+                    pickedImages={pickedImages}
+                    setPickedImages={setPickedImages}
+                  />
+                  <BikeInputFields setFieldValue={setFieldValue} />
+                </BikeDetails>
+                <OtherDetails handleChange={handleChange} values={values} />
+              </FormCarousel>
               <View>
-                <Button title="Submit" onPress={handleSubmit} />
-                <Button title="Cancel" onPress={cancelAdding} />
+                <Pressable>
+                  <Button title={'yes'} onPress={handleSubmit} />
+                </Pressable>
               </View>
             </View>
           )}
         </Formik>
       </View>
+      <FlashMessage position="top" />
     </Modal>
   );
 };
@@ -95,11 +133,20 @@ export default FormModal;
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
-    borderRadius: 20,
-    padding: 30,
+    borderRadius: commonStyles.borderRadius.large,
+    padding: commonStyles.gap[3],
   },
   form: {flex: 1, justifyContent: 'space-around'},
-  header: {fontSize: 24, textAlign: 'center'},
+  header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
+  closeButtonContainer: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+  closeButton: {
+    fontSize: commonStyles.iconSize.large,
+  },
 });
