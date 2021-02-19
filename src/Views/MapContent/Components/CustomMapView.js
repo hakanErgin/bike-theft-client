@@ -3,7 +3,7 @@ import {useQuery} from '@apollo/client';
 import {GET_THEFTS} from '../../../Utils/gql';
 import setCurrentPosition from '../../../Utils/currentPositionHandler';
 
-import {Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 import InfoBar from './InfoBar';
 import CrosshairOverlay from '../../ModalContent/Components/CrosshairOverlay';
@@ -13,6 +13,7 @@ import MapLayerOverlay from './MapLayerOverlay';
 import MyLocationButton from './MyLocationButton';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 import commonVariables from '../../../Utils/commonVariables';
+import {LoadingView, ErrorView} from '../../../Utils/commonComponents';
 
 /*
  * if onscreen buttons are necessary:
@@ -83,10 +84,10 @@ const CustomMapView = ({
   }
 
   if (get_loading) {
-    return <Text>Loading...</Text>;
+    return <LoadingView />;
   }
   if (get_error) {
-    console.log({get_error});
+    return <ErrorView error={get_error} />;
   }
   return (
     <>

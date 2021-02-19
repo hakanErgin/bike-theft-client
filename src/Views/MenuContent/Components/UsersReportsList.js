@@ -7,6 +7,7 @@ import {useQuery} from '@apollo/client';
 
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
+import {LoadingView, ErrorView} from '../../../Utils/commonComponents';
 
 function ViewButton({theftId}) {
   const setIsViewModalVisible = useToggleIsViewModalVisible();
@@ -27,10 +28,21 @@ function ViewButton({theftId}) {
 }
 
 export function UsersReportedThefts({currentUser}) {
-  const {data: get_data} = useQuery(GET_USERS_THEFTS, {
-    variables: {id_token: currentUser.idToken},
-    onError: (err) => console.log(err),
-  });
+  const {loading: get_loading, error: get_error, data: get_data} = useQuery(
+    GET_USERS_THEFTS,
+    {
+      variables: {id_token: currentUser.idToken},
+      onError: (err) => console.log(err),
+    },
+  );
+
+  if (get_loading) {
+    return <LoadingView />;
+  }
+  if (get_error) {
+    return <ErrorView error={get_error} />;
+  }
+
   if (get_data) {
     const usersReportedThefts = get_data.getUsersReportedThefts;
     return (

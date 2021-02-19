@@ -9,6 +9,7 @@ import {
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
 import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
+import {LoadingView, ErrorView} from '../../Utils/commonComponents';
 
 import {
   useIsViewModalVisible,
@@ -93,23 +94,24 @@ const ViewModal = () => {
   }, []);
 
   //#region
-  const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
-    variables: {id: selectedTheftId},
-  });
-
-  const [submitDeleteMutation, {error: delete_error}] = useMutation(
-    DELETE_THEFT,
+  const {loading: get_loading, error: get_error, data: get_data} = useQuery(
+    GET_THEFT,
     {
-      refetchQueries: [
-        {query: GET_THEFTS},
-        {
-          query: GET_USERS_THEFTS,
-          variables: {id_token: token && token},
-        },
-      ],
-      onCompleted: () => setIsViewModalVisible(false),
+      variables: {id: selectedTheftId},
     },
   );
+
+  const [submitDeleteMutation] = useMutation(DELETE_THEFT, {
+    refetchQueries: [
+      {query: GET_THEFTS},
+      {
+        query: GET_USERS_THEFTS,
+        variables: {id_token: token && token},
+      },
+    ],
+    onCompleted: () => setIsViewModalVisible(false),
+    onError: (err) => console.log(err),
+  });
 
   async function deleteTheft() {
     const currentToken = await getToken();
@@ -122,13 +124,17 @@ const ViewModal = () => {
     });
   }
 
-  if (delete_error || get_error) {
-    console.log(delete_error || get_error);
-  }
   useEffect(() => {
     isUserLoggedIn &&
       getCurrentUser().then((res) => setViewingUserId(res.user.id));
   }, [isUserLoggedIn]);
+
+  if (get_loading) {
+    return <LoadingView />;
+  }
+  if (get_error) {
+    return <ErrorView error={get_error} />;
+  }
   //#endregion
 
   if (get_data) {
