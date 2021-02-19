@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {
   GoogleSignin,
@@ -14,10 +14,9 @@ import SignOutIcon from 'react-native-vector-icons/Entypo';
 export const SignInButton = () => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
 
-  GoogleSignin.configure({
-    webClientId: WEB_CLIENT_ID,
-    offlineAccess: true,
-  });
+  useEffect(() => {
+    configureGoogle();
+  }, []);
 
   const [createUserOrSignInMutation, {error: user_error}] = useMutation(
     CREATE_USER_OR_SIGN_IN,
@@ -31,7 +30,6 @@ export const SignInButton = () => {
         variables: {id_token: userInfo.idToken},
       }).then((result) => {
         setIsUserLoggedIn(true);
-        console.log({result});
       });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -76,6 +74,39 @@ export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
   );
 };
 
+// helper function
+export async function isSignedInToGoogle() {
+  return await GoogleSignin.isSignedIn();
+}
+
+export async function getCurrentUser() {
+  return await GoogleSignin.getCurrentUser();
+}
+
+export async function getToken() {
+  return await GoogleSignin.getTokens();
+}
+
+export async function signUserInSilently() {
+  configureGoogle();
+  return await GoogleSignin.signInSilently();
+}
+
+function configureGoogle() {
+  GoogleSignin.configure({
+    webClientId: WEB_CLIENT_ID,
+  });
+}
+
+// async function handleSignIn() {
+//   const isUserSignedIn = await isSignedInToGoogle();
+//   if (isUserSignedIn === true) {
+//     return await getCurrentUser();
+//   } else {
+//     return await signUserInSilently();
+//   }
+// }
+
 // status button for dev
 // export const CheckUserButton = (isUserLoggedIn) => {
 //   async function checkUser() {
@@ -88,17 +119,3 @@ export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
 //   }
 //   return <Button title={'status'} onPress={checkUser} />;
 // };
-
-// helper function
-export async function isSignedInToGoogle() {
-  return await GoogleSignin.isSignedIn();
-}
-
-export async function getCurrentUser() {
-  const currentUser = await GoogleSignin.getCurrentUser();
-  return currentUser;
-}
-
-export async function getToken() {
-  return await GoogleSignin.getTokens();
-}

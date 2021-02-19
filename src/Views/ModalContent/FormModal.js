@@ -15,7 +15,6 @@ import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheft
 import CloseButton from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
-// import {GoogleSignin} from '@react-native-community/google-signin';
 
 import {BikeDetails} from './Components/Intervals/BikeDetails';
 import {OtherDetails} from './Components/Intervals/OtherDetails';
