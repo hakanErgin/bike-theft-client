@@ -11,6 +11,7 @@ import {IsViewModalVisibleProvider} from './IsViewModalVisibleContext';
 const client = new ApolloClient({
   uri: GRAPHQL_REMOTE_URI,
   cache: new InMemoryCache({
+    // this makes sure usersreports are in sync when delete
     typePolicies: {
       Query: {
         fields: {
