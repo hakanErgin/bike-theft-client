@@ -18,9 +18,9 @@ export const SignInButton = () => {
     configureGoogle();
   }, []);
 
-  const [createUserOrSignInMutation, {error: user_error}] = useMutation(
-    CREATE_USER_OR_SIGN_IN,
-  );
+  const [createUserOrSignInMutation] = useMutation(CREATE_USER_OR_SIGN_IN, {
+    onError: (err) => console.log(err),
+  });
 
   const signIn = async () => {
     try {

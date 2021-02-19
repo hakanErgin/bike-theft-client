@@ -48,12 +48,15 @@ const FormModal = ({
         },
       ],
       onCompleted: () => finishAddingTheft(),
+      onError: (err) => console.log(err),
     },
   );
   const [singleUpload] = useMutation(SINGLE_FILE_UPLOAD, {
+    onError: (err) => console.log(err),
     client: mediaClient,
   });
   const [multiUpload] = useMutation(MULTI_FILE_UPLOAD, {
+    onError: (err) => console.log(err),
     client: mediaClient,
   });
 
