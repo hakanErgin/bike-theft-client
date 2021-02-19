@@ -7,7 +7,6 @@ import {
   GET_THEFT,
   // GET_USERS_THEFTS,
 } from '../../Utils/gql';
-import {GoogleSignin} from '@react-native-community/google-signin';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
 import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
 
@@ -17,10 +16,7 @@ import {
 } from '../../ContextProviders/IsViewModalVisibleContext';
 import Modal from 'react-native-modal';
 import commonStyles from '../../Utils/commonStyles';
-import {
-  getCurrentUser,
-  // getToken,
-} from '../../Utils/GoogleSignin';
+import {getCurrentUser, getToken} from '../../Utils/GoogleSignin';
 import CloseButton from 'react-native-vector-icons/MaterialIcons';
 
 function FieldRow({field, value}) {
@@ -117,7 +113,7 @@ const ViewModal = () => {
   );
 
   async function deleteTheft() {
-    const currentToken = await GoogleSignin.getTokens();
+    const currentToken = await getToken();
     submitDeleteMutation({
       variables: {
         id_token: currentToken.idToken,

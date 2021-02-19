@@ -1,4 +1,4 @@
-import {GoogleSignin} from '@react-native-community/google-signin';
+import {getToken} from './GoogleSignin';
 import {showMessage} from 'react-native-flash-message';
 
 export async function submitForm(
@@ -9,7 +9,7 @@ export async function submitForm(
   submitCreateMutation,
   selectedRegion,
 ) {
-  const currentToken = await GoogleSignin.getTokens();
+  const currentToken = await getToken();
   const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
 
   console.log({pickedImages});
