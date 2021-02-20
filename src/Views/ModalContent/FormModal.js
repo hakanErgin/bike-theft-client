@@ -16,6 +16,7 @@ import CloseButton from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
 import {getToken} from '../../Utils/GoogleSignin';
+import {LoadingView} from '../../Utils/commonComponents';
 
 import {BikeDetails} from './Components/Intervals/BikeDetails';
 import {OtherDetails} from './Components/Intervals/OtherDetails';
@@ -37,7 +38,7 @@ const FormModal = ({
   const [token, setToken] = useState();
 
   //#region mutation/query
-  const [submitCreateMutation, {error: create_error}] = useMutation(
+  const [submitCreateMutation, {loading: create_loading}] = useMutation(
     CREATE_THEFT,
     {
       refetchQueries: [
@@ -51,14 +52,20 @@ const FormModal = ({
       onError: (err) => console.log(err),
     },
   );
-  const [singleUpload] = useMutation(SINGLE_FILE_UPLOAD, {
-    onError: (err) => console.log(err),
-    client: mediaClient,
-  });
-  const [multiUpload] = useMutation(MULTI_FILE_UPLOAD, {
-    onError: (err) => console.log(err),
-    client: mediaClient,
-  });
+  const [singleUpload, {loading: single_file_loading}] = useMutation(
+    SINGLE_FILE_UPLOAD,
+    {
+      onError: (err) => console.log(err),
+      client: mediaClient,
+    },
+  );
+  const [multiUpload, {loading: multi_file_loading}] = useMutation(
+    MULTI_FILE_UPLOAD,
+    {
+      onError: (err) => console.log(err),
+      client: mediaClient,
+    },
+  );
 
   useEffect(() => {
     (async function () {
@@ -74,7 +81,9 @@ const FormModal = ({
     setIsFormModalVisible(false);
     setIsAddingNewTheft(false);
   }
-  create_error && console.log(create_error);
+  if (create_loading || single_file_loading || multi_file_loading) {
+    return <LoadingView />;
+  }
 
   return (
     <Modal isVisible={isFormModalVisible}>

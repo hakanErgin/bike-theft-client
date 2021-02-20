@@ -71,8 +71,8 @@ export function UsersReportedThefts({currentUser}) {
               You do not have any thefts reported yet.
             </Text>
             <Text style={styles.centeredText}>
-              Use the button below to create a report and please provide as much
-              information as possible.
+              Create a report and please provide as much information as
+              possible.
             </Text>
             <Text style={styles.centeredText}>
               Then your reports will be displayed here for easy access and on

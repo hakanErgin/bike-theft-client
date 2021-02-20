@@ -53,7 +53,7 @@ function BikeDetailsView({theftData}) {
       <FieldRow field={'Frame size:'} value={theftData.bike.frame_size} />
       <FieldRow field={'Wheel size:'} value={theftData.bike.wheel_size} />
       {theftData.bike.photos.length > 0 && (
-        <View style={styles.photosContainer}>
+        <View style={styles.imageThumbnailContainer}>
           {theftData.bike.photos.map((img) => {
             return (
               <Image
@@ -199,8 +199,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingHorizontal: 10,
   },
+  imageThumbnailContainer: {flexDirection: 'row'},
   imageThumbnail: {
-    marginHorizontal: commonStyles.gap[3],
+    margin: commonStyles.gap[3],
     width: 75,
     height: 75,
     borderRadius: commonStyles.borderRadius.normal,

@@ -23,6 +23,7 @@ export function ErrorView({error}) {
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 50,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
