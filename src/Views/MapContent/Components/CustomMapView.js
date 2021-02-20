@@ -117,10 +117,12 @@ const CustomMapView = ({
       )}
       <MenuButton navigation={navigation} />
       <SearchBar mapRef={mapRef} />
-      <InfoBar
-        thefts={thefts}
-        currentRegionBoundaries={currentRegionBoundaries}
-      />
+      {visibleMapLayer !== 'heatmap' && !isAddingNewTheft && (
+        <InfoBar
+          thefts={thefts}
+          currentRegionBoundaries={currentRegionBoundaries}
+        />
+      )}
       <MyLocationButton
         ref={mapRef}
         usersLocation={usersLocation}

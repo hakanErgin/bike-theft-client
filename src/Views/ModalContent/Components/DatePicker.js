@@ -47,6 +47,7 @@ export default DatePicker;
 const styles = StyleSheet.create({
   calendarInputContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 1,
