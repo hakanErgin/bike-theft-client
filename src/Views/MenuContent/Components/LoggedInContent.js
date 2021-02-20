@@ -4,6 +4,7 @@ import {useToggleIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTh
 import {LogoutButton, signUserInSilently} from '../../../Utils/GoogleSignin';
 import {UsersReportedThefts} from './UsersReportsList';
 import commonStyles from '../../../Utils/commonStyles';
+import {LoadingView} from '../../../Utils/commonComponents';
 
 export default function LoggedInContent({navigation}) {
   const [currentUser, setCurrentUser] = useState();
@@ -39,7 +40,7 @@ export default function LoggedInContent({navigation}) {
       </View>
     );
   } else {
-    return null;
+    return <LoadingView />;
   }
 }
 

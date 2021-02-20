@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Alert} from 'react-native';
 import {
   GoogleSignin,
   statusCodes,
@@ -57,6 +57,19 @@ export const SignInButton = () => {
 };
 
 export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
+  const showConfirmationAlert = (proceedAction) =>
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+        },
+        {text: 'OK', onPress: proceedAction},
+      ],
+      {cancelable: true},
+    );
+
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
   const signOut = async () => {
     try {
@@ -68,7 +81,7 @@ export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
     }
   };
   return (
-    <TouchableOpacity onPress={signOut}>
+    <TouchableOpacity onPress={() => showConfirmationAlert(signOut)}>
       <SignOutIcon name={'log-out'} size={size} color={color} />
     </TouchableOpacity>
   );

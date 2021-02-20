@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Text, View, StyleSheet, ScrollView, Image} from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Alert,
+} from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
 import {
   GET_THEFTS,
@@ -77,6 +85,39 @@ function OtherDetailsView({theftData}) {
   );
 }
 
+const DeleteButton = ({submitDeleteMutation, selectedTheftId, get_data}) => {
+  const showConfirmationAlert = (proceedAction) =>
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete this report?',
+      [
+        {
+          text: 'Cancel',
+        },
+        {text: 'OK', onPress: proceedAction},
+      ],
+      {cancelable: true},
+    );
+
+  async function deleteTheft() {
+    const currentToken = await getToken();
+    submitDeleteMutation({
+      variables: {
+        id_token: currentToken.idToken,
+        theftId: selectedTheftId,
+        theftUserId: get_data.getTheft.userId,
+      },
+    });
+  }
+
+  return (
+    <Button
+      title={'delete report'}
+      onPress={() => showConfirmationAlert(deleteTheft)}
+    />
+  );
+};
+
 const ViewModal = () => {
   const [viewingUserId, setViewingUserId] = useState();
   const [token, setToken] = useState();
@@ -116,17 +157,6 @@ const ViewModal = () => {
     },
   );
 
-  async function deleteTheft() {
-    const currentToken = await getToken();
-    submitDeleteMutation({
-      variables: {
-        id_token: currentToken.idToken,
-        theftId: selectedTheftId,
-        theftUserId: get_data.getTheft.userId,
-      },
-    });
-  }
-
   useEffect(() => {
     isUserLoggedIn &&
       getCurrentUser().then((res) => setViewingUserId(res.user.id));
@@ -151,9 +181,12 @@ const ViewModal = () => {
             <DateDetailsView theftData={theftData} />
             <BikeDetailsView theftData={theftData} />
             <OtherDetailsView theftData={theftData} />
-
             {viewingUserId === theftData.user.google_id && (
-              <Button title={'delete'} onPress={deleteTheft} />
+              <DeleteButton
+                submitDeleteMutation={submitDeleteMutation}
+                selectedTheftId={selectedTheftId}
+                get_data={get_data}
+              />
             )}
           </ScrollView>
           <View style={styles.closeButtonContainer}>
