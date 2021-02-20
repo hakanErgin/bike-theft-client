@@ -9,6 +9,7 @@ import {
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
 import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
+import {LoadingView, ErrorView} from '../../Utils/commonComponents';
 
 import {
   useIsViewModalVisible,
@@ -52,7 +53,7 @@ function BikeDetailsView({theftData}) {
       <FieldRow field={'Frame size:'} value={theftData.bike.frame_size} />
       <FieldRow field={'Wheel size:'} value={theftData.bike.wheel_size} />
       {theftData.bike.photos.length > 0 && (
-        <View style={styles.photosContainer}>
+        <View style={styles.imageThumbnailContainer}>
           {theftData.bike.photos.map((img) => {
             return (
               <Image
@@ -93,11 +94,14 @@ const ViewModal = () => {
   }, []);
 
   //#region
-  const {error: get_error, data: get_data} = useQuery(GET_THEFT, {
-    variables: {id: selectedTheftId},
-  });
+  const {loading: get_loading, error: get_error, data: get_data} = useQuery(
+    GET_THEFT,
+    {
+      variables: {id: selectedTheftId},
+    },
+  );
 
-  const [submitDeleteMutation, {error: delete_error}] = useMutation(
+  const [submitDeleteMutation, {loading: delete_loading}] = useMutation(
     DELETE_THEFT,
     {
       refetchQueries: [
@@ -108,6 +112,7 @@ const ViewModal = () => {
         },
       ],
       onCompleted: () => setIsViewModalVisible(false),
+      onError: (err) => console.log(err),
     },
   );
 
@@ -122,13 +127,17 @@ const ViewModal = () => {
     });
   }
 
-  if (delete_error || get_error) {
-    console.log(delete_error || get_error);
-  }
   useEffect(() => {
     isUserLoggedIn &&
       getCurrentUser().then((res) => setViewingUserId(res.user.id));
   }, [isUserLoggedIn]);
+
+  if (get_loading || delete_loading) {
+    return <LoadingView />;
+  }
+  if (get_error) {
+    return <ErrorView error={get_error} />;
+  }
   //#endregion
 
   if (get_data) {
@@ -193,8 +202,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingHorizontal: 10,
   },
+  imageThumbnailContainer: {flexDirection: 'row'},
   imageThumbnail: {
-    marginHorizontal: commonStyles.gap[3],
+    margin: commonStyles.gap[3],
     width: 75,
     height: 75,
     borderRadius: commonStyles.borderRadius.normal,
