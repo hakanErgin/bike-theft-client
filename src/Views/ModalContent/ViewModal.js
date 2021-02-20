@@ -101,17 +101,20 @@ const ViewModal = () => {
     },
   );
 
-  const [submitDeleteMutation] = useMutation(DELETE_THEFT, {
-    refetchQueries: [
-      {query: GET_THEFTS},
-      {
-        query: GET_USERS_THEFTS,
-        variables: {id_token: token && token},
-      },
-    ],
-    onCompleted: () => setIsViewModalVisible(false),
-    onError: (err) => console.log(err),
-  });
+  const [submitDeleteMutation, {loading: delete_loading}] = useMutation(
+    DELETE_THEFT,
+    {
+      refetchQueries: [
+        {query: GET_THEFTS},
+        {
+          query: GET_USERS_THEFTS,
+          variables: {id_token: token && token},
+        },
+      ],
+      onCompleted: () => setIsViewModalVisible(false),
+      onError: (err) => console.log(err),
+    },
+  );
 
   async function deleteTheft() {
     const currentToken = await getToken();
@@ -129,7 +132,7 @@ const ViewModal = () => {
       getCurrentUser().then((res) => setViewingUserId(res.user.id));
   }, [isUserLoggedIn]);
 
-  if (get_loading) {
+  if (get_loading || delete_loading) {
     return <LoadingView />;
   }
   if (get_error) {
