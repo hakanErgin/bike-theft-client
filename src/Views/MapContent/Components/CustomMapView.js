@@ -6,11 +6,8 @@ import setCurrentPosition from '../../../Utils/currentPositionHandler';
 import {StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 import InfoBar from './InfoBar';
-import CrosshairOverlay from '../../ModalContent/Components/CrosshairOverlay';
-import SearchBar from './SearchBar';
-import MenuButton from './MenuButton';
+import TopBar from './TopBar';
 import MapLayerOverlay from './MapLayerOverlay';
-import MyLocationButton from './MyLocationButton';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 import commonVariables from '../../../Utils/commonVariables';
 import {LoadingView, ErrorView} from '../../../Utils/commonComponents';
@@ -108,27 +105,23 @@ const CustomMapView = ({
           <MapLayerOverlay visibleMapLayer={visibleMapLayer} thefts={thefts} />
         )}
       </MapView>
-      {isAddingNewTheft && (
-        <CrosshairOverlay
-          currentRegion={currentRegion}
-          setSelectedRegion={setSelectedRegion}
-          setIsFormModalVisible={setIsFormModalVisible}
-        />
-      )}
-      <MenuButton navigation={navigation} />
-      <SearchBar mapRef={mapRef} />
+      <TopBar
+        mapRef={mapRef}
+        navigation={navigation}
+        usersLocation={usersLocation}
+        MY_POSITION_ZOOM_LEVEL={MY_POSITION_ZOOM_LEVEL}
+        setUsersLocation={setUsersLocation}
+        currentRegion={currentRegion}
+        setSelectedRegion={setSelectedRegion}
+        setIsFormModalVisible={setIsFormModalVisible}
+        isAddingNewTheft={isAddingNewTheft}
+      />
       {visibleMapLayer !== 'heatmap' && !isAddingNewTheft && (
         <InfoBar
           thefts={thefts}
           currentRegionBoundaries={currentRegionBoundaries}
         />
       )}
-      <MyLocationButton
-        ref={mapRef}
-        usersLocation={usersLocation}
-        MY_POSITION_ZOOM_LEVEL={MY_POSITION_ZOOM_LEVEL}
-        setUsersLocation={setUsersLocation}
-      />
     </>
   );
 };
