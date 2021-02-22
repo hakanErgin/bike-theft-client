@@ -56,14 +56,10 @@ const CustomMapView = ({
 
   // set boundaries on region change
   useEffect(() => {
-    (async function () {
-      return (
-        mapRef.current != null &&
-        mapRef.current
-          .getMapBoundaries()
-          .then((region) => setCurrentRegionBoundaries(region))
-      );
-    })();
+    mapRef.current != null &&
+      mapRef.current
+        .getMapBoundaries()
+        .then((region) => setCurrentRegionBoundaries(region));
   }, [currentRegion]);
 
   function updateStateAndMapLayers(region) {
