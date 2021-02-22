@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -10,15 +10,32 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import BackButton from 'react-native-vector-icons/Ionicons';
-import FlashMessage from 'react-native-flash-message';
-import commonStyles, {inputAndroid} from '../../Utils/commonStyles';
+import commonStyles, {inputAndroid} from '../Utils/commonStyles';
 import RNPickerSelect from 'react-native-picker-select';
 
-export default function FeedbackModal({navigation}) {
+export default function FeedbackForm({navigation}) {
+  const [areFieldsSet, setAreFieldsSet] = useState(false);
+
+  function validate(values) {
+    const errors = {};
+    if (values.feedback === '' || !values.feedback) {
+      errors.feedback = 'Feedback';
+    }
+    if (values.feedback_type === 'Not Specified' || !values.feedback_type) {
+      errors.feedback_type = 'Feedback type';
+    }
+    if (errors.feedback || errors.feedback_type) {
+      setAreFieldsSet(false);
+    } else {
+      setAreFieldsSet(true);
+    }
+    return errors;
+  }
+
   return (
     <View style={styles.modal}>
       <Formik
-        validateOnChange={false}
+        validate={validate}
         initialValues={{
           feedback_type: 'Not Specified',
           feedback: '',
@@ -35,7 +52,7 @@ export default function FeedbackModal({navigation}) {
               <BackButton name="arrow-back" style={styles.backButton} />
             </TouchableOpacity>
             <View>
-              <Text style={{}}>Please choose type of feedback</Text>
+              <Text style={{}}>Choose type of feedback</Text>
               <Text style={styles.requiredText}>*required</Text>
               <RNPickerSelect
                 useNativeAndroidPickerStyle={false}
@@ -58,23 +75,28 @@ export default function FeedbackModal({navigation}) {
               />
             </View>
             <View>
-              <Text>Anything else you like to add</Text>
+              <Text>Your anonymous feedback</Text>
+              <Text style={styles.requiredText}>*required</Text>
               <TextInput
                 style={styles.textArea}
                 onChangeText={handleChange('feedback')}
                 value={values.feedback}
                 numberOfLines={4}
+                placeholder={'Fill here'}
               />
             </View>
             <View>
               <Pressable>
-                <Button title={'Sumbit'} onPress={handleSubmit} />
+                <Button
+                  title={'Sumbit'}
+                  onPress={handleSubmit}
+                  disabled={!areFieldsSet}
+                />
               </Pressable>
             </View>
           </View>
         )}
       </Formik>
-      <FlashMessage position="top" />
     </View>
   );
 }
@@ -108,7 +130,7 @@ const styles = StyleSheet.create({
   },
   textArea: {
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: commonStyles.containerBackgroundColor.lightGray,
     borderRadius: commonStyles.borderRadius.normal,
     textAlignVertical: 'top',
     paddingBottom: commonStyles.gap[3],

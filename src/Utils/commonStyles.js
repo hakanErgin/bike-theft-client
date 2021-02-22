@@ -7,8 +7,7 @@ const commonStyles = {
   containerBackgroundColor: {
     light: 'white',
     dark: 'black',
-    gray: '#E5E5E5',
-    lightBlue: '#eff1f8',
+    lightGray: '#c9c9c9',
   },
   // can use for margin/padding
   gap: [2, 4, 8, 12, 16, 22, 28, 36],
@@ -23,6 +22,6 @@ export const inputAndroid = {
   borderWidth: 1,
   borderRadius: commonStyles.borderRadius.normal,
   color: 'black',
-  borderColor: 'gray',
+  borderColor: commonStyles.containerBackgroundColor.lightGray,
   paddingRight: commonStyles.gap[6], // to ensure the text is never behind the icon
 };

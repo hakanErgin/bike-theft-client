@@ -4,7 +4,7 @@ import CustomDrawerContent from './Views/MenuContent/CustomDrawerContent';
 import CombinedProviders from './ContextProviders/CombinedProviders';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import FeedbackModal from './Views/ModalContent/FeedbackModal';
+import FeedbackForm from './Views/FeedbackForm';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,7 +24,11 @@ const App = () => {
           drawerContent={DrawerContent}
           gestureHandlerProps={{enabled: false}}>
           <Drawer.Screen name="Map" component={MapContent} />
-          <Drawer.Screen name="Feedback" component={FeedbackModal} />
+          <Drawer.Screen
+            name="Feedback"
+            component={FeedbackForm}
+            options={{unmountOnBlur: true}}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
     </CombinedProviders>
