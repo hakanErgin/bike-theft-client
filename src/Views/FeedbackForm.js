@@ -8,13 +8,34 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
 import BackButton from 'react-native-vector-icons/Ionicons';
 import commonStyles, {inputAndroid} from '../Utils/commonStyles';
 import RNPickerSelect from 'react-native-picker-select';
+import {CREATE_FEEDBACK} from '../Utils/gql';
+import {LoadingView} from '../Utils/commonComponents';
 
 export default function FeedbackForm({navigation}) {
   const [areFieldsSet, setAreFieldsSet] = useState(false);
+  const [submitCreateMutation, {loading: create_loading}] = useMutation(
+    CREATE_FEEDBACK,
+    {
+      onCompleted: (res) => {
+        // console.log(res);
+        navigateBack();
+      },
+    },
+  );
+  function navigateBack() {
+    navigation.goBack();
+  }
+
+  function submitFeedback(values) {
+    submitCreateMutation({
+      variables: {type: values.feedback_type, description: values.feedback},
+    });
+  }
 
   function validate(values) {
     const errors = {};
@@ -32,6 +53,10 @@ export default function FeedbackForm({navigation}) {
     return errors;
   }
 
+  if (create_loading) {
+    return <LoadingView />;
+  }
+
   return (
     <View style={styles.modal}>
       <Formik
@@ -40,15 +65,13 @@ export default function FeedbackForm({navigation}) {
           feedback_type: 'Not Specified',
           feedback: '',
         }}
-        onSubmit={(values) => {
-          console.log(values);
-        }}>
+        onSubmit={submitFeedback}>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
           <View style={styles.form}>
             <Text style={styles.header}>Feedback</Text>
             <TouchableOpacity
               style={styles.backButtonContainer}
-              onPress={() => navigation.goBack()}>
+              onPress={navigateBack}>
               <BackButton name="arrow-back" style={styles.backButton} />
             </TouchableOpacity>
             <View>
