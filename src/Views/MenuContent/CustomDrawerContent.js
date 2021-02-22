@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   SignInButton,
   // CheckUserButton,
@@ -13,18 +13,9 @@ import {
 import LoggedInContent from './Components/LoggedInContent';
 import commonStyles from '../../Utils/commonStyles';
 
-// this needs to be a function
-function DrawerContent(props) {
-  return (
-    // <DrawerContentScrollView {...props}>
-    <CustomDrawerContent {...props} />
-    // </DrawerContentScrollView>
-  );
-}
-
 function LoggedOutContent() {
   return (
-    <View>
+    <View style={styles.loggedOutContent}>
       <Text>Sign in to report a bike theft!</Text>
       <SignInButton />
     </View>
@@ -52,15 +43,24 @@ const CustomDrawerContent = ({navigation}) => {
         <LoggedOutContent />
       )}
       {/* <CheckUserButton /> */}
+      <TouchableOpacity
+        style={styles.feedbackButton}
+        onPress={() => navigation.navigate({name: 'Feedback'})}>
+        <Text>Feedback</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default DrawerContent;
+export default CustomDrawerContent;
 
 const styles = StyleSheet.create({
   drawerContainer: {
     padding: commonStyles.gap[4],
     flex: 1,
   },
+  loggedOutContent: {
+    flex: 1,
+  },
+  feedbackButton: {alignSelf: 'center'},
 });

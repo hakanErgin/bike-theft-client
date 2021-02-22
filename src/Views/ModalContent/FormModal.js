@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Text, View, StyleSheet, Pressable} from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
   CREATE_THEFT,
@@ -107,13 +114,11 @@ const FormModal = ({
           {({handleChange, values, handleSubmit, setFieldValue}) => (
             <View style={styles.form}>
               <Text style={styles.header}>Report a theft</Text>
-              <View style={styles.closeButtonContainer}>
-                <CloseButton
-                  name="close"
-                  onPress={finishAddingTheft}
-                  style={styles.closeButton}
-                />
-              </View>
+              <TouchableOpacity
+                style={styles.closeButtonContainer}
+                onPress={finishAddingTheft}>
+                <CloseButton name="close" style={styles.closeButton} />
+              </TouchableOpacity>
               <FormCarousel>
                 <DateDetails values={values} setFieldValue={setFieldValue} />
                 <BikeDetails>
