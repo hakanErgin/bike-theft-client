@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import MapScreen from './Views/MapContent/MapScreen';
 import CustomDrawerContent from './Views/MenuContent/CustomDrawerContent';
 import CombinedProviders from './ContextProviders/CombinedProviders';

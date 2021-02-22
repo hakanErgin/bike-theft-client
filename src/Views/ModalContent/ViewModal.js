@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
 import {
@@ -189,15 +190,13 @@ const ViewModal = () => {
               />
             )}
           </ScrollView>
-          <View style={styles.closeButtonContainer}>
-            <CloseButton
-              name="close"
-              onPress={() => {
-                setIsViewModalVisible(false);
-              }}
-              style={styles.closeButton}
-            />
-          </View>
+          <TouchableOpacity
+            style={styles.closeButtonContainer}
+            onPress={() => {
+              setIsViewModalVisible(false);
+            }}>
+            <CloseButton name="close" style={styles.closeButton} />
+          </TouchableOpacity>
         </View>
       </Modal>
     );
