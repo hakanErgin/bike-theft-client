@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
-import Crosshair from 'react-native-vector-icons/MaterialCommunityIcons';
 import Check from 'react-native-vector-icons/AntDesign';
 import Cancel from 'react-native-vector-icons/AntDesign';
 import commonStyles from '../../../Utils/commonStyles';
@@ -33,9 +32,6 @@ export default function CrosshairOverlay({
           the screen.
         </Text>
       </View>
-      <View style={styles.crosshairContainer}>
-        <Crosshair name="crosshairs" style={styles.crosshair} />
-      </View>
       <View style={styles.bottomButtonsContainer}>
         <TouchableOpacity
           style={styles.bottomButtons}
@@ -59,29 +55,19 @@ const styles = StyleSheet.create({
     borderRadius: commonStyles.borderRadius.small,
     backgroundColor: commonStyles.containerBackgroundColor.light,
     elevation: 1,
-    flex: 0,
   },
   topInfoText: {textAlign: 'center'},
-  crosshair: {
-    fontSize: commonStyles.iconSize.xl,
-    color: commonStyles.iconColor.darkRed,
-  },
-  crosshairContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
   buttonFont: {
     fontSize: commonStyles.iconSize.xl,
     color: commonStyles.iconColor.darkRed,
   },
   bottomButtonsContainer: {
-    flex: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   bottomButtons: {
     borderRadius: commonStyles.borderRadius.small,
     backgroundColor: commonStyles.containerBackgroundColor.light,
+    padding: commonStyles.gap[1],
   },
 });

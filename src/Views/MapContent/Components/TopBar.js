@@ -8,6 +8,7 @@ import ClearIcon from 'react-native-vector-icons/MaterialIcons';
 import MenuButton from './MenuButton';
 import MyLocationButton from './MyLocationButton';
 import CrosshairOverlay from '../../ModalContent/Components/CrosshairOverlay';
+import Crosshair from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function TopBar({
   mapRef,
@@ -28,7 +29,10 @@ export default function TopBar({
   }
   return (
     <View style={styles.topBarContainer} pointerEvents="box-none">
-      <View style={{flex: 0, flexDirection: 'row'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+        }}>
         <MenuButton navigation={navigation} />
         <GooglePlacesAutocomplete
           styles={searchBarStyles}
@@ -72,18 +76,24 @@ export default function TopBar({
         />
       </View>
       {isAddingNewTheft && (
-        <CrosshairOverlay
-          currentRegion={currentRegion}
-          setSelectedRegion={setSelectedRegion}
-          setIsFormModalVisible={setIsFormModalVisible}
-        />
+        <>
+          <CrosshairOverlay
+            currentRegion={currentRegion}
+            setSelectedRegion={setSelectedRegion}
+            setIsFormModalVisible={setIsFormModalVisible}
+          />
+          <View style={styles.crosshairContainer}>
+            <Crosshair name="crosshairs" style={styles.crosshair} />
+          </View>
+        </>
       )}
     </View>
   );
 }
 const searchBarStyles = {
   textInputContainer: {
-    alignItems: 'center',
+    marginHorizontal: 12,
+    marginTop: 4,
   },
 };
 
@@ -91,13 +101,12 @@ const styles = StyleSheet.create({
   topBarContainer: {
     zIndex: 10,
     justifyContent: 'space-between',
-    flex: 0,
     flexDirection: 'column',
     position: 'absolute',
     top: commonStyles.gap[3],
-    right: commonStyles.gap[3],
-    left: commonStyles.gap[3],
-    bottom: commonStyles.gap[6],
+    right: commonStyles.gap[1],
+    left: commonStyles.gap[1],
+    bottom: commonStyles.gap[1],
   },
   clearIcon: {
     fontSize: commonStyles.iconSize.large,
@@ -105,5 +114,18 @@ const styles = StyleSheet.create({
     right: commonStyles.gap[2],
     color: commonStyles.iconColor.lightGrey,
     backgroundColor: commonStyles.containerBackgroundColor.light,
+  },
+  crosshair: {
+    fontSize: commonStyles.iconSize.xl,
+    color: commonStyles.iconColor.darkRed,
+  },
+  crosshairContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: commonStyles.gap[3],
+    right: commonStyles.gap[3],
+    left: commonStyles.gap[3],
+    bottom: commonStyles.gap[3],
   },
 });

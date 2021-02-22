@@ -20,7 +20,13 @@ const MyLocationButton = React.forwardRef(
       }
     }
     return (
-      <TouchableOpacity onPress={() => goToLocation()}>
+      <TouchableOpacity
+        onPress={() => goToLocation()}
+        style={{
+          backgroundColor: commonStyles.containerBackgroundColor.light,
+          borderRadius: commonStyles.borderRadius.normal,
+          marginVertical: 4,
+        }}>
         <GpsIcon name="crosshairs-gps" style={styles.gpsIcon} />
       </TouchableOpacity>
     );
