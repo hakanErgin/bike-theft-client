@@ -93,6 +93,15 @@ export const DELETE_THEFT = gql`
   }
 `;
 
+export const CREATE_FEEDBACK = gql`
+  mutation($type: String!, $description: String!) {
+    createFeedback(type: $type, description: $description) {
+      type
+      description
+    }
+  }
+`;
+
 export const SINGLE_FILE_UPLOAD = gql`
   mutation($file: Upload!) {
     singleUpload(file: $file) {
