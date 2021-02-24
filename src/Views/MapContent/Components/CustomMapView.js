@@ -6,7 +6,7 @@ import setCurrentPosition from '../../../Utils/currentPositionHandler';
 import {StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
 import InfoBar from './InfoBar';
-import CrosshairOverlay from '../../ModalContent/Components/CrosshairOverlay';
+import CrosshairOverlay from './CrosshairOverlay';
 import SearchBar from './SearchBar';
 import MenuButton from './MenuButton';
 import MapLayerOverlay from './MapLayerOverlay';
