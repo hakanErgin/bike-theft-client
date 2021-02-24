@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: 'gray',
+    borderColor: commonStyles.containerBackgroundColor.lightGray,
   },
   calendarInputText: {
     fontSize: commonStyles.fontSize.normal,
