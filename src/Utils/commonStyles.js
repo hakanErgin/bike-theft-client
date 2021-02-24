@@ -7,7 +7,9 @@ const commonStyles = {
   containerBackgroundColor: {
     light: 'white',
     dark: 'black',
+    gray: '#E5E5E5',
     lightGray: '#c9c9c9',
+    lightBlue: '#eff1f8',
   },
   // can use for margin/padding
   gap: [2, 4, 8, 12, 16, 22, 28, 36],
