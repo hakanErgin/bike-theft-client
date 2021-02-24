@@ -111,7 +111,7 @@ const CustomMapView = ({
           setIsFormModalVisible={setIsFormModalVisible}
         />
       )}
-      <MenuButton navigation={navigation} />
+      <MenuButton navigation={navigation} isAddingNewTheft={isAddingNewTheft} />
       <SearchBar mapRef={mapRef} />
       {visibleMapLayer !== 'heatmap' && !isAddingNewTheft && (
         <InfoBar

@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
   bullets: {
     position: 'absolute',
     bottom: 0,
+    alignSelf: 'center',
     flexDirection: 'row',
   },
   bullet: {
