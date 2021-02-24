@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     left: commonStyles.gap[3],
     backgroundColor: commonStyles.containerBackgroundColor.light,
     borderRadius: commonStyles.borderRadius.small,
+    elevation: 1,
   },
   menuIcon: {
     fontSize: commonStyles.iconSize.xl,

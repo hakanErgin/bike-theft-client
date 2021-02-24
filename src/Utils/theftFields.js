@@ -3,7 +3,7 @@ const theftFields = {
     {
       type: {
         required: true,
-        Question: 'Please choose a type of bike',
+        Question: 'Type of bike',
         Options: [
           'Road',
           'City',
@@ -19,7 +19,7 @@ const theftFields = {
     {
       brand: {
         required: true,
-        Question: 'Please choose a bike brand',
+        Question: 'Brand of bike',
         Options: [
           'Bianchi',
           'Cannondale',
@@ -57,7 +57,7 @@ const theftFields = {
     {
       color: {
         required: true,
-        Question: 'Please choose a color',
+        Question: 'Color',
         Options: [
           'Black',
           'White',
@@ -76,7 +76,7 @@ const theftFields = {
     {
       year: {
         required: false,
-        Question: 'Please choose production year/era',
+        Question: 'Production year/era',
         Options: [
           '2020-Now',
           '2015-2019',
@@ -94,14 +94,14 @@ const theftFields = {
     {
       frame_size: {
         required: false,
-        Question: 'Please choose a frame size, in CM (centimeters)',
+        Question: 'Frame size (in CM)',
         Options: [46, 48, 50, 52, 54, 56, 58, 60, 62, 64],
       },
     },
     {
       wheel_size: {
         required: false,
-        Question: 'Please choose wheel size, in IN (inches)',
+        Question: 'Wheel size (in IN)',
         Options: [16, 20, 24, 26, 27, 28, 29],
       },
     },
@@ -109,18 +109,18 @@ const theftFields = {
   date_time: {
     date: {
       required: true,
-      Question: 'Please choose the date your bike was stolen at',
+      Question: 'Date your bike was stolen on',
       Options: {},
     },
     time: {
       required: false,
-      Question: 'Please choose the time of the day your bike was stolen at',
+      Question: 'Time of the day your bike was stolen at',
       Options: ['Day-time/During the day', 'Night-time/During the night'],
     },
   },
   location: {
     required: true,
-    Question: 'Please choose the location your bike was stolen at',
+    Question: 'Location your bike was stolen at',
     Options: {longitude: 123, lattitude: 1231},
   },
 };

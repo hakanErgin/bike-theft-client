@@ -56,6 +56,7 @@ const searchBarStyles = {
   textInputContainer: {
     alignItems: 'center',
   },
+  textInput: {elevation: 1},
 };
 
 const styles = StyleSheet.create({

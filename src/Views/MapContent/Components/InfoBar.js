@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     borderRadius: commonStyles.borderRadius.normal,
-    elevation: 1,
+
+    elevation: 0.25,
   },
   trafficLight: {
     borderRadius: commonStyles.borderRadius.normal,

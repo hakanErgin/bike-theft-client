@@ -140,6 +140,7 @@ const ViewModal = () => {
     GET_THEFT,
     {
       variables: {id: selectedTheftId},
+      onCompleted: (data) => console.log(data),
     },
   );
 

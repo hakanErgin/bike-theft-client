@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     bottom: commonStyles.gap[3],
     borderRadius: commonStyles.borderRadius.small,
     backgroundColor: commonStyles.containerBackgroundColor.light,
+    elevation: 1,
   },
   cancel: {
     fontSize: commonStyles.iconSize.xl,
@@ -94,5 +95,6 @@ const styles = StyleSheet.create({
     bottom: commonStyles.gap[3],
     borderRadius: commonStyles.borderRadius.small,
     backgroundColor: commonStyles.containerBackgroundColor.light,
+    elevation: 1,
   },
 });
