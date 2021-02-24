@@ -44,9 +44,7 @@ export default InfoBar;
 const styles = StyleSheet.create({
   statusBarContainer: {
     position: 'absolute',
-    left: 100,
-    right: 100,
-    maxWidth: 250,
+    alignSelf: 'center',
     bottom: commonStyles.gap[3],
     padding: commonStyles.gap[2],
     backgroundColor: commonStyles.containerBackgroundColor.light,
@@ -54,12 +52,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     borderRadius: commonStyles.borderRadius.normal,
+    elevation: 1,
   },
   trafficLight: {
     borderRadius: commonStyles.borderRadius.normal,
     backgroundColor: 'red',
-    zIndex: 10,
-    marginLeft: commonStyles.gap[5],
+    marginLeft: commonStyles.gap[3],
     width: 20,
     height: 20,
   },
