@@ -19,8 +19,7 @@ export default commonStyles;
 
 export const inputAndroid = {
   fontSize: commonStyles.fontSize.normal,
-  paddingHorizontal: commonStyles.gap[2],
-  paddingVertical: commonStyles.gap[2],
+  padding: commonStyles.gap[2],
   borderWidth: 1,
   borderRadius: commonStyles.borderRadius.normal,
   color: 'black',

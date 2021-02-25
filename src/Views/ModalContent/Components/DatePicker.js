@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import CalendarIcon from 'react-native-vector-icons/Feather';
 import commonStyles from '../../../Utils/commonStyles';
@@ -22,16 +22,12 @@ const DatePicker = ({setFieldValue, values}) => {
 
   return (
     <View>
-      <View style={styles.calendarInputContainer}>
+      <Pressable style={styles.calendarInputContainer} onPress={showDatePicker}>
         <Text style={styles.calendarInputText}>
           {values.date_details.date.toDateString()}
         </Text>
-        <CalendarIcon
-          name="calendar"
-          onPress={showDatePicker}
-          style={styles.calendarIcon}
-        />
-      </View>
+        <CalendarIcon name="calendar" style={styles.calendarIcon} />
+      </Pressable>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
@@ -48,10 +44,9 @@ const styles = StyleSheet.create({
   calendarInputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    padding: commonStyles.gap[2],
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: commonStyles.borderRadius.normal,
     borderColor: commonStyles.containerBackgroundColor.lightGray,
   },
   calendarInputText: {
