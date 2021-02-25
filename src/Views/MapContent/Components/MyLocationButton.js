@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     right: commonStyles.gap[3],
     backgroundColor: 'white',
     borderRadius: 5,
+    elevation: 1,
   },
   gpsIcon: {
     fontSize: commonStyles.iconSize.xl,

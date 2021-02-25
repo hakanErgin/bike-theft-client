@@ -24,6 +24,9 @@ export const GET_USERS_THEFTS = gql`
     getUsersReportedThefts(id_token: $id_token) {
       _id
       created_at
+      bike {
+        brand
+      }
       region {
         latitude
         longitude

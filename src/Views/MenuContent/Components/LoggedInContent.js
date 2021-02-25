@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     fontSize: commonStyles.fontSize.large,
   },
   btnContainer: {
-    marginVertical: 5,
-    paddingHorizontal: 20,
+    marginVertical: commonStyles.gap[1],
+    paddingHorizontal: commonStyles.gap[4],
   },
   nameAndLogoutBtnContainer: {
     flexDirection: 'row',

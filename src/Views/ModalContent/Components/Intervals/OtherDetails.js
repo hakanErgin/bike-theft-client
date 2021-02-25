@@ -5,12 +5,12 @@ import commonStyles from '../../../../Utils/commonStyles';
 export const OtherDetails = ({handleChange, values}) => {
   return (
     <View style={styles.slide}>
-      <Text>Anything else you like to add</Text>
+      <Text>Anything else you like to add..</Text>
       <TextInput
         style={styles.textArea}
         onChangeText={handleChange('comments')}
         value={values.comments}
-        numberOfLines={4}
+        numberOfLines={8}
         placeholder="Comments"
       />
     </View>
@@ -22,7 +22,7 @@ export default OtherDetails;
 const styles = StyleSheet.create({
   textArea: {
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: commonStyles.containerBackgroundColor.gray,
     borderRadius: commonStyles.borderRadius.normal,
     textAlignVertical: 'top',
     paddingBottom: commonStyles.gap[3],

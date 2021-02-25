@@ -54,11 +54,9 @@ export function UsersReportedThefts({currentUser}) {
             </Text>
             <ScrollView>
               {usersReportedThefts.map((theft, index) => {
-                // date was converted to string when stored in state in the parent
-                const dateCreated = new Date(theft.created_at);
                 return (
                   <View key={theft._id} style={styles.reportRows}>
-                    <Text>Reported on: {dateCreated.toDateString()} - </Text>
+                    <Text>{theft.bike.brand} - </Text>
                     <ViewButton theftId={theft._id} />
                   </View>
                 );
@@ -91,14 +89,15 @@ export function UsersReportedThefts({currentUser}) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
-    paddingVertical: commonStyles.gap[6],
-    borderRadius: commonStyles.borderRadius.large,
-    minHeight: '50%',
+    paddingVertical: commonStyles.gap[5],
+    borderRadius: commonStyles.borderRadius.xl,
+    margin: commonStyles.gap[3],
     justifyContent: 'space-evenly',
+    elevation: 0.25,
   },
   header: {
     marginBottom: commonStyles.gap[3],
-    fontSize: 18,
+    fontSize: commonStyles.fontSize.normal,
     color: commonStyles.iconColor.darkRed,
   },
   reportRows: {

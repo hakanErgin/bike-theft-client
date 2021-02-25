@@ -60,3 +60,6 @@ buck-out/
 debug.log
 .env
 .vscode/
+
+android/app/debug.keystore.old
+android/app/debug.keystore

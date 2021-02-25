@@ -131,9 +131,7 @@ const FormModal = ({
                 <OtherDetails handleChange={handleChange} values={values} />
               </FormCarousel>
               <View>
-                <Pressable>
-                  <Button title={'yes'} onPress={handleSubmit} />
-                </Pressable>
+                <Button title={'Submit'} onPress={handleSubmit} />
               </View>
             </View>
           )}
@@ -154,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: commonStyles.borderRadius.large,
     padding: commonStyles.gap[3],
   },
-  form: {flex: 1, justifyContent: 'space-around'},
+  form: {flex: 1, justifyContent: 'center'},
   header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
   closeButtonContainer: {
     flex: 1,

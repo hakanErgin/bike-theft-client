@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     top: 75,
-    paddingHorizontal: commonStyles.gap[1],
-    maxWidth: '90%',
+    marginHorizontal: commonStyles.gap[6],
+    paddingVertical: commonStyles.gap[1],
     borderRadius: commonStyles.borderRadius.small,
     backgroundColor: commonStyles.containerBackgroundColor.light,
   },
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     bottom: commonStyles.gap[3],
     borderRadius: commonStyles.borderRadius.small,
     backgroundColor: commonStyles.containerBackgroundColor.light,
+    elevation: 1,
   },
   cancel: {
     fontSize: commonStyles.iconSize.xl,
@@ -94,5 +95,6 @@ const styles = StyleSheet.create({
     bottom: commonStyles.gap[3],
     borderRadius: commonStyles.borderRadius.small,
     backgroundColor: commonStyles.containerBackgroundColor.light,
+    elevation: 1,
   },
 });

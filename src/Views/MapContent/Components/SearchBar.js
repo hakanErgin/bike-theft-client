@@ -56,6 +56,7 @@ const searchBarStyles = {
   textInputContainer: {
     alignItems: 'center',
   },
+  textInput: {elevation: 1},
 };
 
 const styles = StyleSheet.create({
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     top: commonStyles.gap[3],
-    width: '60%',
+    width: '65%',
   },
   clearIcon: {
     fontSize: commonStyles.iconSize.large,
