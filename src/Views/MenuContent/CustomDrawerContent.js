@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   SignInButton,
-  // CheckUserButton,
   isSignedInToGoogle,
+  signUserInSilently,
+  signUserOut,
 } from '../../Utils/GoogleSignin';
 import {
   useIsUserLoggedIn,
@@ -21,15 +22,28 @@ function LoggedOutContent() {
     </View>
   );
 }
-
+// this is an entry point to the app
 const CustomDrawerContent = ({navigation}) => {
+  const [user, setUser] = useState();
   const isUserLoggedIn = useIsUserLoggedIn();
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
   // decide what to show in drawer
   useEffect(() => {
-    isSignedInToGoogle().then((res) => {
-      if (res === !isUserLoggedIn) {
-        setIsUserLoggedIn(res);
+    isSignedInToGoogle().then((isSignedIn) => {
+      if (isSignedIn === true) {
+        signUserInSilently()
+          .then((userData) => {
+            setUser(userData);
+            setIsUserLoggedIn(isSignedIn);
+          })
+          .catch((err) => {
+            console.log('signinsilent err ' + {err});
+            signUserOut().then(() => {
+              setIsUserLoggedIn(false);
+            });
+          });
+      } else if (isSignedIn === false) {
+        setIsUserLoggedIn(isSignedIn);
       }
     });
   }, [isUserLoggedIn, setIsUserLoggedIn]);
@@ -37,12 +51,11 @@ const CustomDrawerContent = ({navigation}) => {
   return (
     <View style={styles.drawerContainer}>
       <Text>Welcome,</Text>
-      {isUserLoggedIn ? (
-        <LoggedInContent navigation={navigation} />
+      {isUserLoggedIn && user ? (
+        <LoggedInContent navigation={navigation} userData={user} />
       ) : (
         <LoggedOutContent />
       )}
-      {/* <CheckUserButton /> */}
       <TouchableOpacity
         style={styles.feedbackButton}
         onPress={() => navigation.navigate({name: 'Feedback'})}>

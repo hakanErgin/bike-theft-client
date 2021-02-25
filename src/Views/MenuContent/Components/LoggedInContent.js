@@ -1,39 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Button, Text, StyleSheet} from 'react-native';
 import {useToggleIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
-import {LogoutButton, signUserInSilently} from '../../../Utils/GoogleSignin';
+import {LogoutButton} from '../../../Utils/GoogleSignin';
 import {UsersReportedThefts} from './UsersReportsList';
 import commonStyles from '../../../Utils/commonStyles';
 import {LoadingView} from '../../../Utils/commonComponents';
 
-export default function LoggedInContent({navigation}) {
-  const [currentUser, setCurrentUser] = useState();
+export default function LoggedInContent({navigation, userData}) {
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
-
-  useEffect(() => {
-    signUserInSilently()
-      .then((userData) => {
-        setCurrentUser(userData);
-      })
-      .catch((err) => console.log('signUserInSilently' + err));
-  }, []);
 
   function isAddingNewTheftController() {
     navigation.toggleDrawer();
     setIsAddingNewTheft((val) => !val);
   }
-  if (currentUser) {
+  if (userData) {
     return (
       <View style={styles.loggedInContentContainer}>
         <View style={styles.nameAndLogoutBtnContainer}>
-          <Text style={styles.username}>{currentUser.user.name}</Text>
+          <Text style={styles.username}>{userData.user.name}</Text>
           <LogoutButton
             setIsAddingNewTheft={setIsAddingNewTheft}
             color={commonStyles.iconColor.darkRed}
             size={commonStyles.iconSize.large}
           />
         </View>
-        <UsersReportedThefts currentUser={currentUser} />
+        <UsersReportedThefts currentUser={userData} />
         <View style={styles.btnContainer}>
           <Button title={'REPORT THEFT'} onPress={isAddingNewTheftController} />
         </View>
