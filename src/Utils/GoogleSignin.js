@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {TouchableOpacity, Alert} from 'react-native';
 import {
   GoogleSignin,

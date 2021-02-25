@@ -1,12 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Button,
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  TouchableOpacity,
-} from 'react-native';
+import {Button, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
   CREATE_THEFT,
