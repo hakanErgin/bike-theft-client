@@ -1,14 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import MapScreen from './Views/MapContent/MapScreen';
 import CustomDrawerContent from './Views/MenuContent/CustomDrawerContent';
 import CombinedProviders from './ContextProviders/CombinedProviders';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import FeedbackForm from './Views/FeedbackForm';
+import {configureGoogleSignin} from './Utils/GoogleSignin';
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+  useEffect(() => {
+    configureGoogleSignin();
+  }, []);
+
   function MapContent(props) {
     return <MapScreen {...props} />;
   }

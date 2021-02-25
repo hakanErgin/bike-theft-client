@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {TouchableOpacity, Alert} from 'react-native';
 import {
   GoogleSignin,
@@ -13,10 +13,6 @@ import SignOutIcon from 'react-native-vector-icons/Entypo';
 
 export const SignInButton = () => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
-
-  useEffect(() => {
-    configureGoogle();
-  }, []);
 
   const [createUserOrSignInMutation] = useMutation(CREATE_USER_OR_SIGN_IN, {
     onError: (err) => console.log(err),
@@ -88,6 +84,7 @@ export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
 };
 
 // helper function
+
 export async function isSignedInToGoogle() {
   return await GoogleSignin.isSignedIn();
 }
@@ -101,11 +98,15 @@ export async function getToken() {
 }
 
 export async function signUserInSilently() {
-  configureGoogle();
   return await GoogleSignin.signInSilently();
 }
 
-function configureGoogle() {
+export async function signUserOut() {
+  await GoogleSignin.revokeAccess();
+  await GoogleSignin.signOut();
+}
+
+export function configureGoogleSignin() {
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
   });
