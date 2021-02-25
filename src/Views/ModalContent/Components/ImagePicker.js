@@ -15,13 +15,13 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
     };
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        console.log('User cancelled camera picker');
+        // console.log('User cancelled camera picker');
         return;
       } else if (response.errorCode === 'permission') {
-        console.log('Permission not satisfied');
+        // console.log('Permission not satisfied');
         return;
       } else if (response.errorCode === 'others') {
-        console.log(response.errorMessage);
+        // console.log(response.errorMessage);
         return;
       }
       const file = new ReactNativeFile({
