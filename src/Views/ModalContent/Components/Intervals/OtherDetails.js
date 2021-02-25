@@ -22,7 +22,7 @@ export default OtherDetails;
 const styles = StyleSheet.create({
   textArea: {
     borderWidth: 1,
-    borderColor: commonStyles.containerBackgroundColor.gray,
+    borderColor: commonStyles.containerBackgroundColor.lightGray,
     borderRadius: commonStyles.borderRadius.normal,
     textAlignVertical: 'top',
     paddingBottom: commonStyles.gap[3],
