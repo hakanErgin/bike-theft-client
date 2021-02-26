@@ -133,7 +133,6 @@ const ViewModal = () => {
   //#region
 
   useEffect(() => {
-    console.log(currentUser);
     if (currentUser) {
       setToken(currentUser.idToken);
       setViewingUserId(currentUser.user.id);
