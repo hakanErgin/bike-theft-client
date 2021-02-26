@@ -17,7 +17,6 @@ import {
   GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
-import {useIsUserLoggedIn} from '../../ContextProviders/IsUserLoggedInContext';
 import {LoadingView, ErrorView} from '../../Utils/commonComponents';
 
 import {
@@ -26,8 +25,8 @@ import {
 } from '../../ContextProviders/IsViewModalVisibleContext';
 import Modal from 'react-native-modal';
 import commonStyles from '../../Utils/commonStyles';
-import {getCurrentUser, getToken} from '../../Utils/GoogleSignin';
 import CloseButton from 'react-native-vector-icons/MaterialIcons';
+import {useCurrentUser} from '../../ContextProviders/UserContext';
 
 function FieldRow({field, value}) {
   return (
@@ -86,7 +85,12 @@ function OtherDetailsView({theftData}) {
   );
 }
 
-const DeleteButton = ({submitDeleteMutation, selectedTheftId, get_data}) => {
+const DeleteButton = ({
+  submitDeleteMutation,
+  selectedTheftId,
+  get_data,
+  token,
+}) => {
   const showConfirmationAlert = (proceedAction) =>
     Alert.alert(
       'Confirmation',
@@ -101,10 +105,9 @@ const DeleteButton = ({submitDeleteMutation, selectedTheftId, get_data}) => {
     );
 
   async function deleteTheft() {
-    const currentToken = await getToken();
     submitDeleteMutation({
       variables: {
-        id_token: currentToken.idToken,
+        id_token: token,
         theftId: selectedTheftId,
         theftUserId: get_data.getTheft.userId,
       },
@@ -125,18 +128,18 @@ const ViewModal = () => {
   const isViewModalVisible = useIsViewModalVisible();
   const setIsViewModalVisible = useToggleIsViewModalVisible();
   const selectedTheftId = useSelectedTheftId();
-  const isUserLoggedIn = useIsUserLoggedIn();
-
-  useEffect(() => {
-    isUserLoggedIn &&
-      (async function () {
-        getToken().then((result) => {
-          setToken(result.idToken);
-        });
-      })();
-  }, [isUserLoggedIn]);
+  const currentUser = useCurrentUser();
 
   //#region
+
+  useEffect(() => {
+    console.log(currentUser);
+    if (currentUser) {
+      setToken(currentUser.idToken);
+      setViewingUserId(currentUser.user.id);
+    }
+  }, [currentUser]);
+
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(
     GET_THEFT,
     {
@@ -158,11 +161,6 @@ const ViewModal = () => {
       onError: (err) => console.log(err),
     },
   );
-
-  useEffect(() => {
-    isUserLoggedIn &&
-      getCurrentUser().then((res) => setViewingUserId(res.user.id));
-  }, [isUserLoggedIn]);
 
   if (get_loading || delete_loading) {
     return <LoadingView />;
@@ -188,6 +186,7 @@ const ViewModal = () => {
                 submitDeleteMutation={submitDeleteMutation}
                 selectedTheftId={selectedTheftId}
                 get_data={get_data}
+                token={token}
               />
             )}
           </ScrollView>

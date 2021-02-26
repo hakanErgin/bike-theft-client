@@ -52,7 +52,12 @@ export const SignInButton = () => {
   );
 };
 
-export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
+export const LogoutButton = ({
+  setIsAddingNewTheft,
+  setCurrentUser,
+  size,
+  color,
+}) => {
   const showConfirmationAlert = (proceedAction) =>
     Alert.alert(
       'Confirmation',
@@ -71,7 +76,11 @@ export const LogoutButton = ({setIsAddingNewTheft, size, color}) => {
     try {
       setIsAddingNewTheft(false);
       await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut().then(() => setIsUserLoggedIn(false));
+      await GoogleSignin.signOut()
+        .then(() => setIsUserLoggedIn(false))
+        .then(() => {
+          setCurrentUser(null);
+        });
     } catch (error) {
       console.log(error);
     }

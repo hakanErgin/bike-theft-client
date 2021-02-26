@@ -5,11 +5,15 @@ import {LogoutButton} from '../../../Utils/GoogleSignin';
 import {UsersReportedThefts} from './UsersReportsList';
 import commonStyles from '../../../Utils/commonStyles';
 import {LoadingView} from '../../../Utils/commonComponents';
-import {useCurrentUser} from '../../../ContextProviders/UserContext';
+import {
+  useCurrentUser,
+  useSetCurrentUser,
+} from '../../../ContextProviders/UserContext';
 
 export default function LoggedInContent({navigation}) {
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
   const currentUser = useCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
 
   function isAddingNewTheftController() {
     navigation.toggleDrawer();
@@ -22,6 +26,7 @@ export default function LoggedInContent({navigation}) {
           <Text style={styles.username}>{currentUser.user.name}</Text>
           <LogoutButton
             setIsAddingNewTheft={setIsAddingNewTheft}
+            setCurrentUser={setCurrentUser}
             color={commonStyles.iconColor.darkRed}
             size={commonStyles.iconSize.large}
           />
