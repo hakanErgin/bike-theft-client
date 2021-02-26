@@ -128,12 +128,13 @@ const ViewModal = () => {
   const isUserLoggedIn = useIsUserLoggedIn();
 
   useEffect(() => {
-    (async function () {
-      getToken().then((result) => {
-        setToken(result.idToken);
-      });
-    })();
-  }, []);
+    isUserLoggedIn &&
+      (async function () {
+        getToken().then((result) => {
+          setToken(result.idToken);
+        });
+      })();
+  }, [isUserLoggedIn]);
 
   //#region
   const {loading: get_loading, error: get_error, data: get_data} = useQuery(

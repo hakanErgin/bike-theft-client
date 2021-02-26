@@ -5,26 +5,28 @@ import {LogoutButton} from '../../../Utils/GoogleSignin';
 import {UsersReportedThefts} from './UsersReportsList';
 import commonStyles from '../../../Utils/commonStyles';
 import {LoadingView} from '../../../Utils/commonComponents';
+import {useCurrentUser} from '../../../ContextProviders/UserContext';
 
-export default function LoggedInContent({navigation, userData}) {
+export default function LoggedInContent({navigation}) {
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
+  const currentUser = useCurrentUser();
 
   function isAddingNewTheftController() {
     navigation.toggleDrawer();
     setIsAddingNewTheft((val) => !val);
   }
-  if (userData) {
+  if (currentUser) {
     return (
       <View style={styles.loggedInContentContainer}>
         <View style={styles.nameAndLogoutBtnContainer}>
-          <Text style={styles.username}>{userData.user.name}</Text>
+          <Text style={styles.username}>{currentUser.user.name}</Text>
           <LogoutButton
             setIsAddingNewTheft={setIsAddingNewTheft}
             color={commonStyles.iconColor.darkRed}
             size={commonStyles.iconSize.large}
           />
         </View>
-        <UsersReportedThefts currentUser={userData} />
+        <UsersReportedThefts currentUser={currentUser} />
         <View style={styles.btnContainer}>
           <Button title={'REPORT THEFT'} onPress={isAddingNewTheftController} />
         </View>

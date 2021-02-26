@@ -13,6 +13,10 @@ import {
 // import {DrawerContentScrollView} from '@react-navigation/drawer';
 import LoggedInContent from './Components/LoggedInContent';
 import commonStyles from '../../Utils/commonStyles';
+import {
+  useSetCurrentUser,
+  useCurrentUser,
+} from '../../ContextProviders/UserContext';
 
 function LoggedOutContent() {
   return (
@@ -24,7 +28,9 @@ function LoggedOutContent() {
 }
 // this is an entry point to the app
 const CustomDrawerContent = ({navigation}) => {
-  const [user, setUser] = useState();
+  const setCurrentUser = useSetCurrentUser();
+  const currentUser = useCurrentUser();
+
   const isUserLoggedIn = useIsUserLoggedIn();
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
   // decide what to show in drawer
@@ -33,11 +39,11 @@ const CustomDrawerContent = ({navigation}) => {
       if (isSignedIn === true) {
         signUserInSilently()
           .then((userData) => {
-            setUser(userData);
+            setCurrentUser(userData);
             setIsUserLoggedIn(isSignedIn);
           })
           .catch((err) => {
-            console.log('signinsilent err ' + {err});
+            console.log('signinsilent err ' + err);
             signUserOut().then(() => {
               setIsUserLoggedIn(false);
             });
@@ -46,13 +52,14 @@ const CustomDrawerContent = ({navigation}) => {
         setIsUserLoggedIn(isSignedIn);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUserLoggedIn, setIsUserLoggedIn]);
 
   return (
     <View style={styles.drawerContainer}>
       <Text>Welcome,</Text>
-      {isUserLoggedIn && user ? (
-        <LoggedInContent navigation={navigation} userData={user} />
+      {isUserLoggedIn && currentUser ? (
+        <LoggedInContent navigation={navigation} />
       ) : (
         <LoggedOutContent />
       )}

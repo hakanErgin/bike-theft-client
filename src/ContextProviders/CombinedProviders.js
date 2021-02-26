@@ -7,6 +7,7 @@ import {IsAddingNewTheftProvider} from './IsAddingNewTheftContext';
 import {IsUserLoggedInProvider} from './IsUserLoggedInContext';
 import {SelectedTheftIdProvider} from './SelectedTheftIdContext';
 import {IsViewModalVisibleProvider} from './IsViewModalVisibleContext';
+import {CurrentUserProvider} from './UserContext';
 
 const client = new ApolloClient({
   uri: GRAPHQL_REMOTE_URI,
@@ -35,13 +36,15 @@ export const mediaClient = new ApolloClient({
 const CombinedProviders = ({children}) => {
   return (
     <ApolloProvider client={client}>
-      <IsUserLoggedInProvider>
-        <SelectedTheftIdProvider>
-          <IsViewModalVisibleProvider>
-            <IsAddingNewTheftProvider>{children}</IsAddingNewTheftProvider>
-          </IsViewModalVisibleProvider>
-        </SelectedTheftIdProvider>
-      </IsUserLoggedInProvider>
+      <CurrentUserProvider>
+        <IsUserLoggedInProvider>
+          <SelectedTheftIdProvider>
+            <IsViewModalVisibleProvider>
+              <IsAddingNewTheftProvider>{children}</IsAddingNewTheftProvider>
+            </IsViewModalVisibleProvider>
+          </SelectedTheftIdProvider>
+        </IsUserLoggedInProvider>
+      </CurrentUserProvider>
     </ApolloProvider>
   );
 };
