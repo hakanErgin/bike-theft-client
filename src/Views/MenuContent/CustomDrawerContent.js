@@ -21,7 +21,11 @@ import {
 function LoggedOutContent() {
   return (
     <View style={styles.loggedOutContent}>
-      <Text>Sign in to report a bike theft!</Text>
+      <View>
+        <Text>You can sign in to report a bike theft,</Text>
+        <Text>or close this menu and view reported bike thefts on the map</Text>
+        <Text>More to come..</Text>
+      </View>
       <SignInButton />
     </View>
   );
@@ -46,10 +50,12 @@ const CustomDrawerContent = ({navigation}) => {
             console.log('signinsilent err ' + err);
             signUserOut().then(() => {
               setIsUserLoggedIn(false);
+              navigation.openDrawer();
             });
           });
       } else if (isSignedIn === false) {
         setIsUserLoggedIn(isSignedIn);
+        navigation.openDrawer();
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +63,7 @@ const CustomDrawerContent = ({navigation}) => {
 
   return (
     <View style={styles.drawerContainer}>
-      <Text>Welcome,</Text>
+      <Text>Welcome</Text>
       {isUserLoggedIn && currentUser ? (
         <LoggedInContent navigation={navigation} />
       ) : (
@@ -66,7 +72,7 @@ const CustomDrawerContent = ({navigation}) => {
       <TouchableOpacity
         style={styles.feedbackButton}
         onPress={() => navigation.navigate({name: 'Feedback'})}>
-        <Text>Feedback</Text>
+        <Text>Give feedback!</Text>
       </TouchableOpacity>
     </View>
   );
@@ -81,6 +87,8 @@ const styles = StyleSheet.create({
   },
   loggedOutContent: {
     flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   feedbackButton: {alignSelf: 'center'},
 });
