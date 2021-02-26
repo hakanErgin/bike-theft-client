@@ -15,8 +15,8 @@ import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheft
 import CloseButton from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
-import {getToken} from '../../Utils/GoogleSignin';
 import {LoadingView} from '../../Utils/commonComponents';
+import {useCurrentUser} from '../../ContextProviders/UserContext';
 
 import {BikeDetails} from './Components/Intervals/BikeDetails';
 import {OtherDetails} from './Components/Intervals/OtherDetails';
@@ -32,8 +32,7 @@ const FormModal = ({
   setIsFormModalVisible,
 }) => {
   const [pickedImages, setPickedImages] = useState([]);
-  // can use this to print location fetched from coords
-  // const {longitude, latitude} = selectedRegion;
+  const currentUser = useCurrentUser();
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
   const [token, setToken] = useState();
 
@@ -68,12 +67,10 @@ const FormModal = ({
   );
 
   useEffect(() => {
-    (async function () {
-      getToken().then((result) => {
-        setToken(result.idToken);
-      });
-    })();
-  }, []);
+    if (currentUser) {
+      setToken(currentUser.idToken);
+    }
+  }, [currentUser]);
 
   // #endregion
 
@@ -100,8 +97,7 @@ const FormModal = ({
               multiUpload,
               submitCreateMutation,
               selectedRegion,
-              setIsFormModalVisible,
-              setIsAddingNewTheft,
+              token,
             )
           }>
           {({handleChange, values, handleSubmit, setFieldValue}) => (

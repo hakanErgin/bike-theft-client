@@ -89,9 +89,8 @@ export function UsersReportedThefts({currentUser}) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
-    paddingVertical: commonStyles.gap[5],
+    paddingVertical: commonStyles.gap[7],
     borderRadius: commonStyles.borderRadius.xl,
-    margin: commonStyles.gap[3],
     justifyContent: 'space-evenly',
     elevation: 0.25,
   },

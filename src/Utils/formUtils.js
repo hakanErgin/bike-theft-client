@@ -1,4 +1,3 @@
-import {getToken} from './GoogleSignin';
 import {showMessage} from 'react-native-flash-message';
 
 export async function submitForm(
@@ -8,10 +7,9 @@ export async function submitForm(
   multiUpload,
   submitCreateMutation,
   selectedRegion,
+  token,
 ) {
-  const currentToken = await getToken();
   const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
-
   if (pickedImages.length > 1) {
     multiUpload({
       variables: {files: pickedImages},
@@ -52,7 +50,7 @@ export async function submitForm(
           },
           created_at: new Date(),
         },
-        id_token: currentToken.idToken,
+        id_token: token,
       },
     });
   }

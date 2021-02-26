@@ -13,18 +13,28 @@ import {
 // import {DrawerContentScrollView} from '@react-navigation/drawer';
 import LoggedInContent from './Components/LoggedInContent';
 import commonStyles from '../../Utils/commonStyles';
+import {
+  useSetCurrentUser,
+  useCurrentUser,
+} from '../../ContextProviders/UserContext';
 
 function LoggedOutContent() {
   return (
     <View style={styles.loggedOutContent}>
-      <Text>Sign in to report a bike theft!</Text>
+      <View>
+        <Text>You can sign in to report a bike theft,</Text>
+        <Text>or close this menu and view reported bike thefts on the map</Text>
+        <Text>More to come..</Text>
+      </View>
       <SignInButton />
     </View>
   );
 }
 // this is an entry point to the app
 const CustomDrawerContent = ({navigation}) => {
-  const [user, setUser] = useState();
+  const setCurrentUser = useSetCurrentUser();
+  const currentUser = useCurrentUser();
+
   const isUserLoggedIn = useIsUserLoggedIn();
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
   // decide what to show in drawer
@@ -33,33 +43,36 @@ const CustomDrawerContent = ({navigation}) => {
       if (isSignedIn === true) {
         signUserInSilently()
           .then((userData) => {
-            setUser(userData);
+            setCurrentUser(userData);
             setIsUserLoggedIn(isSignedIn);
           })
           .catch((err) => {
-            console.log('signinsilent err ' + {err});
+            console.log('signinsilent err ' + err);
             signUserOut().then(() => {
               setIsUserLoggedIn(false);
+              navigation.openDrawer();
             });
           });
       } else if (isSignedIn === false) {
         setIsUserLoggedIn(isSignedIn);
+        navigation.openDrawer();
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUserLoggedIn, setIsUserLoggedIn]);
 
   return (
     <View style={styles.drawerContainer}>
-      <Text>Welcome,</Text>
-      {isUserLoggedIn && user ? (
-        <LoggedInContent navigation={navigation} userData={user} />
+      <Text>Welcome</Text>
+      {isUserLoggedIn && currentUser ? (
+        <LoggedInContent navigation={navigation} />
       ) : (
         <LoggedOutContent />
       )}
       <TouchableOpacity
         style={styles.feedbackButton}
         onPress={() => navigation.navigate({name: 'Feedback'})}>
-        <Text>Feedback</Text>
+        <Text>Give feedback!</Text>
       </TouchableOpacity>
     </View>
   );
@@ -74,6 +87,8 @@ const styles = StyleSheet.create({
   },
   loggedOutContent: {
     flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   feedbackButton: {alignSelf: 'center'},
 });
