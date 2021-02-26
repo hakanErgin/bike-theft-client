@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   clearIcon: {
     fontSize: commonStyles.iconSize.large,
     position: 'absolute',
+    elevation: 1,
     right: commonStyles.gap[2],
     color: commonStyles.iconColor.lightGrey,
     backgroundColor: commonStyles.containerBackgroundColor.light,
