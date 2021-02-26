@@ -98,13 +98,13 @@ export async function isSignedInToGoogle() {
   return await GoogleSignin.isSignedIn();
 }
 
-export async function getCurrentUser() {
-  return await GoogleSignin.getCurrentUser();
-}
+// export async function getCurrentUser() {
+//   return await GoogleSignin.getCurrentUser();
+// }
 
-export async function getToken() {
-  return await GoogleSignin.getTokens();
-}
+// export async function getToken() {
+//   return await GoogleSignin.getTokens();
+// }
 
 export async function signUserInSilently() {
   return await GoogleSignin.signInSilently();

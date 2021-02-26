@@ -15,7 +15,6 @@ import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheft
 import CloseButton from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
-import {getToken} from '../../Utils/GoogleSignin';
 import {LoadingView} from '../../Utils/commonComponents';
 import {useCurrentUser} from '../../ContextProviders/UserContext';
 
