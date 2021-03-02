@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {GOOGLE_API_KEY} from '@env';
+import {GOOGLE_API_KEY_FOR_GEOSEARCH} from '@env';
 import commonStyles from '../../../Utils/commonStyles';
 import commonVariables from '../../../Utils/commonVariables';
 import ClearIcon from 'react-native-vector-icons/MaterialIcons';
@@ -33,7 +33,7 @@ export default function SearchBar({mapRef}) {
         }}
         fetchDetails={true}
         query={{
-          key: GOOGLE_API_KEY,
+          key: GOOGLE_API_KEY_FOR_GEOSEARCH,
           language: 'en',
         }}
         debounce={commonVariables.SEARCH_DEBOUNCE}
