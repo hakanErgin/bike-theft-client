@@ -23,6 +23,15 @@ const client = new ApolloClient({
           },
         },
       },
+      Theft: {
+        fields: {
+          bike: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
     },
   }),
 });
