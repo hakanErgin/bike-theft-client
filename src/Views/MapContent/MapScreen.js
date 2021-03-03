@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import CustomMapView from './Components/CustomMapView';
 import FormModal from '../ModalContent/FormModal';
-import ViewModal from '../ModalContent/ViewModal';
+import ViewModal from '../ViewModalContent/ViewModal';
 import {useIsViewModalVisible} from '../../ContextProviders/IsViewModalVisibleContext';
 
 const MapScreen = (props) => {
