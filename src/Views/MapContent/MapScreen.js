@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import CustomMapView from './Components/CustomMapView';
-import FormModal from '../ModalContent/FormModal';
+import FormModal from '../FormModalContent/FormModal';
 import ViewModal from '../ViewModalContent/ViewModal';
 import {useIsViewModalVisible} from '../../ContextProviders/IsViewModalVisibleContext';
 
