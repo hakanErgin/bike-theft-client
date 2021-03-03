@@ -62,29 +62,20 @@ export async function submitForm(
 
 export function validate(values) {
   const errors = {};
-  if (
-    values.bike_details.type === 'Not Specified' ||
-    !values.bike_details.type
-  ) {
+  if (!values.bike_details.type) {
     errors.type = 'Bike type';
   }
-  if (
-    values.bike_details.brand === 'Not Specified' ||
-    !values.bike_details.brand
-  ) {
+  if (!values.bike_details.brand) {
     errors.brand = 'Bike brand';
   }
-  if (
-    values.bike_details.color === 'Not Specified' ||
-    !values.bike_details.color
-  ) {
+  if (!values.bike_details.color) {
     errors.color = 'Bike color';
   }
-  showValidationWarning(errors);
+  handleValidationWarning(errors);
   return errors;
 }
 
-export function showValidationWarning(errors) {
+export function handleValidationWarning(errors) {
   let errorDescription = [];
   for (const [key, value] of Object.entries(errors)) {
     errorDescription.push(` ${value}`);
