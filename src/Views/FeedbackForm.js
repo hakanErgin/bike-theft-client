@@ -7,6 +7,7 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
@@ -23,7 +24,12 @@ export default function FeedbackForm({navigation}) {
     {
       onCompleted: (res) => {
         // console.log(res);
-        navigateBack();
+        Alert.alert(
+          'Thanks for the feedback',
+          'We have received it successfully',
+          [{text: 'OK', onPress: navigateBack}],
+          {cancelable: true},
+        );
       },
     },
   );
