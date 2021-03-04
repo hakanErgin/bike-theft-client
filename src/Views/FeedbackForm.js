@@ -107,6 +107,7 @@ export default function FeedbackForm({navigation}) {
               <Text>Your anonymous feedback</Text>
               <Text style={styles.requiredText}>*required</Text>
               <TextInput
+                multiline={true}
                 style={styles.textArea}
                 onChangeText={handleChange('feedback')}
                 value={values.feedback}

@@ -7,6 +7,7 @@ export const OtherDetails = ({handleChange, values}) => {
     <View style={styles.slide}>
       <Text>Anything else you like to add..</Text>
       <TextInput
+        multiline={true}
         style={styles.textArea}
         onChangeText={handleChange('comments')}
         value={values.comments}
