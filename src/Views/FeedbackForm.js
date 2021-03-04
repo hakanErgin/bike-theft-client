@@ -39,10 +39,10 @@ export default function FeedbackForm({navigation}) {
 
   function validate(values) {
     const errors = {};
-    if (values.feedback === '' || !values.feedback) {
+    if (!values.feedback) {
       errors.feedback = 'Feedback';
     }
-    if (values.feedback_type === 'Not Specified' || !values.feedback_type) {
+    if (!values.feedback_type) {
       errors.feedback_type = 'Feedback type';
     }
     if (errors.feedback || errors.feedback_type) {
@@ -62,8 +62,8 @@ export default function FeedbackForm({navigation}) {
       <Formik
         validate={validate}
         initialValues={{
-          feedback_type: 'Not Specified',
-          feedback: '',
+          feedback_type: undefined,
+          feedback: undefined,
         }}
         onSubmit={submitFeedback}>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
