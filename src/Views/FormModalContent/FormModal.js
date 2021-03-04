@@ -90,7 +90,10 @@ const FormModal = ({
   }
 
   return (
-    <Modal isVisible={isFormModalVisible} style={styles.modal}>
+    <Modal
+      isVisible={isFormModalVisible}
+      style={styles.modal}
+      transparent={false}>
       <Formik
         validateOnChange={false}
         validate={validate}
