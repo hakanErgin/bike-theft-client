@@ -72,23 +72,18 @@ const ViewModal = () => {
   if (get_loading || delete_loading) {
     return <LoadingView />;
   }
-  if (get_error) {
-    return <ErrorView error={get_error} />;
-  }
   //#endregion
 
-  if (get_data) {
-    const theftData = get_data.getTheft;
-
-    return (
-      <Modal isVisible={isViewModalVisible}>
-        <View style={styles.modal}>
+  return (
+    <Modal isVisible={isViewModalVisible}>
+      <View style={styles.modal}>
+        {get_data ? (
           <ScrollView>
             <Text style={styles.header}>Reported bike theft</Text>
-            <DateDetailsView theftData={theftData} />
-            <BikeDetailsView theftData={theftData} />
-            <OtherDetailsView theftData={theftData} />
-            {viewingUserId === theftData.user.google_id && (
+            <DateDetailsView theftData={get_data.getTheft} />
+            <BikeDetailsView theftData={get_data.getTheft} />
+            <OtherDetailsView theftData={get_data.getTheft} />
+            {viewingUserId === get_data.getTheft.user.google_id && (
               <DeleteButton
                 submitDeleteMutation={submitDeleteMutation}
                 selectedTheftId={selectedTheftId}
@@ -97,19 +92,21 @@ const ViewModal = () => {
               />
             )}
           </ScrollView>
-          <TouchableOpacity
-            style={styles.closeButtonContainer}
-            onPress={() => {
-              setIsViewModalVisible(false);
-            }}>
-            <CloseButton name="close" style={styles.closeButton} />
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    );
-  } else {
-    return null;
-  }
+        ) : (
+          <View style={styles.errorContainer}>
+            <ErrorView error={get_error} />
+          </View>
+        )}
+        <TouchableOpacity
+          style={styles.closeButtonContainer}
+          onPress={() => {
+            setIsViewModalVisible(false);
+          }}>
+          <CloseButton name="close" style={styles.closeButton} />
+        </TouchableOpacity>
+      </View>
+    </Modal>
+  );
 };
 
 export default ViewModal;
@@ -132,4 +129,5 @@ const styles = StyleSheet.create({
     fontSize: commonStyles.iconSize.large,
     margin: commonStyles.gap[3],
   },
+  errorContainer: {height: '15%'},
 });
