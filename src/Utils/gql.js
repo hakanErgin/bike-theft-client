@@ -62,6 +62,7 @@ export const GET_THEFT = gql`
       bike {
         type
         brand
+        color
         year
         frame_size
         wheel_size
