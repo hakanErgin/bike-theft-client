@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     fontSize: commonStyles.fontSize.large,
   },
   btnContainer: {
-    marginVertical: commonStyles.gap[1],
+    marginVertical: commonStyles.gap[4],
     paddingHorizontal: commonStyles.gap[4],
   },
   nameAndLogoutBtnContainer: {
