@@ -20,23 +20,35 @@ export function DateDetailsView({theftData}) {
       <Text style={styles.fieldHeader}>Date info</Text>
       <FieldRow field={'Reported on:'} value={dateCreated.toDateString()} />
       <FieldRow field={'Date stolen:'} value={dateStolen.toDateString()} />
-      <FieldRow field={'Time of the day:'} value={theftData.date_time.time} />
+      {theftData.date_time.time && (
+        <FieldRow field={'Time of the day:'} value={theftData.date_time.time} />
+      )}
     </View>
   );
 }
 
 export function BikeDetailsView({theftData}) {
+  const {
+    type,
+    brand,
+    color,
+    year,
+    frame_size,
+    wheel_size,
+    photos,
+  } = theftData.bike;
   return (
     <View style={styles.detailsContainer}>
       <Text style={styles.fieldHeader}>Bike info</Text>
-      <FieldRow field={'Type:'} value={theftData.bike.type} />
-      <FieldRow field={'Brand:'} value={theftData.bike.brand} />
-      <FieldRow field={'Manufacture year:'} value={theftData.bike.year} />
-      <FieldRow field={'Frame size:'} value={theftData.bike.frame_size} />
-      <FieldRow field={'Wheel size:'} value={theftData.bike.wheel_size} />
-      {theftData.bike.photos.length > 0 && (
+      <FieldRow field={'Type:'} value={type} />
+      <FieldRow field={'Brand:'} value={brand} />
+      <FieldRow field={'Color:'} value={color} />
+      {year && <FieldRow field={'Manufacture year:'} value={year} />}
+      {frame_size && <FieldRow field={'Frame size:'} value={frame_size} />}
+      {wheel_size && <FieldRow field={'Wheel size:'} value={wheel_size} />}
+      {photos.length > 0 && (
         <View style={styles.imageThumbnailContainer}>
-          {theftData.bike.photos.map((img) => {
+          {photos.map((img) => {
             return (
               <Image
                 key={img}
@@ -51,12 +63,16 @@ export function BikeDetailsView({theftData}) {
   );
 }
 export function OtherDetailsView({theftData}) {
-  return (
-    <View style={styles.detailsContainer}>
-      <Text style={styles.fieldHeader}>Other</Text>
-      <FieldRow field={'Comments:'} value={theftData.comments} />
-    </View>
-  );
+  if (theftData.comments) {
+    return (
+      <View style={styles.detailsContainer}>
+        <Text style={styles.fieldHeader}>Other</Text>
+        <FieldRow field={'Comments:'} value={theftData.comments} />
+      </View>
+    );
+  } else {
+    return null;
+  }
 }
 
 const styles = StyleSheet.create({
