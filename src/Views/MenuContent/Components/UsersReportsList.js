@@ -61,7 +61,9 @@ export function UsersReportedThefts({currentUser}) {
               {usersReportedThefts.map((theft) => {
                 return (
                   <View key={theft._id} style={styles.reportRows}>
-                    <NormalText>{theft.bike.brand} - </NormalText>
+                    <NormalText style={styles.centeredText}>
+                      {theft.bike.brand} -{' '}
+                    </NormalText>
                     <ViewButton theftId={theft._id} />
                   </View>
                 );
@@ -83,9 +85,9 @@ export function UsersReportedThefts({currentUser}) {
             </NormalText>
           </>
         )}
-        <BoldText style={styles.centeredText}>
+        <NormalText style={[styles.centeredText, styles.bottomText]}>
           Thanks for contributing!
-        </BoldText>
+        </NormalText>
       </View>
     );
   } else {
@@ -99,11 +101,11 @@ const styles = StyleSheet.create({
     paddingVertical: commonStyles.gap[7],
     borderRadius: commonStyles.borderRadius.xl,
     justifyContent: 'space-evenly',
-    elevation: 0.25,
+    elevation: 1,
   },
   header: {
     marginBottom: commonStyles.gap[3],
-    fontSize: commonStyles.fontSize.normal,
+    fontSize: commonStyles.fontSize.large,
     color: commonStyles.iconColor.darkRed,
   },
   reportRows: {
@@ -115,5 +117,9 @@ const styles = StyleSheet.create({
     fontSize: commonStyles.iconSize.large,
     color: commonStyles.iconColor.darkRed,
   },
-  centeredText: {textAlign: 'center'},
+  centeredText: {textAlign: 'center', fontSize: commonStyles.fontSize.normal},
+  bottomText: {
+    marginTop: commonStyles.gap[1],
+    fontStyle: 'italic',
+  },
 });

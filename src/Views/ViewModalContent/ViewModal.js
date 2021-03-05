@@ -72,11 +72,13 @@ const ViewModal = () => {
     <Modal isVisible={isViewModalVisible}>
       <View style={styles.modal}>
         {get_data ? (
-          <ScrollView>
+          <>
             <BoldText style={styles.header}>Reported bike theft</BoldText>
-            <DateDetailsView theftData={get_data.getTheft} />
-            <BikeDetailsView theftData={get_data.getTheft} />
-            <OtherDetailsView theftData={get_data.getTheft} />
+            <ScrollView>
+              <DateDetailsView theftData={get_data.getTheft} />
+              <BikeDetailsView theftData={get_data.getTheft} />
+              <OtherDetailsView theftData={get_data.getTheft} />
+            </ScrollView>
             {viewingUserId === get_data.getTheft.user.google_id && (
               <DeleteButton
                 submitDeleteMutation={submitDeleteMutation}
@@ -85,7 +87,7 @@ const ViewModal = () => {
                 token={token}
               />
             )}
-          </ScrollView>
+          </>
         ) : (
           <View style={styles.errorContainer}>
             <ErrorView error={get_error} />
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
-    borderRadius: commonStyles.borderRadius.large,
+    borderRadius: commonStyles.borderRadius.xl,
     padding: commonStyles.gap[4],
   },
   header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},

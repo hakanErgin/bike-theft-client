@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
     paddingVertical: commonStyles.gap[2],
-    borderRadius: commonStyles.borderRadius.normal,
+    borderRadius: commonStyles.borderRadius.large,
     alignItems: 'center',
     marginVertical: 5,
     paddingHorizontal: 10,

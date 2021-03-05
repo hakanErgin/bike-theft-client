@@ -1,10 +1,14 @@
 import React from 'react';
-import {View, Button, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useToggleIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 import {LogoutButton} from '../../../Utils/GoogleSignin';
 import {UsersReportedThefts} from './UsersReportsList';
 import commonStyles from '../../../Utils/commonStyles';
-import {LoadingView, NormalText} from '../../../Utils/commonComponents';
+import {
+  LoadingView,
+  NormalText,
+  BoldText,
+} from '../../../Utils/commonComponents';
 import {
   useCurrentUser,
   useSetCurrentUser,
@@ -30,13 +34,15 @@ export default function LoggedInContent({navigation}) {
             setIsAddingNewTheft={setIsAddingNewTheft}
             setCurrentUser={setCurrentUser}
             color={commonStyles.iconColor.darkRed}
-            size={commonStyles.iconSize.large}
+            size={commonStyles.iconSize.larger}
           />
         </View>
         <UsersReportedThefts currentUser={currentUser} />
-        <View style={styles.btnContainer}>
-          <Button title={'REPORT THEFT'} onPress={isAddingNewTheftController} />
-        </View>
+        <TouchableOpacity
+          onPress={isAddingNewTheftController}
+          style={styles.reportButton}>
+          <BoldText style={styles.reportButtonText}>Report a theft</BoldText>
+        </TouchableOpacity>
       </View>
     );
   } else {
@@ -50,14 +56,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   username: {
-    fontSize: commonStyles.fontSize.large,
+    fontSize: commonStyles.fontSize.xl,
   },
-  btnContainer: {
-    marginVertical: commonStyles.gap[4],
-    paddingHorizontal: commonStyles.gap[4],
-  },
+  reportBtnContainer: {},
   nameAndLogoutBtnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'baseline',
+  },
+  reportButton: {
+    margin: commonStyles.gap[4],
+    padding: commonStyles.gap[2],
+    backgroundColor: commonStyles.containerBackgroundColor.light,
+    borderRadius: commonStyles.borderRadius.large,
+    borderColor: commonStyles.iconColor.darkRed,
+    borderWidth: 1,
+    alignItems: 'center',
+    elevation: 3,
+  },
+  reportButtonText: {
+    color: commonStyles.iconColor.darkRed,
+    fontSize: commonStyles.fontSize.large,
   },
 });
