@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   SignInButton,
   isSignedInToGoogle,
@@ -17,14 +17,17 @@ import {
   useSetCurrentUser,
   useCurrentUser,
 } from '../../ContextProviders/UserContext';
+import {NormalText} from '../../Utils/commonComponents';
 
 function LoggedOutContent() {
   return (
     <View style={styles.loggedOutContent}>
       <View>
-        <Text>You can sign in to report a bike theft,</Text>
-        <Text>or close this menu and view reported bike thefts on the map</Text>
-        <Text>More to come..</Text>
+        <NormalText>You can sign in to report a bike theft,</NormalText>
+        <NormalText>
+          or close this menu and view reported bike thefts on the map
+        </NormalText>
+        <NormalText>More to come..</NormalText>
       </View>
       <SignInButton />
     </View>
@@ -63,7 +66,7 @@ const CustomDrawerContent = ({navigation}) => {
 
   return (
     <View style={styles.drawerContainer}>
-      <Text>Welcome</Text>
+      <NormalText>Welcome</NormalText>
       {isUserLoggedIn && currentUser ? (
         <LoggedInContent navigation={navigation} />
       ) : (
@@ -72,7 +75,7 @@ const CustomDrawerContent = ({navigation}) => {
       <TouchableOpacity
         style={styles.feedbackButton}
         onPress={() => navigation.navigate({name: 'Feedback'})}>
-        <Text>Give feedback!</Text>
+        <NormalText>Give feedback!</NormalText>
       </TouchableOpacity>
     </View>
   );

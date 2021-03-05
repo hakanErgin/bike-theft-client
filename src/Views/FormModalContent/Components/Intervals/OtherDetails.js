@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
 import commonStyles from '../../../../Utils/commonStyles';
+import {NormalText} from '../../../../Utils/commonComponents';
 
 export const OtherDetails = ({handleChange, values}) => {
   return (
     <View style={styles.slide}>
-      <Text>Anything else you like to add..</Text>
+      <NormalText>Anything else you like to add..</NormalText>
       <TextInput
         multiline={true}
         style={styles.textArea}

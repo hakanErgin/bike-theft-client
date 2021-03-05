@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import ViewIcon from 'react-native-vector-icons/Entypo';
 import commonStyles from '../../../Utils/commonStyles';
 import {GET_USERS_THEFTS} from '../../../Utils/gql';
@@ -7,7 +7,11 @@ import {useQuery} from '@apollo/client';
 
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
-import {LoadingView, ErrorView} from '../../../Utils/commonComponents';
+import {
+  LoadingView,
+  ErrorView,
+  NormalText,
+} from '../../../Utils/commonComponents';
 
 function ViewButton({theftId}) {
   const setIsViewModalVisible = useToggleIsViewModalVisible();
@@ -49,14 +53,14 @@ export function UsersReportedThefts({currentUser}) {
       <View style={styles.container}>
         {usersReportedThefts.length > 0 ? (
           <>
-            <Text style={[styles.centeredText, styles.header]}>
+            <NormalText style={[styles.centeredText, styles.header]}>
               Your report(s):
-            </Text>
+            </NormalText>
             <ScrollView>
-              {usersReportedThefts.map((theft, index) => {
+              {usersReportedThefts.map((theft) => {
                 return (
                   <View key={theft._id} style={styles.reportRows}>
-                    <Text>{theft.bike.brand} - </Text>
+                    <NormalText>{theft.bike.brand} - </NormalText>
                     <ViewButton theftId={theft._id} />
                   </View>
                 );
@@ -65,20 +69,22 @@ export function UsersReportedThefts({currentUser}) {
           </>
         ) : (
           <>
-            <Text style={styles.centeredText}>
+            <NormalText style={styles.centeredText}>
               You do not have any thefts reported yet.
-            </Text>
-            <Text style={styles.centeredText}>
+            </NormalText>
+            <NormalText style={styles.centeredText}>
               Create a report and please provide as much information as
               possible.
-            </Text>
-            <Text style={styles.centeredText}>
+            </NormalText>
+            <NormalText style={styles.centeredText}>
               Then your reports will be displayed here for easy access and on
               the map.
-            </Text>
+            </NormalText>
           </>
         )}
-        <Text style={styles.centeredText}>Thanks for contributing!</Text>
+        <NormalText style={styles.centeredText}>
+          Thanks for contributing!
+        </NormalText>
       </View>
     );
   } else {

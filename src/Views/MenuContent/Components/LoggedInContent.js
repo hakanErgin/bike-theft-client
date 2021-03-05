@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Button, Text, StyleSheet} from 'react-native';
+import {View, Button, StyleSheet} from 'react-native';
 import {useToggleIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 import {LogoutButton} from '../../../Utils/GoogleSignin';
 import {UsersReportedThefts} from './UsersReportsList';
 import commonStyles from '../../../Utils/commonStyles';
-import {LoadingView} from '../../../Utils/commonComponents';
+import {LoadingView, NormalText} from '../../../Utils/commonComponents';
 import {
   useCurrentUser,
   useSetCurrentUser,
@@ -23,7 +23,9 @@ export default function LoggedInContent({navigation}) {
     return (
       <View style={styles.loggedInContentContainer}>
         <View style={styles.nameAndLogoutBtnContainer}>
-          <Text style={styles.username}>{currentUser.user.name}</Text>
+          <NormalText style={styles.username}>
+            {currentUser.user.name}
+          </NormalText>
           <LogoutButton
             setIsAddingNewTheft={setIsAddingNewTheft}
             setCurrentUser={setCurrentUser}

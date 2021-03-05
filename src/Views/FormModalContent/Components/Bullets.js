@@ -1,12 +1,13 @@
 import React from 'react';
 import commonStyles from '../../../Utils/commonStyles';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {NormalText} from '../../../Utils/commonComponents';
 
 const Bullets = ({intervals, interval}) => {
   let bullets = [];
   for (let i = 1; i <= intervals; i++) {
     bullets.push(
-      <Text
+      <NormalText
         key={i}
         // eslint-disable-next-line react-native/no-inline-styles
         style={{
@@ -14,7 +15,7 @@ const Bullets = ({intervals, interval}) => {
           opacity: interval === i ? 0.5 : 0.1,
         }}>
         &bull;
-      </Text>,
+      </NormalText>,
     );
   }
 

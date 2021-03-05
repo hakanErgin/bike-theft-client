@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Pressable,
   Button,
@@ -15,7 +14,7 @@ import BackButton from 'react-native-vector-icons/Ionicons';
 import commonStyles, {inputAndroid} from '../Utils/commonStyles';
 import RNPickerSelect from 'react-native-picker-select';
 import {CREATE_FEEDBACK} from '../Utils/gql';
-import {LoadingView} from '../Utils/commonComponents';
+import {LoadingView, NormalText} from '../Utils/commonComponents';
 
 export default function FeedbackForm({navigation}) {
   const [areFieldsSet, setAreFieldsSet] = useState(false);
@@ -74,15 +73,15 @@ export default function FeedbackForm({navigation}) {
         onSubmit={submitFeedback}>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
           <View style={styles.form}>
-            <Text style={styles.header}>Feedback</Text>
+            <NormalText style={styles.header}>Feedback</NormalText>
             <TouchableOpacity
               style={styles.backButtonContainer}
               onPress={navigateBack}>
               <BackButton name="arrow-back" style={styles.backButton} />
             </TouchableOpacity>
             <View>
-              <Text style={{}}>Choose type of feedback</Text>
-              <Text style={styles.requiredText}>*required</Text>
+              <NormalText style={{}}>Choose type of feedback</NormalText>
+              <NormalText style={styles.requiredText}>*required</NormalText>
               <RNPickerSelect
                 useNativeAndroidPickerStyle={false}
                 onValueChange={(value) => setFieldValue('feedback_type', value)}
@@ -104,8 +103,8 @@ export default function FeedbackForm({navigation}) {
               />
             </View>
             <View>
-              <Text>Your anonymous feedback</Text>
-              <Text style={styles.requiredText}>*required</Text>
+              <NormalText>Your anonymous feedback</NormalText>
+              <NormalText style={styles.requiredText}>*required</NormalText>
               <TextInput
                 multiline={true}
                 style={styles.textArea}

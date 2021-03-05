@@ -1,12 +1,13 @@
 import React from 'react';
 import commonStyles from '../../../Utils/commonStyles';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
+import {NormalText} from '../../../Utils/commonComponents';
 
 export function FieldRow({field, value}) {
   return (
     <View style={styles.fieldRow}>
-      <Text style={styles.fieldName}>{field}</Text>
-      <Text style={styles.fieldValue}>{value}</Text>
+      <NormalText style={styles.fieldName}>{field}</NormalText>
+      <NormalText style={styles.fieldValue}>{value}</NormalText>
     </View>
   );
 }
@@ -17,7 +18,7 @@ export function DateDetailsView({theftData}) {
 
   return (
     <View style={styles.detailsContainer}>
-      <Text style={styles.fieldHeader}>Date info</Text>
+      <NormalText style={styles.fieldHeader}>Date info</NormalText>
       <FieldRow field={'Reported on:'} value={dateCreated.toDateString()} />
       <FieldRow field={'Date stolen:'} value={dateStolen.toDateString()} />
       {theftData.date_time.time && (
@@ -39,7 +40,7 @@ export function BikeDetailsView({theftData}) {
   } = theftData.bike;
   return (
     <View style={styles.detailsContainer}>
-      <Text style={styles.fieldHeader}>Bike info</Text>
+      <NormalText style={styles.fieldHeader}>Bike info</NormalText>
       <FieldRow field={'Type:'} value={type} />
       <FieldRow field={'Brand:'} value={brand} />
       <FieldRow field={'Color:'} value={color} />
@@ -66,7 +67,7 @@ export function OtherDetailsView({theftData}) {
   if (theftData.comments) {
     return (
       <View style={styles.detailsContainer}>
-        <Text style={styles.fieldHeader}>Other</Text>
+        <NormalText style={styles.fieldHeader}>Other</NormalText>
         <FieldRow field={'Comments:'} value={theftData.comments} />
       </View>
     );

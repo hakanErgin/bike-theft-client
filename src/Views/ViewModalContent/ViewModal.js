@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
 import {
   GET_THEFTS,
@@ -14,7 +8,7 @@ import {
   GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
-import {LoadingView, ErrorView} from '../../Utils/commonComponents';
+import {LoadingView, ErrorView, NormalText} from '../../Utils/commonComponents';
 import DeleteButton from './Components/DeleteButton';
 import {
   DateDetailsView,
@@ -79,7 +73,7 @@ const ViewModal = () => {
       <View style={styles.modal}>
         {get_data ? (
           <ScrollView>
-            <Text style={styles.header}>Reported bike theft</Text>
+            <NormalText style={styles.header}>Reported bike theft</NormalText>
             <DateDetailsView theftData={get_data.getTheft} />
             <BikeDetailsView theftData={get_data.getTheft} />
             <OtherDetailsView theftData={get_data.getTheft} />

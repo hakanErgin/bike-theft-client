@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
   CREATE_THEFT,
@@ -16,7 +16,7 @@ import Check from 'react-native-vector-icons/AntDesign';
 import Cancel from 'react-native-vector-icons/AntDesign';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
-import {LoadingView} from '../../Utils/commonComponents';
+import {LoadingView, NormalText} from '../../Utils/commonComponents';
 import {useCurrentUser} from '../../ContextProviders/UserContext';
 
 import {BikeDetails} from './Components/Intervals/BikeDetails';
@@ -111,7 +111,7 @@ const FormModal = ({
         }>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
           <View style={styles.form}>
-            <Text style={styles.header}>Report a theft</Text>
+            <NormalText style={styles.header}>Report a theft</NormalText>
             <FormCarousel
               intervals={intervals}
               setWidth={setWidth}
