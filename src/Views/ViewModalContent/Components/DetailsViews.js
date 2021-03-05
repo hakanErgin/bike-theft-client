@@ -1,12 +1,13 @@
 import React from 'react';
 import commonStyles from '../../../Utils/commonStyles';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
+import {NormalText, BoldText} from '../../../Utils/commonComponents';
 
 export function FieldRow({field, value}) {
   return (
     <View style={styles.fieldRow}>
-      <Text style={styles.fieldName}>{field}</Text>
-      <Text style={styles.fieldValue}>{value}</Text>
+      <BoldText style={styles.fieldName}>{field}</BoldText>
+      <NormalText style={styles.fieldValue}>{value}</NormalText>
     </View>
   );
 }
@@ -17,7 +18,7 @@ export function DateDetailsView({theftData}) {
 
   return (
     <View style={styles.detailsContainer}>
-      <Text style={styles.fieldHeader}>Date info</Text>
+      <BoldText style={styles.fieldHeader}>Date info</BoldText>
       <FieldRow field={'Reported on:'} value={dateCreated.toDateString()} />
       <FieldRow field={'Date stolen:'} value={dateStolen.toDateString()} />
       {theftData.date_time.time && (
@@ -39,7 +40,7 @@ export function BikeDetailsView({theftData}) {
   } = theftData.bike;
   return (
     <View style={styles.detailsContainer}>
-      <Text style={styles.fieldHeader}>Bike info</Text>
+      <BoldText style={styles.fieldHeader}>Bike info</BoldText>
       <FieldRow field={'Type:'} value={type} />
       <FieldRow field={'Brand:'} value={brand} />
       <FieldRow field={'Color:'} value={color} />
@@ -66,7 +67,7 @@ export function OtherDetailsView({theftData}) {
   if (theftData.comments) {
     return (
       <View style={styles.detailsContainer}>
-        <Text style={styles.fieldHeader}>Other</Text>
+        <BoldText style={styles.fieldHeader}>Other</BoldText>
         <FieldRow field={'Comments:'} value={theftData.comments} />
       </View>
     );
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
     paddingVertical: commonStyles.gap[2],
-    borderRadius: commonStyles.borderRadius.normal,
+    borderRadius: commonStyles.borderRadius.large,
     alignItems: 'center',
     marginVertical: 5,
     paddingHorizontal: 10,

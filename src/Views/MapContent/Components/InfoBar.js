@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import commonStyles from '../../../Utils/commonStyles';
+import {NormalText} from '../../../Utils/commonComponents';
 
 const InfoBar = ({currentRegionBoundaries, thefts}) => {
   const [nrOfTheftsInRegion, setNrOfTheftsInRegion] = useState();
@@ -31,9 +32,9 @@ const InfoBar = ({currentRegionBoundaries, thefts}) => {
   };
   return (
     <View style={styles.statusBarContainer}>
-      <Text>{`${nrOfTheftsInRegion} theft${
+      <NormalText>{`${nrOfTheftsInRegion} theft${
         nrOfTheftsInRegion > 1 ? 's' : ''
-      } in this area`}</Text>
+      } in this area`}</NormalText>
       <View style={[styles.trafficLight, {backgroundColor: getColor()}]} />
     </View>
   );

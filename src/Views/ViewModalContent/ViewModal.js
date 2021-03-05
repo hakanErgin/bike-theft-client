@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {useQuery, useMutation} from '@apollo/client';
 import {
   GET_THEFTS,
@@ -14,7 +8,7 @@ import {
   GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
-import {LoadingView, ErrorView} from '../../Utils/commonComponents';
+import {LoadingView, ErrorView, BoldText} from '../../Utils/commonComponents';
 import DeleteButton from './Components/DeleteButton';
 import {
   DateDetailsView,
@@ -78,11 +72,13 @@ const ViewModal = () => {
     <Modal isVisible={isViewModalVisible}>
       <View style={styles.modal}>
         {get_data ? (
-          <ScrollView>
-            <Text style={styles.header}>Reported bike theft</Text>
-            <DateDetailsView theftData={get_data.getTheft} />
-            <BikeDetailsView theftData={get_data.getTheft} />
-            <OtherDetailsView theftData={get_data.getTheft} />
+          <>
+            <BoldText style={styles.header}>Reported bike theft</BoldText>
+            <ScrollView>
+              <DateDetailsView theftData={get_data.getTheft} />
+              <BikeDetailsView theftData={get_data.getTheft} />
+              <OtherDetailsView theftData={get_data.getTheft} />
+            </ScrollView>
             {viewingUserId === get_data.getTheft.user.google_id && (
               <DeleteButton
                 submitDeleteMutation={submitDeleteMutation}
@@ -91,7 +87,7 @@ const ViewModal = () => {
                 token={token}
               />
             )}
-          </ScrollView>
+          </>
         ) : (
           <View style={styles.errorContainer}>
             <ErrorView error={get_error} />
@@ -115,7 +111,7 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: commonStyles.containerBackgroundColor.light,
     justifyContent: 'space-between',
-    borderRadius: commonStyles.borderRadius.large,
+    borderRadius: commonStyles.borderRadius.xl,
     padding: commonStyles.gap[4],
   },
   header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},

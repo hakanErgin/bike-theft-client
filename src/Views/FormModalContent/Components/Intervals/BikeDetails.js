@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import theftFields from '../../../../Utils/theftFields';
+import {NormalText} from '../../../../Utils/commonComponents';
 import RNPickerSelect from 'react-native-picker-select';
 
 export function BikeInputFields({setFieldValue}) {
@@ -11,9 +12,9 @@ export function BikeInputFields({setFieldValue}) {
 
     return (
       <View style={styles.field} key={fieldType}>
-        <Text style={{}}>{field[fieldType].Question}</Text>
+        <NormalText>{field[fieldType].Question}</NormalText>
         {field[fieldType].required && (
-          <Text style={styles.requiredText}>*required</Text>
+          <NormalText style={styles.requiredText}>*required</NormalText>
         )}
         <RNPickerSelect
           useNativeAndroidPickerStyle={false}

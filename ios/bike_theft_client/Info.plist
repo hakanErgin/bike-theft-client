@@ -53,5 +53,35 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>CaviarDreams.ttf</string>
+		<string>AntDesign.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
+		<string>CaviarDreams_Bold.ttf</string>
+		<string>coolvetica compressed rg.ttf</string>
+		<string>coolvetica rg.ttf</string>
+		<string>AlteHaasGroteskBold.ttf</string>
+		<string>AlteHaasGroteskRegular.ttf</string>
+		<string>HWYGCOND.TTF</string>
+		<string>HWYGEXPD.TTF</string>
+		<string>HWYGNRRW.TTF</string>
+		<string>HWYGOTH.TTF</string>
+		<string>HWYGWDE.TTF</string>
+	</array>
 </dict>
 </plist>

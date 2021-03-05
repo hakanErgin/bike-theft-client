@@ -1,5 +1,7 @@
 import React from 'react';
-import {Button, Alert} from 'react-native';
+import {Alert, TouchableOpacity, StyleSheet} from 'react-native';
+import {BoldText} from '../../../Utils/commonComponents';
+import commonStyles from '../../../Utils/commonStyles';
 
 const DeleteButton = ({
   submitDeleteMutation,
@@ -31,11 +33,29 @@ const DeleteButton = ({
   }
 
   return (
-    <Button
-      title={'delete report'}
+    <TouchableOpacity
       onPress={() => showConfirmationAlert(deleteTheft)}
-    />
+      style={styles.deleteButton}>
+      <BoldText style={styles.deleteButtonText}>Delete this report</BoldText>
+    </TouchableOpacity>
   );
 };
 
 export default DeleteButton;
+
+const styles = StyleSheet.create({
+  deleteButton: {
+    marginVertical: commonStyles.gap[0],
+    padding: commonStyles.gap[2],
+    backgroundColor: commonStyles.containerBackgroundColor.light,
+    borderRadius: commonStyles.borderRadius.large,
+    borderColor: commonStyles.iconColor.darkRed,
+    borderWidth: 1,
+    alignItems: 'center',
+    elevation: 3,
+  },
+  deleteButtonText: {
+    color: commonStyles.iconColor.darkRed,
+    fontSize: commonStyles.fontSize.large,
+  },
+});

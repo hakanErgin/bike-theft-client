@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, StyleSheet, Pressable} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import CalendarIcon from 'react-native-vector-icons/Feather';
 import commonStyles from '../../../Utils/commonStyles';
+import {NormalText} from '../../../Utils/commonComponents';
 
 const DatePicker = ({setFieldValue, values}) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -23,9 +24,9 @@ const DatePicker = ({setFieldValue, values}) => {
   return (
     <View>
       <Pressable style={styles.calendarInputContainer} onPress={showDatePicker}>
-        <Text style={styles.calendarInputText}>
+        <NormalText style={styles.calendarInputText}>
           {values.date_details.date.toDateString()}
-        </Text>
+        </NormalText>
         <CalendarIcon name="calendar" style={styles.calendarIcon} />
       </Pressable>
       <DateTimePickerModal

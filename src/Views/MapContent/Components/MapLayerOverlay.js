@@ -1,8 +1,8 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
+import {NormalText} from '../../../Utils/commonComponents';
 
 const MarkersWithCallouts = ({thefts}) => {
   const setSelectedTheftId = useSetSelectedTheftId();
@@ -24,8 +24,10 @@ const MarkersWithCallouts = ({thefts}) => {
           longitude: theft.region.longitude,
         }}>
         <Callout onPress={onCalloutPress(theftId)}>
-          <Text>Reported on:{dateCreated.toDateString().substring(3)}</Text>
-          <Text>Tap for details</Text>
+          <NormalText>
+            Reported on:{dateCreated.toDateString().substring(3)}
+          </NormalText>
+          <NormalText>Tap for details</NormalText>
         </Callout>
       </Marker>
     );

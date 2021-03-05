@@ -1,11 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
 import commonStyles from './commonStyles';
 
 export function LoadingView() {
   return (
     <View style={styles.container}>
-      <Text>Loading...</Text>
+      <NormalText>Loading...</NormalText>
       <ActivityIndicator size="large" color={commonStyles.iconColor.darkRed} />
     </View>
   );
@@ -14,11 +14,18 @@ export function ErrorView({error}) {
   console.log(error);
   return (
     <View style={styles.container}>
-      <Text>Oops...</Text>
-      <Text>There was a problem loading your content.</Text>
-      <Text>Please restart your application</Text>
+      <NormalText>Oops...</NormalText>
+      <NormalText>There was a problem loading your content.</NormalText>
+      <NormalText>Please restart your application</NormalText>
     </View>
   );
+}
+
+export function NormalText({style, children}) {
+  return <Text style={[style, styles.normalText]}>{children}</Text>;
+}
+export function BoldText({style, children}) {
+  return <Text style={[style, styles.boldText]}>{children}</Text>;
 }
 
 const styles = StyleSheet.create({
@@ -29,8 +36,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     top: '40%',
-    padding: 10,
+    padding: commonStyles.gap[2],
     borderRadius: commonStyles.borderRadius.normal,
     backgroundColor: commonStyles.containerBackgroundColor.light,
   },
+  normalText: {fontFamily: 'AlteHaasGroteskRegular'},
+  boldText: {fontFamily: 'AlteHaasGroteskBold'},
 });

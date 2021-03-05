@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Crosshair from 'react-native-vector-icons/MaterialCommunityIcons';
 import Check from 'react-native-vector-icons/AntDesign';
 import Cancel from 'react-native-vector-icons/AntDesign';
 import commonStyles from '../../../Utils/commonStyles';
 import {useToggleIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
+import {NormalText} from '../../../Utils/commonComponents';
 
 export default function CrosshairOverlay({
   currentRegion,
@@ -31,10 +32,10 @@ export default function CrosshairOverlay({
           onPress={() => confirmLocation()}>
           <Check name="checkcircleo" style={styles.check} />
         </TouchableOpacity>
-        <Text style={styles.infoText}>
+        <NormalText style={styles.infoText}>
           Please choose where your bike was stolen using the indicator at the
           center.
-        </Text>
+        </NormalText>
         <TouchableOpacity
           style={styles.cancelContainer}
           onPress={() => setIsAddingNewTheft(false)}>
