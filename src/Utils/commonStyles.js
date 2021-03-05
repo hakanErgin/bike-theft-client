@@ -18,11 +18,12 @@ const commonStyles = {
 export default commonStyles;
 
 export const inputAndroid = {
+  fontFamily: 'AlteHaasGroteskRegular',
   fontSize: commonStyles.fontSize.normal,
-  padding: commonStyles.gap[2],
+  padding: commonStyles.gap[1],
+  marginVertical: commonStyles.gap[0],
   borderWidth: 1,
   borderRadius: commonStyles.borderRadius.normal,
   color: 'black',
   borderColor: commonStyles.containerBackgroundColor.lightGray,
-  paddingRight: commonStyles.gap[6], // to ensure the text is never behind the icon
 };
