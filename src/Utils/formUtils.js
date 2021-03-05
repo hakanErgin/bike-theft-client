@@ -38,15 +38,19 @@ export async function submitForm(
             type: values.bike_details.type,
             brand: values.bike_details.brand,
             color: values.bike_details.color,
-            year: values.bike_details.year,
-            frame_size: values.bike_details.frame_size,
-            wheel_size: values.bike_details.wheel_size,
+            ...(values.bike_details.year && {year: values.bike_details.year}),
+            ...(values.bike_details.frame_size && {
+              frame_size: values.bike_details.frame_size,
+            }),
+            ...(values.bike_details.wheel_size && {
+              wheel_size: values.bike_details.wheel_size,
+            }),
             photos: photos,
           },
-          comments: values.comments === '' ? 'Not Specified' : values.comments,
+          ...(values.comments && {comments: values.comments}),
           date_time: {
             date: values.date_details.date,
-            time: values.date_details.time,
+            ...(values.date_details.time && {time: values.date_details.time}),
           },
           created_at: new Date(),
         },
@@ -58,29 +62,20 @@ export async function submitForm(
 
 export function validate(values) {
   const errors = {};
-  if (
-    values.bike_details.type === 'Not Specified' ||
-    !values.bike_details.type
-  ) {
+  if (!values.bike_details.type) {
     errors.type = 'Bike type';
   }
-  if (
-    values.bike_details.brand === 'Not Specified' ||
-    !values.bike_details.brand
-  ) {
+  if (!values.bike_details.brand) {
     errors.brand = 'Bike brand';
   }
-  if (
-    values.bike_details.color === 'Not Specified' ||
-    !values.bike_details.color
-  ) {
+  if (!values.bike_details.color) {
     errors.color = 'Bike color';
   }
-  showValidationWarning(errors);
+  handleValidationWarning(errors);
   return errors;
 }
 
-export function showValidationWarning(errors) {
+export function handleValidationWarning(errors) {
   let errorDescription = [];
   for (const [key, value] of Object.entries(errors)) {
     errorDescription.push(` ${value}`);
@@ -94,15 +89,15 @@ export function showValidationWarning(errors) {
 }
 
 export const initialValues = {
-  date_details: {date: new Date(), time: 'Not Specified'},
+  date_details: {date: new Date(), time: undefined},
   bike_details: {
-    type: 'Not Specified',
-    brand: 'Not Specified',
-    color: 'Not Specified',
-    year: 'Not Specified',
-    frame_size: 'Not Specified',
-    wheel_size: 'Not Specified',
-    photos: ['Not Specified'],
+    type: undefined,
+    brand: undefined,
+    color: undefined,
+    year: undefined,
+    frame_size: undefined,
+    wheel_size: undefined,
+    photos: [],
   },
-  comments: '',
+  comments: undefined,
 };

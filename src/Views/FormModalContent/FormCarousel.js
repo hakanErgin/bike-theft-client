@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, ScrollView, Text, StyleSheet} from 'react-native';
-import commonStyles from '../../Utils/commonStyles';
+import {View, ScrollView, StyleSheet} from 'react-native';
 
-export const FormCarousel = ({children}) => {
-  const [interval, setInterval] = React.useState(1);
-  const [width, setWidth] = React.useState(0);
-
-  const intervals = 3;
+export const FormCarousel = ({
+  children,
+  intervals,
+  setWidth,
+  width,
+  setInterval,
+}) => {
   const init = (w) => {
     // initialise width
     setWidth(w);
@@ -23,21 +24,6 @@ export const FormCarousel = ({children}) => {
     }
   };
 
-  let bullets = [];
-  for (let i = 1; i <= intervals; i++) {
-    bullets.push(
-      <Text
-        key={i}
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{
-          ...styles.bullet,
-          opacity: interval === i ? 0.5 : 0.1,
-        }}>
-        &bull;
-      </Text>,
-    );
-  }
-
   return (
     <View style={styles.container}>
       <ScrollView
@@ -47,7 +33,7 @@ export const FormCarousel = ({children}) => {
           width: `${100 * intervals}%`,
         }}
         showsHorizontalScrollIndicator={false}
-        onContentSizeChange={(w, h) => init(w)}
+        onContentSizeChange={(w) => init(w)}
         onScroll={(data) => {
           setWidth(data.nativeEvent.contentSize.width);
           setInterval(getInterval(data.nativeEvent.contentOffset.x));
@@ -57,7 +43,6 @@ export const FormCarousel = ({children}) => {
         decelerationRate="fast">
         {children}
       </ScrollView>
-      <View style={styles.bullets}>{bullets}</View>
     </View>
   );
 };
@@ -72,15 +57,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     overflow: 'hidden',
-  },
-  bullets: {
-    position: 'absolute',
-    bottom: 0,
-    alignSelf: 'center',
-    flexDirection: 'row',
-  },
-  bullet: {
-    paddingHorizontal: commonStyles.gap[0],
-    fontSize: commonStyles.iconSize.large,
   },
 });

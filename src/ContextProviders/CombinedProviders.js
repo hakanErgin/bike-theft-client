@@ -1,5 +1,5 @@
 import React from 'react';
-import {GRAPHQL_REMOTE_URI, MEDIA_REMOTE_URI} from '@env';
+import {GRAPHQL_URI, MEDIA_REMOTE_URI} from '@env';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client';
 
@@ -10,13 +10,22 @@ import {IsViewModalVisibleProvider} from './IsViewModalVisibleContext';
 import {CurrentUserProvider} from './UserContext';
 
 const client = new ApolloClient({
-  uri: GRAPHQL_REMOTE_URI,
+  uri: GRAPHQL_URI,
   cache: new InMemoryCache({
     // this makes sure usersreports are in sync when delete
     typePolicies: {
       Query: {
         fields: {
           getUsersReportedThefts: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+      Theft: {
+        fields: {
+          bike: {
             merge(existing, incoming) {
               return incoming;
             },

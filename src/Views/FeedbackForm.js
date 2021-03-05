@@ -7,6 +7,7 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {useMutation} from '@apollo/client';
 import {Formik} from 'formik';
@@ -23,7 +24,12 @@ export default function FeedbackForm({navigation}) {
     {
       onCompleted: (res) => {
         // console.log(res);
-        navigateBack();
+        Alert.alert(
+          'Thanks for the feedback',
+          'We have received it successfully',
+          [{text: 'OK', onPress: navigateBack}],
+          {cancelable: true},
+        );
       },
     },
   );
@@ -39,10 +45,10 @@ export default function FeedbackForm({navigation}) {
 
   function validate(values) {
     const errors = {};
-    if (values.feedback === '' || !values.feedback) {
+    if (!values.feedback) {
       errors.feedback = 'Feedback';
     }
-    if (values.feedback_type === 'Not Specified' || !values.feedback_type) {
+    if (!values.feedback_type) {
       errors.feedback_type = 'Feedback type';
     }
     if (errors.feedback || errors.feedback_type) {
@@ -62,8 +68,8 @@ export default function FeedbackForm({navigation}) {
       <Formik
         validate={validate}
         initialValues={{
-          feedback_type: 'Not Specified',
-          feedback: '',
+          feedback_type: undefined,
+          feedback: undefined,
         }}
         onSubmit={submitFeedback}>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
@@ -101,6 +107,7 @@ export default function FeedbackForm({navigation}) {
               <Text>Your anonymous feedback</Text>
               <Text style={styles.requiredText}>*required</Text>
               <TextInput
+                multiline={true}
                 style={styles.textArea}
                 onChangeText={handleChange('feedback')}
                 value={values.feedback}

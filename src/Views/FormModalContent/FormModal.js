@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
   CREATE_THEFT,
@@ -12,7 +12,8 @@ import {Formik} from 'formik';
 import Modal from 'react-native-modal';
 import FormCarousel from './FormCarousel';
 import {useToggleIsAddingNewTheft} from '../../ContextProviders/IsAddingNewTheftContext';
-import CloseButton from 'react-native-vector-icons/MaterialIcons';
+import Check from 'react-native-vector-icons/AntDesign';
+import Cancel from 'react-native-vector-icons/AntDesign';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
 import {LoadingView} from '../../Utils/commonComponents';
@@ -25,6 +26,7 @@ import ImagePickerComponent from './Components/ImagePicker';
 import {BikeInputFields} from './Components/Intervals/BikeDetails';
 import {submitForm, initialValues, validate} from '../../Utils/formUtils';
 import FlashMessage from 'react-native-flash-message';
+import Bullets from './Components/Bullets';
 
 const FormModal = ({
   isFormModalVisible,
@@ -35,6 +37,11 @@ const FormModal = ({
   const currentUser = useCurrentUser();
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
   const [token, setToken] = useState();
+
+  // carousel intervals
+  const [interval, setInterval] = useState(1);
+  const [width, setWidth] = useState(0);
+  const intervals = 3;
 
   //#region mutation/query
   const [submitCreateMutation, {loading: create_loading}] = useMutation(
@@ -83,49 +90,59 @@ const FormModal = ({
   }
 
   return (
-    <Modal isVisible={isFormModalVisible}>
-      <View style={styles.modal}>
-        <Formik
-          validateOnChange={false}
-          validate={validate}
-          initialValues={initialValues}
-          onSubmit={(values) =>
-            submitForm(
-              values,
-              pickedImages,
-              singleUpload,
-              multiUpload,
-              submitCreateMutation,
-              selectedRegion,
-              token,
-            )
-          }>
-          {({handleChange, values, handleSubmit, setFieldValue}) => (
-            <View style={styles.form}>
-              <Text style={styles.header}>Report a theft</Text>
+    <Modal
+      isVisible={isFormModalVisible}
+      style={styles.modal}
+      transparent={false}>
+      <Formik
+        validateOnChange={false}
+        validate={validate}
+        initialValues={initialValues}
+        onSubmit={(values) =>
+          submitForm(
+            values,
+            pickedImages,
+            singleUpload,
+            multiUpload,
+            submitCreateMutation,
+            selectedRegion,
+            token,
+          )
+        }>
+        {({handleChange, values, handleSubmit, setFieldValue}) => (
+          <View style={styles.form}>
+            <Text style={styles.header}>Report a theft</Text>
+            <FormCarousel
+              intervals={intervals}
+              setWidth={setWidth}
+              width={width}
+              setInterval={setInterval}>
+              <DateDetails values={values} setFieldValue={setFieldValue} />
+              <BikeDetails>
+                <ImagePickerComponent
+                  pickedImages={pickedImages}
+                  setPickedImages={setPickedImages}
+                />
+                <BikeInputFields setFieldValue={setFieldValue} />
+              </BikeDetails>
+              <OtherDetails handleChange={handleChange} values={values} />
+            </FormCarousel>
+            <View style={styles.bottomContainer}>
               <TouchableOpacity
-                style={styles.closeButtonContainer}
+                style={styles.cancelContainer}
                 onPress={finishAddingTheft}>
-                <CloseButton name="close" style={styles.closeButton} />
+                <Cancel name="closecircleo" style={styles.cancel} />
               </TouchableOpacity>
-              <FormCarousel>
-                <DateDetails values={values} setFieldValue={setFieldValue} />
-                <BikeDetails>
-                  <ImagePickerComponent
-                    pickedImages={pickedImages}
-                    setPickedImages={setPickedImages}
-                  />
-                  <BikeInputFields setFieldValue={setFieldValue} />
-                </BikeDetails>
-                <OtherDetails handleChange={handleChange} values={values} />
-              </FormCarousel>
-              <View>
-                <Button title={'Submit'} onPress={handleSubmit} />
-              </View>
+              <Bullets intervals={intervals} interval={interval} style={{}} />
+              <TouchableOpacity
+                style={styles.checkContainer}
+                onPress={handleSubmit}>
+                <Check name="checkcircleo" style={styles.check} />
+              </TouchableOpacity>
             </View>
-          )}
-        </Formik>
-      </View>
+          </View>
+        )}
+      </Formik>
       <FlashMessage position="top" />
     </Modal>
   );
@@ -135,21 +152,26 @@ export default FormModal;
 
 const styles = StyleSheet.create({
   modal: {
-    flex: 1,
+    justifyContent: 'center',
     backgroundColor: commonStyles.containerBackgroundColor.light,
-    justifyContent: 'space-between',
-    borderRadius: commonStyles.borderRadius.large,
-    padding: commonStyles.gap[3],
+    borderRadius: commonStyles.borderRadius.xl,
   },
-  form: {flex: 1, justifyContent: 'center'},
-  header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
-  closeButtonContainer: {
+  form: {
     flex: 1,
-    position: 'absolute',
-    top: 0,
-    right: 0,
+    margin: commonStyles.gap[3],
   },
-  closeButton: {
-    fontSize: commonStyles.iconSize.large,
+  header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
+  check: {
+    fontSize: commonStyles.iconSize.xl,
+    color: commonStyles.iconColor.darkRed,
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  cancel: {
+    fontSize: commonStyles.iconSize.xl,
+    color: commonStyles.iconColor.darkRed,
   },
 });
