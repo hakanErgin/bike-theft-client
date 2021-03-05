@@ -11,6 +11,7 @@ import {
   LoadingView,
   ErrorView,
   NormalText,
+  BoldText,
 } from '../../../Utils/commonComponents';
 
 function ViewButton({theftId}) {
@@ -53,9 +54,9 @@ export function UsersReportedThefts({currentUser}) {
       <View style={styles.container}>
         {usersReportedThefts.length > 0 ? (
           <>
-            <NormalText style={[styles.centeredText, styles.header]}>
+            <BoldText style={[styles.centeredText, styles.header]}>
               Your report(s):
-            </NormalText>
+            </BoldText>
             <ScrollView>
               {usersReportedThefts.map((theft) => {
                 return (
@@ -82,9 +83,9 @@ export function UsersReportedThefts({currentUser}) {
             </NormalText>
           </>
         )}
-        <NormalText style={styles.centeredText}>
+        <BoldText style={styles.centeredText}>
           Thanks for contributing!
-        </NormalText>
+        </BoldText>
       </View>
     );
   } else {

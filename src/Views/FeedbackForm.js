@@ -14,7 +14,7 @@ import BackButton from 'react-native-vector-icons/Ionicons';
 import commonStyles, {inputAndroid} from '../Utils/commonStyles';
 import RNPickerSelect from 'react-native-picker-select';
 import {CREATE_FEEDBACK} from '../Utils/gql';
-import {LoadingView, NormalText} from '../Utils/commonComponents';
+import {LoadingView, NormalText, BoldText} from '../Utils/commonComponents';
 
 export default function FeedbackForm({navigation}) {
   const [areFieldsSet, setAreFieldsSet] = useState(false);
@@ -73,7 +73,7 @@ export default function FeedbackForm({navigation}) {
         onSubmit={submitFeedback}>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
           <View style={styles.form}>
-            <NormalText style={styles.header}>Feedback</NormalText>
+            <BoldText style={styles.header}>Feedback</BoldText>
             <TouchableOpacity
               style={styles.backButtonContainer}
               onPress={navigateBack}>

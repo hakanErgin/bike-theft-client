@@ -16,7 +16,7 @@ import Check from 'react-native-vector-icons/AntDesign';
 import Cancel from 'react-native-vector-icons/AntDesign';
 import commonStyles from '../../Utils/commonStyles';
 import {mediaClient} from '../../ContextProviders/CombinedProviders';
-import {LoadingView, NormalText} from '../../Utils/commonComponents';
+import {LoadingView, BoldText} from '../../Utils/commonComponents';
 import {useCurrentUser} from '../../ContextProviders/UserContext';
 
 import {BikeDetails} from './Components/Intervals/BikeDetails';
@@ -111,7 +111,7 @@ const FormModal = ({
         }>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
           <View style={styles.form}>
-            <NormalText style={styles.header}>Report a theft</NormalText>
+            <BoldText style={styles.header}>Report a theft</BoldText>
             <FormCarousel
               intervals={intervals}
               setWidth={setWidth}

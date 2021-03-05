@@ -8,7 +8,7 @@ import {
   GET_USERS_THEFTS,
 } from '../../Utils/gql';
 import {useSelectedTheftId} from '../../ContextProviders/SelectedTheftIdContext';
-import {LoadingView, ErrorView, NormalText} from '../../Utils/commonComponents';
+import {LoadingView, ErrorView, BoldText} from '../../Utils/commonComponents';
 import DeleteButton from './Components/DeleteButton';
 import {
   DateDetailsView,
@@ -73,7 +73,7 @@ const ViewModal = () => {
       <View style={styles.modal}>
         {get_data ? (
           <ScrollView>
-            <NormalText style={styles.header}>Reported bike theft</NormalText>
+            <BoldText style={styles.header}>Reported bike theft</BoldText>
             <DateDetailsView theftData={get_data.getTheft} />
             <BikeDetailsView theftData={get_data.getTheft} />
             <OtherDetailsView theftData={get_data.getTheft} />

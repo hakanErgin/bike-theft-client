@@ -21,8 +21,11 @@ export function ErrorView({error}) {
   );
 }
 
-export function NormalText({children}) {
-  return <Text style={styles.normalText}>{children}</Text>;
+export function NormalText({style, children}) {
+  return <Text style={[style, styles.normalText]}>{children}</Text>;
+}
+export function BoldText({style, children}) {
+  return <Text style={[style, styles.boldText]}>{children}</Text>;
 }
 
 const styles = StyleSheet.create({
@@ -37,5 +40,6 @@ const styles = StyleSheet.create({
     borderRadius: commonStyles.borderRadius.normal,
     backgroundColor: commonStyles.containerBackgroundColor.light,
   },
-  normalText: {fontFamily: 'serif'},
+  normalText: {fontFamily: 'AlteHaasGroteskRegular'},
+  boldText: {fontFamily: 'AlteHaasGroteskBold'},
 });
