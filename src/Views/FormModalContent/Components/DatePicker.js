@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: commonStyles.gap[2],
+    marginVertical: commonStyles.gap[0],
     borderWidth: 1,
     borderRadius: commonStyles.borderRadius.normal,
     borderColor: commonStyles.containerBackgroundColor.lightGray,
