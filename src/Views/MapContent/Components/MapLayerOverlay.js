@@ -2,15 +2,19 @@ import React from 'react';
 import {Marker, Heatmap, Callout} from 'react-native-maps';
 import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdContext';
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
+import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 import {NormalText} from '../../../Utils/commonComponents';
 
 const MarkersWithCallouts = ({thefts}) => {
   const setSelectedTheftId = useSetSelectedTheftId();
   const setIsViewModalVisible = useToggleIsViewModalVisible();
+  const isAddingNewTheft = useIsAddingNewTheft();
 
   const onCalloutPress = (theftId) => () => {
-    setSelectedTheftId(theftId);
-    setIsViewModalVisible(true);
+    if (!isAddingNewTheft) {
+      setSelectedTheftId(theftId);
+      setIsViewModalVisible(true);
+    }
   };
 
   return thefts.map((theft, index) => {
@@ -35,10 +39,14 @@ const MarkersWithCallouts = ({thefts}) => {
 };
 
 export default function MapLayerOverlay({visibleMapLayer, thefts}) {
-  if (visibleMapLayer === 'heatmap' && thefts.length > 0) {
-    return <Heatmap points={thefts.map((t) => t.region)} />;
-  } else if (visibleMapLayer === 'markers') {
-    return <MarkersWithCallouts thefts={thefts} />;
+  if (thefts.length > 0) {
+    if (visibleMapLayer === 'heatmap') {
+      return (
+        <Heatmap radius={50} opacity={1} points={thefts.map((t) => t.region)} />
+      );
+    } else if (visibleMapLayer === 'markers') {
+      return <MarkersWithCallouts thefts={thefts} />;
+    }
   } else {
     return null;
   }
