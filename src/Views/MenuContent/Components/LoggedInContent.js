@@ -19,7 +19,7 @@ export default function LoggedInContent({navigation}) {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
-  function isAddingNewTheftController() {
+  function toggleIsAddingNewTheft() {
     navigation.toggleDrawer();
     setIsAddingNewTheft((val) => !val);
   }
@@ -39,7 +39,7 @@ export default function LoggedInContent({navigation}) {
         </View>
         <UsersReportedThefts currentUser={currentUser} />
         <TouchableOpacity
-          onPress={isAddingNewTheftController}
+          onPress={toggleIsAddingNewTheft}
           style={styles.reportButton}>
           <BoldText style={styles.reportButtonText}>Report a theft</BoldText>
         </TouchableOpacity>
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
   username: {
     fontSize: commonStyles.fontSize.xl,
   },
-  reportBtnContainer: {},
   nameAndLogoutBtnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
