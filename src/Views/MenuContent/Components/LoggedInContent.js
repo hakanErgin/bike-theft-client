@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   reportButton: {
-    margin: commonStyles.gap[4],
+    margin: commonStyles.gap[5],
     padding: commonStyles.gap[2],
     backgroundColor: commonStyles.containerBackgroundColor.light,
     borderRadius: commonStyles.borderRadius.large,

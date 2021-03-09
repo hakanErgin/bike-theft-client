@@ -79,7 +79,7 @@ export function OtherDetailsView({theftData}) {
 const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
-    backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
+    backgroundColor: commonStyles.containerBackgroundColor.lightRed,
     paddingVertical: commonStyles.gap[2],
     borderRadius: commonStyles.borderRadius.large,
     alignItems: 'center',

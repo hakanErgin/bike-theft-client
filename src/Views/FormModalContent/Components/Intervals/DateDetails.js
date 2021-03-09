@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     ...inputAndroid,
   },
   infoContainer: {
-    backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
+    backgroundColor: commonStyles.containerBackgroundColor.lightRed,
     paddingHorizontal: commonStyles.gap[3],
     paddingVertical: commonStyles.gap[1],
     borderRadius: commonStyles.borderRadius.large,
