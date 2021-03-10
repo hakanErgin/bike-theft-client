@@ -1,7 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import commonStyles from '../../../Utils/commonStyles';
-import {View, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {NormalText, BoldText} from '../../../Utils/commonComponents';
+import Modal from 'react-native-modal';
+import ImageZoom from 'react-native-image-pan-zoom';
 
 export function FieldRow({field, value}) {
   return (
@@ -38,6 +46,16 @@ export function BikeDetailsView({theftData}) {
     wheel_size,
     photos,
   } = theftData.bike;
+  const [isImgModalVisible, setIsImgModalVisible] = useState(false);
+  const [selectedImg, setSelectedImg] = useState();
+  const windowHeight = Dimensions.get('window').height;
+  const windowWidth = Dimensions.get('window').width;
+
+  function displayImage(img) {
+    setSelectedImg(img);
+    setIsImgModalVisible(true);
+  }
+
   return (
     <View style={styles.detailsContainer}>
       <NormalText style={styles.fieldHeader}>Bike info</NormalText>
@@ -51,14 +69,35 @@ export function BikeDetailsView({theftData}) {
         <View style={styles.imageThumbnailContainer}>
           {photos.map((img) => {
             return (
-              <Image
-                key={img}
-                source={{uri: img}}
-                style={styles.imageThumbnail}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  displayImage(img);
+                }}
+                key={img}>
+                <Image source={{uri: img}} style={styles.imageThumbnail} />
+              </TouchableOpacity>
             );
           })}
         </View>
+      )}
+      {isImgModalVisible && (
+        <Modal
+          transparent
+          backdropOpacity={0.9}
+          isVisible={isImgModalVisible}
+          style={styles.modal}>
+          <ImageZoom
+            cropWidth={windowWidth}
+            cropHeight={windowHeight}
+            imageWidth={windowWidth}
+            imageHeight={windowHeight}
+            onClick={() => setIsImgModalVisible(false)}>
+            <Image source={{uri: selectedImg}} style={styles.imageLarge} />
+          </ImageZoom>
+          <NormalText style={styles.imageModalInstructions}>
+            Tap to close
+          </NormalText>
+        </Modal>
       )}
     </View>
   );
@@ -93,6 +132,17 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75,
     borderRadius: commonStyles.borderRadius.normal,
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageLarge: {flex: 1, resizeMode: 'contain'},
+  imageModalInstructions: {
+    color: 'white',
+    position: 'absolute',
+    bottom: 0,
+    fontSize: commonStyles.fontSize.small,
   },
   fieldName: {flex: 1, color: commonStyles.iconColor.darkRed},
   fieldValue: {flex: 1},

@@ -1,7 +1,7 @@
 const commonStyles = {
   // globals
   borderRadius: {small: 6, normal: 10, large: 15, xl: 30},
-  fontSize: {tiny: 6, small: 10, normal: 14, large: 18, xl: 24},
+  fontSize: {tiny: 9, small: 12, normal: 14, large: 18, xl: 24},
   iconSize: {normal: 15, large: 20, larger: 30, xl: 42, xxl: 62},
   iconColor: {darkRed: '#900', lightGrey: '#E5E5E5', white: 'white'},
   containerBackgroundColor: {

@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   collapseArrow: {fontSize: 20},
   requiredText: {
-    fontSize: commonStyles.fontSize.small,
+    fontSize: commonStyles.fontSize.tiny,
     color: 'black',
     fontStyle: 'italic',
     position: 'absolute',

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   requiredText: {
-    fontSize: commonStyles.fontSize.small,
+    fontSize: commonStyles.fontSize.tiny,
     color: 'black',
     fontStyle: 'italic',
     position: 'absolute',
