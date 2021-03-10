@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     borderColor: commonStyles.iconColor.darkRed,
     borderWidth: 1,
     alignItems: 'center',
-    elevation: 3,
+    elevation: 5,
   },
   reportButtonText: {
     color: commonStyles.iconColor.darkRed,

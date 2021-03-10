@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     paddingVertical: commonStyles.gap[7],
     borderRadius: commonStyles.borderRadius.xl,
     justifyContent: 'space-evenly',
-    elevation: 0.5,
+    elevation: 1,
   },
   header: {
     marginBottom: commonStyles.gap[3],

@@ -45,14 +45,14 @@ export default DeleteButton;
 
 const styles = StyleSheet.create({
   deleteButton: {
-    marginVertical: commonStyles.gap[0],
+    marginTop: commonStyles.gap[2],
     padding: commonStyles.gap[2],
     backgroundColor: commonStyles.containerBackgroundColor.light,
     borderRadius: commonStyles.borderRadius.large,
     borderColor: commonStyles.iconColor.darkRed,
     borderWidth: 1,
+    elevation: 5,
     alignItems: 'center',
-    elevation: 3,
   },
   deleteButtonText: {
     color: commonStyles.iconColor.darkRed,

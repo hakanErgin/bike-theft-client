@@ -9,7 +9,7 @@ const commonStyles = {
     dark: 'black',
     lightGray: '#E5E5E5',
     gray: '#c9c9c9',
-    lightRed: '#FBF5F5',
+    lightRed: '#fcfaf4',
   },
   // can use for margin/padding
   gap: [2, 4, 8, 12, 16, 22, 28, 36],

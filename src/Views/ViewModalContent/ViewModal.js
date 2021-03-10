@@ -21,7 +21,7 @@ import {
 } from '../../ContextProviders/IsViewModalVisibleContext';
 import Modal from 'react-native-modal';
 import commonStyles from '../../Utils/commonStyles';
-import CloseButton from 'react-native-vector-icons/MaterialIcons';
+import CloseButton from 'react-native-vector-icons/AntDesign';
 import {useCurrentUser} from '../../ContextProviders/UserContext';
 
 const ViewModal = () => {
@@ -69,11 +69,22 @@ const ViewModal = () => {
   //#endregion
 
   return (
-    <Modal isVisible={isViewModalVisible}>
+    <Modal
+      isVisible={isViewModalVisible}
+      onBackdropPress={() => setIsViewModalVisible(false)}>
       <View style={styles.modal}>
+        <View style={styles.headerContainer}>
+          <BoldText style={styles.header}>Reported bike theft</BoldText>
+          <TouchableOpacity
+            style={styles.closeButtonContainer}
+            onPress={() => {
+              setIsViewModalVisible(false);
+            }}>
+            <CloseButton name="close" style={styles.closeButton} />
+          </TouchableOpacity>
+        </View>
         {get_data ? (
           <>
-            <BoldText style={styles.header}>Reported bike theft</BoldText>
             <ScrollView>
               <DateDetailsView theftData={get_data.getTheft} />
               <BikeDetailsView theftData={get_data.getTheft} />
@@ -93,13 +104,6 @@ const ViewModal = () => {
             <ErrorView error={get_error} />
           </View>
         )}
-        <TouchableOpacity
-          style={styles.closeButtonContainer}
-          onPress={() => {
-            setIsViewModalVisible(false);
-          }}>
-          <CloseButton name="close" style={styles.closeButton} />
-        </TouchableOpacity>
       </View>
     </Modal>
   );
@@ -114,16 +118,23 @@ const styles = StyleSheet.create({
     borderRadius: commonStyles.borderRadius.xl,
     padding: commonStyles.gap[4],
   },
-  header: {fontSize: commonStyles.fontSize.xl, textAlign: 'center'},
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: commonStyles.gap[2],
+  },
+  header: {
+    fontSize: commonStyles.fontSize.xl,
+    color: commonStyles.iconColor.darkRed,
+  },
   closeButtonContainer: {
-    flex: 1,
+    alignSelf: 'center',
     position: 'absolute',
-    top: 0,
     right: 0,
   },
   closeButton: {
     fontSize: commonStyles.iconSize.large,
-    margin: commonStyles.gap[3],
+    color: commonStyles.iconColor.darkRed,
   },
   errorContainer: {height: '15%'},
 });

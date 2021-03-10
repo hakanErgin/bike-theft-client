@@ -18,7 +18,7 @@ export function DateDetailsView({theftData}) {
 
   return (
     <View style={styles.detailsContainer}>
-      <BoldText style={styles.fieldHeader}>Date info</BoldText>
+      <NormalText style={styles.fieldHeader}>Date info</NormalText>
       <FieldRow field={'Reported on:'} value={dateCreated.toDateString()} />
       <FieldRow field={'Date stolen:'} value={dateStolen.toDateString()} />
       {theftData.date_time.time && (
@@ -40,7 +40,7 @@ export function BikeDetailsView({theftData}) {
   } = theftData.bike;
   return (
     <View style={styles.detailsContainer}>
-      <BoldText style={styles.fieldHeader}>Bike info</BoldText>
+      <NormalText style={styles.fieldHeader}>Bike info</NormalText>
       <FieldRow field={'Type:'} value={type} />
       <FieldRow field={'Brand:'} value={brand} />
       <FieldRow field={'Color:'} value={color} />
@@ -67,7 +67,7 @@ export function OtherDetailsView({theftData}) {
   if (theftData.comments) {
     return (
       <View style={styles.detailsContainer}>
-        <BoldText style={styles.fieldHeader}>Other</BoldText>
+        <NormalText style={styles.fieldHeader}>Other</NormalText>
         <FieldRow field={'Comments:'} value={theftData.comments} />
       </View>
     );
@@ -81,10 +81,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: commonStyles.containerBackgroundColor.lightRed,
     paddingVertical: commonStyles.gap[2],
-    borderRadius: commonStyles.borderRadius.large,
+    borderRadius: commonStyles.borderRadius.normal,
     alignItems: 'center',
-    marginVertical: 5,
+    marginVertical: commonStyles.gap[2],
     paddingHorizontal: 10,
+    elevation: 1,
   },
   imageThumbnailContainer: {flexDirection: 'row'},
   imageThumbnail: {
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
   fieldValue: {flex: 1},
   fieldHeader: {
     flex: 1,
-    marginBottom: commonStyles.gap[2],
     fontSize: commonStyles.fontSize.large,
     color: commonStyles.iconColor.darkRed,
   },
