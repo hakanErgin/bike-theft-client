@@ -35,15 +35,16 @@ function BikeInputField({field, setFieldValue, fieldType, values}) {
       {fieldIsBikeType && (
         <View style={styles.checkBoxContainer}>
           <NormalText>e-bike</NormalText>
-          <>
-            <CheckBox
-              value={values.bike_details.ebike}
-              onValueChange={(value) =>
-                setFieldValue('bike_details.ebike', value)
-              }
-              style={styles.checkBox}
-            />
-          </>
+          <CheckBox
+            tintColors={{
+              false: commonStyles.iconColor.lightGrey,
+            }}
+            value={values.bike_details.ebike}
+            onValueChange={(value) =>
+              setFieldValue('bike_details.ebike', value)
+            }
+            style={styles.checkBox}
+          />
         </View>
       )}
     </View>
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
   inputAndroid: {
     ...inputAndroid,
   },
-  checkBox: {opacity: 0.5, flexGrow: 1},
+  checkBox: {flexGrow: 1},
   slide: {
     paddingHorizontal: commonStyles.gap[5],
     paddingBottom: commonStyles.gap[3],
