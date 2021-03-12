@@ -135,7 +135,7 @@ const FormModal = ({
                 onPress={finishAddingTheft}>
                 <Cancel name="closecircleo" style={styles.cancel} />
               </TouchableOpacity>
-              <Bullets intervals={intervals} interval={interval} style={{}} />
+              <Bullets intervals={intervals} interval={interval} />
               <TouchableOpacity
                 style={styles.checkContainer}
                 onPress={handleSubmit}>

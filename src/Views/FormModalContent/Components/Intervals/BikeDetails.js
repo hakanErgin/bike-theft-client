@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import theftFields from '../../../../Utils/theftFields';
-import {NormalText} from '../../../../Utils/commonComponents';
+import {NormalText, BoldText} from '../../../../Utils/commonComponents';
 import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from '@react-native-community/checkbox';
 
@@ -34,9 +34,14 @@ function BikeInputField({field, setFieldValue, fieldType, values}) {
       </View>
       {fieldIsBikeType && (
         <View style={styles.checkBoxContainer}>
-          <NormalText>e-bike</NormalText>
+          {values.bike_details.ebike ? (
+            <BoldText style={styles.ebikeText}>e-bike</BoldText>
+          ) : (
+            <NormalText style={styles.ebikeText}>e-bike</NormalText>
+          )}
           <CheckBox
             tintColors={{
+              true: commonStyles.iconColor.darkRed,
               false: commonStyles.iconColor.lightGrey,
             }}
             value={values.bike_details.ebike}
@@ -81,12 +86,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  typeField: {flex: 5},
+  typeField: {flex: 8},
   checkBoxContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
+    flex: 2,
+    alignItems: 'center',
   },
+  ebikeText: {fontSize: commonStyles.fontSize.small, textAlign: 'right'},
   inputAndroid: {
     ...inputAndroid,
   },
