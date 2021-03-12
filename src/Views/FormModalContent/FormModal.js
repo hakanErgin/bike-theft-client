@@ -19,11 +19,10 @@ import {mediaClient} from '../../ContextProviders/CombinedProviders';
 import {LoadingView, BoldText} from '../../Utils/commonComponents';
 import {useCurrentUser} from '../../ContextProviders/UserContext';
 
-import {BikeDetails} from './Components/Intervals/BikeDetails';
+import {BikeDetails, BikeInputFields} from './Components/Intervals/BikeDetails';
 import {OtherDetails} from './Components/Intervals/OtherDetails';
 import {DateDetails} from './Components/Intervals/DateDetails';
 import ImagePickerComponent from './Components/ImagePicker';
-import {BikeInputFields} from './Components/Intervals/BikeDetails';
 import {submitForm, initialValues, validate} from '../../Utils/formUtils';
 import FlashMessage from 'react-native-flash-message';
 import Bullets from './Components/Bullets';
@@ -123,7 +122,10 @@ const FormModal = ({
                   pickedImages={pickedImages}
                   setPickedImages={setPickedImages}
                 />
-                <BikeInputFields setFieldValue={setFieldValue} />
+                <BikeInputFields
+                  setFieldValue={setFieldValue}
+                  values={values}
+                />
               </BikeDetails>
               <OtherDetails handleChange={handleChange} values={values} />
             </FormCarousel>

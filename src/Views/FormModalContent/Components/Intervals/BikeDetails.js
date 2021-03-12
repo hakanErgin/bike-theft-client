@@ -4,14 +4,15 @@ import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import theftFields from '../../../../Utils/theftFields';
 import {NormalText} from '../../../../Utils/commonComponents';
 import RNPickerSelect from 'react-native-picker-select';
+import CheckBox from '@react-native-community/checkbox';
 
-export function BikeInputFields({setFieldValue}) {
-  return theftFields.bike.map((field) => {
-    // theres only 1 elem/key in each object
-    const fieldType = Object.keys(field)[0];
+function BikeInputField({field, setFieldValue, fieldType, values}) {
+  const fieldIsBikeType = fieldType === 'type';
 
-    return (
-      <View style={styles.field} key={fieldType}>
+  return (
+    <View
+      style={[styles.field, fieldIsBikeType && styles.bikeTypeFieldContainer]}>
+      <View style={styles.typeField}>
         <NormalText>{field[fieldType].Question}</NormalText>
         {field[fieldType].required && (
           <NormalText style={styles.requiredText}>*required</NormalText>
@@ -31,10 +32,40 @@ export function BikeInputFields({setFieldValue}) {
           })}
         />
       </View>
+      {fieldIsBikeType && (
+        <View style={styles.checkBoxContainer}>
+          <NormalText>e-bike</NormalText>
+          <>
+            <CheckBox
+              value={values.bike_details.ebike}
+              onValueChange={(value) =>
+                setFieldValue('bike_details.ebike', value)
+              }
+              style={styles.checkBox}
+            />
+          </>
+        </View>
+      )}
+    </View>
+  );
+}
+
+export function BikeInputFields({setFieldValue, values}) {
+  return theftFields.bike.map((field) => {
+    const fieldType = Object.keys(field)[0]; // theres only 1 elem/key in each object
+    return (
+      <BikeInputField
+        field={field}
+        setFieldValue={setFieldValue}
+        key={fieldType}
+        fieldType={fieldType}
+        values={values}
+      />
     );
   });
 }
 
+// main component for bike details
 export const BikeDetails = ({children}) => {
   return (
     <View style={styles.slide}>
@@ -43,13 +74,22 @@ export const BikeDetails = ({children}) => {
   );
 };
 
-export default BikeDetails;
-
 const styles = StyleSheet.create({
   field: {marginBottom: commonStyles.gap[5]},
+  bikeTypeFieldContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  typeField: {flex: 5},
+  checkBoxContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+  },
   inputAndroid: {
     ...inputAndroid,
   },
+  checkBox: {opacity: 0.5, flexGrow: 1},
   slide: {
     paddingHorizontal: commonStyles.gap[5],
     paddingBottom: commonStyles.gap[3],

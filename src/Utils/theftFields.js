@@ -11,7 +11,7 @@ const theftFields = {
           'BMX',
           'Foldable',
           'Fixie',
-          'E-bike',
+          'Other',
         ],
         'E-bike': false,
       },
@@ -51,6 +51,7 @@ const theftFields = {
           'Specialized',
           'Surly',
           'Trek',
+          'Other',
         ],
       },
     },
@@ -70,6 +71,7 @@ const theftFields = {
           'Orange',
           'Gray',
           'Brown',
+          'Other',
         ],
       },
     },
@@ -109,18 +111,18 @@ const theftFields = {
   date_time: {
     date: {
       required: true,
-      Question: 'Date your bike was stolen on',
+      Question: 'Date of theft',
       Options: {},
     },
     time: {
       required: false,
       Question: 'Time of the day your bike was stolen at',
-      Options: ['Day-time/During the day', 'Night-time/During the night'],
+      Options: ['During the day', 'During the night'],
     },
   },
   location: {
     required: true,
-    Question: 'Location your bike was stolen at',
+    Question: 'Theft location',
     Options: {longitude: 123, lattitude: 1231},
   },
 };
