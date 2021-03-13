@@ -21,10 +21,10 @@ const Bullets = ({intervals, interval}) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.bulletsContainer}>{bullets}</View>
       <NormalText style={styles.pageIndicator}>
         {interval}/{intervals}
       </NormalText>
-      <View style={styles.bulletsContainer}>{bullets}</View>
     </View>
   );
 };
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
   },
   pageIndicator: {
     fontSize: commonStyles.fontSize.tiny,
-    color: 'black',
+    color: commonStyles.iconColor.darkRed,
   },
 });

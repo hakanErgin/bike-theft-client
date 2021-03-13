@@ -26,7 +26,7 @@ const theftFields = {
           'Cinelli',
           'Cube',
           'Dahon',
-          'Decathalon/Btwin',
+          'Decathlon/Btwin',
           'Eddy Merckx',
           'Felt',
           'Focus',

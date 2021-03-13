@@ -80,7 +80,7 @@ export default function FeedbackForm({navigation}) {
               <BackButton name="arrow-back" style={styles.backButton} />
             </TouchableOpacity>
             <View>
-              <NormalText style={{}}>Choose type of feedback</NormalText>
+              <NormalText>Choose type of feedback</NormalText>
               <NormalText style={styles.requiredText}>*required</NormalText>
               <RNPickerSelect
                 useNativeAndroidPickerStyle={false}

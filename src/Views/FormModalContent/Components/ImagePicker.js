@@ -53,7 +53,7 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
       {pickedImages.length < 3 && (
         <TouchableOpacity
           style={styles.addPhotoIconContainer}
-          activeOpacity={0.5}
+          activeOpacity={0.25}
           onPress={() => chooseFile('photo')}>
           <AddPhotoIcon
             name="add-photo-alternate"
@@ -77,10 +77,11 @@ const styles = StyleSheet.create({
   addPhotoIconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: commonStyles.containerBackgroundColor.lightRed,
     borderRadius: commonStyles.borderRadius.normal,
     width: 75,
     height: 75,
+    elevation: 2,
   },
   container: {
     marginBottom: commonStyles.gap[6],

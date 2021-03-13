@@ -13,10 +13,13 @@ function BikeInputField({field, setFieldValue, fieldType, values}) {
     <View
       style={[styles.field, fieldIsBikeType && styles.bikeTypeFieldContainer]}>
       <View style={styles.typeField}>
-        <NormalText>{field[fieldType].Question}</NormalText>
-        {field[fieldType].required && (
-          <NormalText style={styles.requiredText}>*required</NormalText>
-        )}
+        <NormalText>
+          {field[fieldType].Question}
+          {field[fieldType].required && (
+            <BoldText style={styles.requiredText}>*</BoldText>
+          )}
+        </NormalText>
+
         <RNPickerSelect
           useNativeAndroidPickerStyle={false}
           onValueChange={(value) =>
@@ -89,9 +92,9 @@ const styles = StyleSheet.create({
   typeField: {flex: 8},
   checkBoxContainer: {
     flex: 2,
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
-  ebikeText: {fontSize: commonStyles.fontSize.small, textAlign: 'right'},
+  ebikeText: {fontSize: commonStyles.fontSize.normal, textAlign: 'right'},
   inputAndroid: {
     ...inputAndroid,
   },
@@ -111,10 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   requiredText: {
-    fontSize: commonStyles.fontSize.tiny,
-    color: 'black',
-    fontStyle: 'italic',
-    position: 'absolute',
-    right: 0,
+    color: commonStyles.iconColor.darkRed,
+    fontSize: commonStyles.fontSize.normal,
   },
 });

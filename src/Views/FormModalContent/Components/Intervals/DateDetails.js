@@ -5,7 +5,7 @@ import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import RNPickerSelect from 'react-native-picker-select';
 import theftFields from '../../../../Utils/theftFields';
 import DownArrowIcon from 'react-native-vector-icons/AntDesign';
-import {NormalText} from '../../../../Utils/commonComponents';
+import {NormalText, BoldText} from '../../../../Utils/commonComponents';
 
 function InfoBox() {
   const [isInfoCollapsed, setIsInfoCollapsed] = useState(false);
@@ -56,8 +56,11 @@ export const DateDetails = ({setFieldValue, values}) => {
     <View style={styles.slide}>
       <InfoBox />
       <View>
-        <NormalText>{theftFields.date_time.date.Question}</NormalText>
-        <NormalText style={styles.requiredText}>*required</NormalText>
+        <NormalText>
+          {theftFields.date_time.date.Question}
+          <BoldText style={styles.requiredText}>*</BoldText>
+        </NormalText>
+
         <DatePicker setFieldValue={setFieldValue} values={values} />
       </View>
       <View>
@@ -99,7 +102,7 @@ const styles = StyleSheet.create({
     paddingVertical: commonStyles.gap[1],
     borderRadius: commonStyles.borderRadius.large,
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     elevation: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -108,12 +111,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: commonStyles.gap[2],
   },
-  collapseArrow: {fontSize: 20},
+  collapseArrow: {
+    fontSize: commonStyles.iconSize.normal,
+    color: commonStyles.iconColor.darkRed,
+  },
   requiredText: {
-    fontSize: commonStyles.fontSize.tiny,
-    color: 'black',
-    fontStyle: 'italic',
-    position: 'absolute',
-    right: 0,
+    color: commonStyles.iconColor.darkRed,
+    fontSize: commonStyles.fontSize.normal,
   },
 });
