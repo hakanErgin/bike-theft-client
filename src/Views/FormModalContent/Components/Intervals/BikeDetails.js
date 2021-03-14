@@ -8,10 +8,15 @@ import CheckBox from '@react-native-community/checkbox';
 
 function BikeInputField({field, setFieldValue, fieldType, values}) {
   const fieldIsBikeType = fieldType === 'type';
+  const fieldIsWheelSize = fieldType === 'wheel_size';
 
   return (
     <View
-      style={[styles.field, fieldIsBikeType && styles.bikeTypeFieldContainer]}>
+      style={[
+        styles.field,
+        fieldIsBikeType && styles.bikeTypeFieldContainer,
+        fieldIsWheelSize && styles.wheelSizeField,
+      ]}>
       <View style={styles.typeField}>
         <NormalText>
           {field[fieldType].Question}
@@ -19,7 +24,6 @@ function BikeInputField({field, setFieldValue, fieldType, values}) {
             <BoldText style={styles.requiredText}>*</BoldText>
           )}
         </NormalText>
-
         <RNPickerSelect
           useNativeAndroidPickerStyle={false}
           onValueChange={(value) =>
@@ -66,9 +70,9 @@ export function BikeInputFields({setFieldValue, values}) {
       <BikeInputField
         field={field}
         setFieldValue={setFieldValue}
-        key={fieldType}
         fieldType={fieldType}
         values={values}
+        key={fieldType}
       />
     );
   });
@@ -76,15 +80,15 @@ export function BikeInputFields({setFieldValue, values}) {
 
 // main component for bike details
 export const BikeDetails = ({children}) => {
-  return (
-    <View style={styles.slide}>
-      <ScrollView>{children}</ScrollView>
-    </View>
-  );
+  return <View style={styles.slide}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
-  field: {marginBottom: commonStyles.gap[5]},
+  field: {
+    marginBottom: commonStyles.gap[5],
+    marginRight: commonStyles.gap[5],
+  },
+  wheelSizeField: {marginBottom: 0},
   bikeTypeFieldContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -100,18 +104,15 @@ const styles = StyleSheet.create({
   },
   checkBox: {flexGrow: 1},
   slide: {
-    paddingHorizontal: commonStyles.gap[5],
+    paddingLeft: commonStyles.gap[5],
     paddingBottom: commonStyles.gap[3],
     paddingTop: commonStyles.gap[6],
     flexBasis: '100%',
     flex: 1,
     maxWidth: '100%',
     display: 'flex',
-    flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignContent: 'stretch',
   },
   requiredText: {
     color: commonStyles.iconColor.darkRed,
