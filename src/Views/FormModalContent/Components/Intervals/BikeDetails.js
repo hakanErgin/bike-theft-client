@@ -85,8 +85,8 @@ export const BikeDetails = ({children}) => {
 
 const styles = StyleSheet.create({
   field: {
+    marginHorizontal: commonStyles.gap[5],
     marginBottom: commonStyles.gap[5],
-    marginRight: commonStyles.gap[5],
   },
   wheelSizeField: {marginBottom: 0},
   bikeTypeFieldContainer: {
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   },
   checkBox: {flexGrow: 1},
   slide: {
-    paddingLeft: commonStyles.gap[5],
     paddingBottom: commonStyles.gap[3],
     paddingTop: commonStyles.gap[6],
     flexBasis: '100%',

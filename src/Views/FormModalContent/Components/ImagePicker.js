@@ -45,7 +45,10 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
         pickedImages.length > 0 &&
         pickedImages.map((img) => {
           return (
-            <TouchableOpacity key={img.uri} onPress={() => removeFile(img)}>
+            <TouchableOpacity
+              key={img.uri}
+              onPress={() => removeFile(img)}
+              style={styles.imgButton}>
               <Image source={{uri: img.uri}} style={styles.image} />
             </TouchableOpacity>
           );
@@ -89,9 +92,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    marginRight: commonStyles.gap[3],
     width: 75,
     height: 75,
+    borderRadius: commonStyles.borderRadius.normal,
+  },
+  imgButton: {
+    elevation: 2,
+    marginRight: commonStyles.gap[3],
     borderRadius: commonStyles.borderRadius.normal,
   },
 });
