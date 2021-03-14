@@ -60,7 +60,6 @@ export const DateDetails = ({setFieldValue, values}) => {
           {theftFields.date_time.date.Question}
           <BoldText style={styles.requiredText}>*</BoldText>
         </NormalText>
-
         <DatePicker setFieldValue={setFieldValue} values={values} />
       </View>
       <View>
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: commonStyles.borderRadius.large,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 1,
+    elevation: 2,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },

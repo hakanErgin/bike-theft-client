@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
   CREATE_THEFT,
@@ -122,10 +122,12 @@ const FormModal = ({
                   pickedImages={pickedImages}
                   setPickedImages={setPickedImages}
                 />
-                <BikeInputFields
-                  setFieldValue={setFieldValue}
-                  values={values}
-                />
+                <ScrollView persistentScrollbar={true}>
+                  <BikeInputFields
+                    setFieldValue={setFieldValue}
+                    values={values}
+                  />
+                </ScrollView>
               </BikeDetails>
               <OtherDetails handleChange={handleChange} values={values} />
             </FormCarousel>

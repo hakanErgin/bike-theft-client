@@ -12,7 +12,7 @@ const commonStyles = {
     lightRed: '#fcfaf4',
   },
   // can use for margin/padding
-  gap: [2, 4, 8, 12, 16, 22, 28, 36],
+  gap: [2, 4, 8, 12, 16, 22, 28, 36, 48],
 };
 
 export default commonStyles;

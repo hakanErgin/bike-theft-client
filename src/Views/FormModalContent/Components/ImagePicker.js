@@ -14,16 +14,16 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
       maxHeight: 1280,
     };
     launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        // console.log('User cancelled camera picker');
-        return;
-      } else if (response.errorCode === 'permission') {
-        // console.log('Permission not satisfied');
-        return;
-      } else if (response.errorCode === 'others') {
-        // console.log(response.errorMessage);
-        return;
-      }
+      // if (response.didCancel) {
+      //   console.log('User cancelled camera picker');
+      //   return;
+      // } else if (response.errorCode === 'permission') {
+      //   console.log('Permission not satisfied');
+      //   return;
+      // } else if (response.errorCode === 'others') {
+      //   console.log(response.errorMessage);
+      //   return;
+      // }
       const file = new ReactNativeFile({
         uri: response.uri,
         name: response.fileName,
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: commonStyles.gap[6],
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'center',
   },
   image: {
