@@ -97,7 +97,7 @@ export function UsersReportedThefts({currentUser}) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
+    backgroundColor: commonStyles.containerBackgroundColor.lightRed,
     paddingVertical: commonStyles.gap[7],
     borderRadius: commonStyles.borderRadius.xl,
     justifyContent: 'space-evenly',
@@ -117,7 +117,11 @@ const styles = StyleSheet.create({
     fontSize: commonStyles.iconSize.large,
     color: commonStyles.iconColor.darkRed,
   },
-  centeredText: {textAlign: 'center', fontSize: commonStyles.fontSize.normal},
+  centeredText: {
+    textAlign: 'center',
+    fontSize: commonStyles.fontSize.normal,
+    color: 'black',
+  },
   bottomText: {
     marginTop: commonStyles.gap[1],
     fontStyle: 'italic',

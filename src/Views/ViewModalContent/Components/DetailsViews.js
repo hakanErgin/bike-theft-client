@@ -1,7 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import commonStyles from '../../../Utils/commonStyles';
-import {View, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {NormalText, BoldText} from '../../../Utils/commonComponents';
+import Modal from 'react-native-modal';
+import ImageZoom from 'react-native-image-pan-zoom';
 
 export function FieldRow({field, value}) {
   return (
@@ -18,7 +26,7 @@ export function DateDetailsView({theftData}) {
 
   return (
     <View style={styles.detailsContainer}>
-      <BoldText style={styles.fieldHeader}>Date info</BoldText>
+      <NormalText style={styles.fieldHeader}>Date info</NormalText>
       <FieldRow field={'Reported on:'} value={dateCreated.toDateString()} />
       <FieldRow field={'Date stolen:'} value={dateStolen.toDateString()} />
       {theftData.date_time.time && (
@@ -38,9 +46,19 @@ export function BikeDetailsView({theftData}) {
     wheel_size,
     photos,
   } = theftData.bike;
+  const [isImgModalVisible, setIsImgModalVisible] = useState(false);
+  const [selectedImg, setSelectedImg] = useState();
+  const windowHeight = Dimensions.get('window').height;
+  const windowWidth = Dimensions.get('window').width;
+
+  function displayImage(img) {
+    setSelectedImg(img);
+    setIsImgModalVisible(true);
+  }
+
   return (
     <View style={styles.detailsContainer}>
-      <BoldText style={styles.fieldHeader}>Bike info</BoldText>
+      <NormalText style={styles.fieldHeader}>Bike info</NormalText>
       <FieldRow field={'Type:'} value={type} />
       <FieldRow field={'Brand:'} value={brand} />
       <FieldRow field={'Color:'} value={color} />
@@ -51,14 +69,35 @@ export function BikeDetailsView({theftData}) {
         <View style={styles.imageThumbnailContainer}>
           {photos.map((img) => {
             return (
-              <Image
-                key={img}
-                source={{uri: img}}
-                style={styles.imageThumbnail}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  displayImage(img);
+                }}
+                key={img}>
+                <Image source={{uri: img}} style={styles.imageThumbnail} />
+              </TouchableOpacity>
             );
           })}
         </View>
+      )}
+      {isImgModalVisible && (
+        <Modal
+          transparent
+          backdropOpacity={0.9}
+          isVisible={isImgModalVisible}
+          style={styles.modal}>
+          <ImageZoom
+            cropWidth={windowWidth}
+            cropHeight={windowHeight}
+            imageWidth={windowWidth}
+            imageHeight={windowHeight}
+            onClick={() => setIsImgModalVisible(false)}>
+            <Image source={{uri: selectedImg}} style={styles.imageLarge} />
+          </ImageZoom>
+          <NormalText style={styles.imageModalInstructions}>
+            Tap to close
+          </NormalText>
+        </Modal>
       )}
     </View>
   );
@@ -67,7 +106,7 @@ export function OtherDetailsView({theftData}) {
   if (theftData.comments) {
     return (
       <View style={styles.detailsContainer}>
-        <BoldText style={styles.fieldHeader}>Other</BoldText>
+        <NormalText style={styles.fieldHeader}>Other</NormalText>
         <FieldRow field={'Comments:'} value={theftData.comments} />
       </View>
     );
@@ -79,12 +118,13 @@ export function OtherDetailsView({theftData}) {
 const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
-    backgroundColor: commonStyles.containerBackgroundColor.lightBlue,
+    backgroundColor: commonStyles.containerBackgroundColor.lightRed,
     paddingVertical: commonStyles.gap[2],
-    borderRadius: commonStyles.borderRadius.large,
+    borderRadius: commonStyles.borderRadius.normal,
     alignItems: 'center',
-    marginVertical: 5,
+    marginVertical: commonStyles.gap[2],
     paddingHorizontal: 10,
+    elevation: 1,
   },
   imageThumbnailContainer: {flexDirection: 'row'},
   imageThumbnail: {
@@ -93,11 +133,25 @@ const styles = StyleSheet.create({
     height: 75,
     borderRadius: commonStyles.borderRadius.normal,
   },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageLarge: {flex: 1, resizeMode: 'contain'},
+  imageModalInstructions: {
+    color: 'white',
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: 'black',
+    paddingHorizontal: commonStyles.gap[2],
+    paddingVertical: commonStyles.gap[1],
+    borderRadius: commonStyles.borderRadius.small,
+    fontSize: commonStyles.fontSize.small,
+  },
   fieldName: {flex: 1, color: commonStyles.iconColor.darkRed},
   fieldValue: {flex: 1},
   fieldHeader: {
     flex: 1,
-    marginBottom: commonStyles.gap[2],
     fontSize: commonStyles.fontSize.large,
     color: commonStyles.iconColor.darkRed,
   },

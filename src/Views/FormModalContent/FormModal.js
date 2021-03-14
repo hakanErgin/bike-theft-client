@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import {useMutation} from '@apollo/client';
 import {
   CREATE_THEFT,
@@ -19,11 +19,10 @@ import {mediaClient} from '../../ContextProviders/CombinedProviders';
 import {LoadingView, BoldText} from '../../Utils/commonComponents';
 import {useCurrentUser} from '../../ContextProviders/UserContext';
 
-import {BikeDetails} from './Components/Intervals/BikeDetails';
+import {BikeDetails, BikeInputFields} from './Components/Intervals/BikeDetails';
 import {OtherDetails} from './Components/Intervals/OtherDetails';
 import {DateDetails} from './Components/Intervals/DateDetails';
 import ImagePickerComponent from './Components/ImagePicker';
-import {BikeInputFields} from './Components/Intervals/BikeDetails';
 import {submitForm, initialValues, validate} from '../../Utils/formUtils';
 import FlashMessage from 'react-native-flash-message';
 import Bullets from './Components/Bullets';
@@ -123,7 +122,12 @@ const FormModal = ({
                   pickedImages={pickedImages}
                   setPickedImages={setPickedImages}
                 />
-                <BikeInputFields setFieldValue={setFieldValue} />
+                <ScrollView persistentScrollbar={true}>
+                  <BikeInputFields
+                    setFieldValue={setFieldValue}
+                    values={values}
+                  />
+                </ScrollView>
               </BikeDetails>
               <OtherDetails handleChange={handleChange} values={values} />
             </FormCarousel>
@@ -133,7 +137,7 @@ const FormModal = ({
                 onPress={finishAddingTheft}>
                 <Cancel name="closecircleo" style={styles.cancel} />
               </TouchableOpacity>
-              <Bullets intervals={intervals} interval={interval} style={{}} />
+              <Bullets intervals={intervals} interval={interval} />
               <TouchableOpacity
                 style={styles.checkContainer}
                 onPress={handleSubmit}>

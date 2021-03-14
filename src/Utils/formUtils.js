@@ -46,6 +46,7 @@ export async function submitForm(
               wheel_size: values.bike_details.wheel_size,
             }),
             photos: photos,
+            ebike: values.bike_details.ebike,
           },
           ...(values.comments && {comments: values.comments}),
           date_time: {
@@ -98,6 +99,7 @@ export const initialValues = {
     frame_size: undefined,
     wheel_size: undefined,
     photos: [],
+    ebike: false,
   },
   comments: undefined,
 };

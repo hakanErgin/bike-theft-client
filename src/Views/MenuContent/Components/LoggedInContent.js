@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   reportButton: {
-    margin: commonStyles.gap[4],
+    margin: commonStyles.gap[5],
     padding: commonStyles.gap[2],
     backgroundColor: commonStyles.containerBackgroundColor.light,
     borderRadius: commonStyles.borderRadius.large,
     borderColor: commonStyles.iconColor.darkRed,
     borderWidth: 1,
     alignItems: 'center',
-    elevation: 3,
+    elevation: 5,
   },
   reportButtonText: {
     color: commonStyles.iconColor.darkRed,

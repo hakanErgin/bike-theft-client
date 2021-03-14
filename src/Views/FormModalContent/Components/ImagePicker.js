@@ -14,16 +14,16 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
       maxHeight: 1280,
     };
     launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        // console.log('User cancelled camera picker');
-        return;
-      } else if (response.errorCode === 'permission') {
-        // console.log('Permission not satisfied');
-        return;
-      } else if (response.errorCode === 'others') {
-        // console.log(response.errorMessage);
-        return;
-      }
+      // if (response.didCancel) {
+      //   console.log('User cancelled camera picker');
+      //   return;
+      // } else if (response.errorCode === 'permission') {
+      //   console.log('Permission not satisfied');
+      //   return;
+      // } else if (response.errorCode === 'others') {
+      //   console.log(response.errorMessage);
+      //   return;
+      // }
       const file = new ReactNativeFile({
         uri: response.uri,
         name: response.fileName,
@@ -45,7 +45,10 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
         pickedImages.length > 0 &&
         pickedImages.map((img) => {
           return (
-            <TouchableOpacity key={img.uri} onPress={() => removeFile(img)}>
+            <TouchableOpacity
+              key={img.uri}
+              onPress={() => removeFile(img)}
+              style={styles.imgButton}>
               <Image source={{uri: img.uri}} style={styles.image} />
             </TouchableOpacity>
           );
@@ -53,7 +56,7 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
       {pickedImages.length < 3 && (
         <TouchableOpacity
           style={styles.addPhotoIconContainer}
-          activeOpacity={0.5}
+          activeOpacity={0.25}
           onPress={() => chooseFile('photo')}>
           <AddPhotoIcon
             name="add-photo-alternate"
@@ -77,21 +80,25 @@ const styles = StyleSheet.create({
   addPhotoIconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: commonStyles.containerBackgroundColor.lightRed,
     borderRadius: commonStyles.borderRadius.normal,
     width: 75,
     height: 75,
+    elevation: 2,
   },
   container: {
     marginBottom: commonStyles.gap[6],
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'center',
   },
   image: {
-    marginRight: commonStyles.gap[3],
     width: 75,
     height: 75,
+    borderRadius: commonStyles.borderRadius.normal,
+  },
+  imgButton: {
+    elevation: 2,
+    marginRight: commonStyles.gap[3],
     borderRadius: commonStyles.borderRadius.normal,
   },
 });
