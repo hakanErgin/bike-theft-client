@@ -42,6 +42,9 @@ export const GET_THEFTS = gql`
           latitude
           longitude
         }
+        date_time {
+          date
+        }
       }
     }
   }
