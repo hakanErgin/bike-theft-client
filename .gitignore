@@ -64,3 +64,5 @@ debug.log
 android/app/debug.keystore.old
 android/app/debug.keystore
 android/gradle.properties
+
+res_backup/
