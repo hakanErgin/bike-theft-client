@@ -30,6 +30,11 @@ const client = new ApolloClient({
               return incoming;
             },
           },
+          date_time: {
+            merge(existing, incoming) {
+              return incoming;
+            },
+          },
         },
       },
     },

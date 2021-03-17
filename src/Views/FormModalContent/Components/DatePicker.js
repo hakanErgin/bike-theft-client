@@ -30,6 +30,7 @@ const DatePicker = ({setFieldValue, values}) => {
         <CalendarIcon name="calendar" style={styles.calendarIcon} />
       </Pressable>
       <DateTimePickerModal
+        maximumDate={new Date()}
         isVisible={isDatePickerVisible}
         mode="date"
         onConfirm={(date) => handleConfirm(date, setFieldValue)}
