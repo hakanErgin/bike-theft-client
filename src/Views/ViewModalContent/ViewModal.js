@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: commonStyles.borderRadius.xl,
     padding: commonStyles.gap[4],
+    maxHeight: '98%',
   },
   headerContainer: {
     flexDirection: 'row',

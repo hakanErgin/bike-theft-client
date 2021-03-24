@@ -117,7 +117,7 @@ export default function FeedbackForm({navigation}) {
             <View>
               <Pressable>
                 <Button
-                  title={'Sumbit'}
+                  title={'Submit'}
                   onPress={handleSubmit}
                   disabled={!areFieldsSet}
                 />
