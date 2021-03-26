@@ -4,8 +4,12 @@ import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import {NormalText} from '../../../../Utils/commonComponents';
 import CheckBox from '@react-native-community/checkbox';
 
-export const OtherDetails = ({handleChange, values}) => {
-  const [isSharingContact, setIsSharingContact] = useState(false);
+export const OtherDetails = ({
+  handleChange,
+  values,
+  isSharingContact,
+  setIsSharingContact,
+}) => {
   return (
     <View style={styles.slide}>
       <ScrollView contentContainerStyle={styles.scrollableContainer}>
@@ -40,9 +44,9 @@ export const OtherDetails = ({handleChange, values}) => {
                 If my bicycle is seen, I want to be contacted by:
               </NormalText>
               <TextInput
-                style={styles.contactInfo}
-                onChangeText={handleChange('other_details.contactInfo')}
-                value={values.other_details.contactInfo}
+                style={styles.contact}
+                onChangeText={handleChange('other_details.contact')}
+                value={values.other_details.contact}
                 placeholder="Email or phone"
               />
               <NormalText style={styles.noticeText}>
@@ -57,8 +61,6 @@ export const OtherDetails = ({handleChange, values}) => {
   );
 };
 
-export default OtherDetails;
-
 const styles = StyleSheet.create({
   otherDetailsContainer: {width: '100%'},
   textArea: {
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   },
   scrollableContainer: {justifyContent: 'space-around'},
   noticeText: {marginTop: commonStyles.gap[2]},
-  contactInfo: {
+  contact: {
     borderWidth: 1,
     borderColor: commonStyles.containerBackgroundColor.lightGray,
     borderRadius: commonStyles.borderRadius.normal,

@@ -8,6 +8,7 @@ export async function submitForm(
   submitCreateMutation,
   selectedRegion,
   token,
+  isSharingContact,
 ) {
   const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
   if (pickedImages.length > 1) {
@@ -48,7 +49,14 @@ export async function submitForm(
             photos: photos,
             ebike: values.bike_details.ebike,
           },
-          ...(values.comments && {comments: values.comments}),
+          ...(values.other_details.comments && {
+            comments: values.other_details.comments,
+          }),
+          ...(isSharingContact &&
+            values.other_details.contact && {
+              contact: values.other_details.contact,
+            }),
+
           date_time: {
             date: values.date_details.date,
             ...(values.date_details.time && {time: values.date_details.time}),
@@ -101,5 +109,5 @@ export const initialValues = {
     photos: [],
     ebike: false,
   },
-  comments: undefined,
+  other_details: {comments: undefined, contact: undefined},
 };
