@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, TextInput, StyleSheet, ScrollView} from 'react-native';
 import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import {NormalText} from '../../../../Utils/commonComponents';
