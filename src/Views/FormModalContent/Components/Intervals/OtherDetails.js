@@ -14,8 +14,8 @@ export const OtherDetails = ({handleChange, values}) => {
           <TextInput
             multiline={true}
             style={styles.textArea}
-            onChangeText={handleChange('comments')}
-            value={values.comments}
+            onChangeText={handleChange('other_details.comments')}
+            value={values.other_details.comments}
             numberOfLines={6}
             placeholder="Comments"
           />
@@ -41,8 +41,8 @@ export const OtherDetails = ({handleChange, values}) => {
               </NormalText>
               <TextInput
                 style={styles.contactInfo}
-                onChangeText={handleChange('contactInfo')}
-                value={values.contactInfo}
+                onChangeText={handleChange('other_details.contactInfo')}
+                value={values.other_details.contactInfo}
                 placeholder="Email or phone"
               />
               <NormalText style={styles.noticeText}>
@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: commonStyles.containerBackgroundColor.lightGray,
     borderRadius: commonStyles.borderRadius.normal,
+    padding: commonStyles.gap[1],
+    marginVertical: commonStyles.gap[0],
   },
   inputAndroid: {
     ...inputAndroid,
