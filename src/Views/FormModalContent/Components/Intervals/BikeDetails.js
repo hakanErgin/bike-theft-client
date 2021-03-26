@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import theftFields from '../../../../Utils/theftFields';
 import {NormalText, BoldText} from '../../../../Utils/commonComponents';
