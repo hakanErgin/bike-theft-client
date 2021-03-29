@@ -69,7 +69,7 @@ export async function submitForm(
   }
 }
 
-export function validate(values) {
+export function validate(values, isSharingContact) {
   const errors = {};
   if (!values.bike_details.type) {
     errors.type = 'Bike type';
@@ -80,6 +80,12 @@ export function validate(values) {
   if (!values.bike_details.color) {
     errors.color = 'Bike color';
   }
+  if (isSharingContact) {
+    if (!values.other_details.contact) {
+      errors.contact = 'Contact';
+    }
+  }
+
   handleValidationWarning(errors);
   return errors;
 }

@@ -95,7 +95,7 @@ const FormModal = ({
       transparent={false}>
       <Formik
         validateOnChange={false}
-        validate={validate}
+        validate={(values) => validate(values, isSharingContact)}
         initialValues={initialValues}
         onSubmit={(values) =>
           submitForm(
