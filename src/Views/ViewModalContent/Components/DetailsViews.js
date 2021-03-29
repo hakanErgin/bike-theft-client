@@ -114,7 +114,23 @@ export function BikeDetailsView({theftData}) {
     </View>
   );
 }
+
+function RevealedContact({setIsContactVisible}) {
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        setIsContactVisible(true);
+      }}>
+      <SelectableText style={[styles.fieldValue, {fontStyle: 'italic'}]}>
+        Tap to display
+      </SelectableText>
+    </TouchableOpacity>
+  );
+}
+
 export function OtherDetailsView({theftData}) {
+  const [isContactVisible, setIsContactVisible] = useState(false);
+
   if (theftData.comments) {
     return (
       <View style={styles.detailsContainer}>
@@ -127,7 +143,17 @@ export function OtherDetailsView({theftData}) {
     return (
       <View style={styles.detailsContainer}>
         <NormalText style={styles.fieldHeader}>Other</NormalText>
-        <FieldRow field={'Contact:'} value={theftData.contact} selectable />
+        <FieldRow
+          field={'Contact:'}
+          value={
+            isContactVisible ? (
+              theftData.contact
+            ) : (
+              <RevealedContact setIsContactVisible={setIsContactVisible} />
+            )
+          }
+          selectable
+        />
       </View>
     );
   } else {
