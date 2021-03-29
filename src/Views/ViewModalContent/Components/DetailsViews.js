@@ -131,29 +131,26 @@ function RevealedContact({setIsContactVisible}) {
 export function OtherDetailsView({theftData}) {
   const [isContactVisible, setIsContactVisible] = useState(false);
 
-  if (theftData.comments) {
+  if (theftData.comments || theftData.contact) {
     return (
       <View style={styles.detailsContainer}>
         <NormalText style={styles.fieldHeader}>Other</NormalText>
-        <FieldRow field={'Comments:'} value={theftData.comments} />
-      </View>
-    );
-  }
-  if (theftData.contact) {
-    return (
-      <View style={styles.detailsContainer}>
-        <NormalText style={styles.fieldHeader}>Other</NormalText>
-        <FieldRow
-          field={'Contact:'}
-          value={
-            isContactVisible ? (
-              theftData.contact
-            ) : (
-              <RevealedContact setIsContactVisible={setIsContactVisible} />
-            )
-          }
-          selectable
-        />
+        {theftData.comments && (
+          <FieldRow field={'Comments:'} value={theftData.comments} />
+        )}
+        {theftData.contact && (
+          <FieldRow
+            field={'Contact:'}
+            value={
+              isContactVisible ? (
+                theftData.contact
+              ) : (
+                <RevealedContact setIsContactVisible={setIsContactVisible} />
+              )
+            }
+            selectable
+          />
+        )}
       </View>
     );
   } else {
