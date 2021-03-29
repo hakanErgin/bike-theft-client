@@ -82,7 +82,7 @@ export function validate(values, isSharingContact) {
   }
   if (isSharingContact) {
     if (!values.other_details.contact) {
-      errors.contact = 'Contact';
+      errors.contact = 'Email or Phone';
     }
   }
 
