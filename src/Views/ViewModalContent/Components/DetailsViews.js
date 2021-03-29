@@ -7,15 +7,23 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {NormalText, BoldText} from '../../../Utils/commonComponents';
+import {
+  NormalText,
+  BoldText,
+  SelectableText,
+} from '../../../Utils/commonComponents';
 import Modal from 'react-native-modal';
 import ImageZoom from 'react-native-image-pan-zoom';
 
-export function FieldRow({field, value}) {
+export function FieldRow({field, value, selectable}) {
   return (
     <View style={styles.fieldRow}>
       <BoldText style={styles.fieldName}>{field}</BoldText>
-      <NormalText style={styles.fieldValue}>{value}</NormalText>
+      {!selectable ? (
+        <NormalText style={styles.fieldValue}>{value}</NormalText>
+      ) : (
+        <SelectableText style={styles.fieldValue}>{value}</SelectableText>
+      )}
     </View>
   );
 }
@@ -108,6 +116,14 @@ export function OtherDetailsView({theftData}) {
       <View style={styles.detailsContainer}>
         <NormalText style={styles.fieldHeader}>Other</NormalText>
         <FieldRow field={'Comments:'} value={theftData.comments} />
+      </View>
+    );
+  }
+  if (theftData.contact) {
+    return (
+      <View style={styles.detailsContainer}>
+        <NormalText style={styles.fieldHeader}>Other</NormalText>
+        <FieldRow field={'Contact:'} value={theftData.contact} selectable />
       </View>
     );
   } else {

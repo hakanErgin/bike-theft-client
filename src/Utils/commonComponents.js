@@ -27,6 +27,13 @@ export function NormalText({style, children}) {
 export function BoldText({style, children}) {
   return <Text style={[style, styles.boldText]}>{children}</Text>;
 }
+export function SelectableText({style, children}) {
+  return (
+    <Text selectable style={[style, styles.normalText]}>
+      {children}
+    </Text>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
