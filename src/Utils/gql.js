@@ -70,7 +70,9 @@ export const GET_THEFT = gql`
         frame_size
         wheel_size
         photos
+        ebike
       }
+      contact
       comments
       created_at
       date_time {
