@@ -15,12 +15,15 @@ import {
 import Modal from 'react-native-modal';
 import ImageZoom from 'react-native-image-pan-zoom';
 
-export function FieldRow({field, value, selectable}) {
+export function FieldRow({field, value, selectable, ebike}) {
   return (
     <View style={styles.fieldRow}>
       <BoldText style={styles.fieldName}>{field}</BoldText>
       {!selectable ? (
-        <NormalText style={styles.fieldValue}>{value}</NormalText>
+        <NormalText style={styles.fieldValue}>
+          {value}
+          {ebike && ' (e-bike)'}
+        </NormalText>
       ) : (
         <SelectableText style={styles.fieldValue}>{value}</SelectableText>
       )}
@@ -53,6 +56,7 @@ export function BikeDetailsView({theftData}) {
     frame_size,
     wheel_size,
     photos,
+    ebike,
   } = theftData.bike;
   const [isImgModalVisible, setIsImgModalVisible] = useState(false);
   const [selectedImg, setSelectedImg] = useState();
@@ -67,7 +71,7 @@ export function BikeDetailsView({theftData}) {
   return (
     <View style={styles.detailsContainer}>
       <NormalText style={styles.fieldHeader}>Bike info</NormalText>
-      <FieldRow field={'Type:'} value={type} />
+      <FieldRow field={'Type:'} value={type} ebike={ebike} />
       <FieldRow field={'Brand:'} value={brand} />
       <FieldRow field={'Color:'} value={color} />
       {year && <FieldRow field={'Manufacture year:'} value={year} />}
