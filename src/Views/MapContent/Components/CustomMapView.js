@@ -12,7 +12,9 @@ import MenuButton from './MenuButton';
 import MapLayerOverlay from './MapLayerOverlay';
 import MyLocationButton from './MyLocationButton';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
-import commonVariables from '../../../Utils/commonVariables';
+import commonVariables, {
+  BRUSSELS_LOCATION,
+} from '../../../Utils/commonVariables';
 import {LoadingView, ErrorView} from '../../../Utils/commonComponents';
 
 /*
@@ -51,9 +53,13 @@ const CustomMapView = ({
   // set initial location to my location
 
   useEffect(() => {
-    setCurrentPosition(setUsersLocation);
-    // removing dependancy here prevented re-render loop!!
-  }, []);
+    setCurrentPosition(setUsersLocation).then(() => {
+      // if no location is set for the user then just show Brussels
+      !usersLocation &&
+        mapRef.current != null &&
+        mapRef.current.animateToRegion(BRUSSELS_LOCATION);
+    });
+  }, [usersLocation]);
 
   // set boundaries on region change
   useEffect(() => {

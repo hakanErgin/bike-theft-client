@@ -38,11 +38,11 @@ function InfoBox() {
             </NormalText>
           </View>
         )}
+        <NormalText style={styles.informationText}>{infoMessage}</NormalText>
         <ArrowIcon
-          name={!isInfoCollapsed ? 'right' : 'up'}
+          name={!isInfoCollapsed ? 'left' : 'up'}
           style={styles.collapseArrow}
         />
-        <NormalText style={styles.informationText}>{infoMessage}</NormalText>
       </View>
     </Pressable>
   );

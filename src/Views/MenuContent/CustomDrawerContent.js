@@ -53,12 +53,10 @@ const CustomDrawerContent = ({navigation}) => {
             console.log('signinsilent err ' + err);
             signUserOut().then(() => {
               setIsUserLoggedIn(false);
-              navigation.openDrawer();
             });
           });
       } else if (isSignedIn === false) {
         setIsUserLoggedIn(isSignedIn);
-        navigation.openDrawer();
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import commonStyles, {inputAndroid} from '../../../../Utils/commonStyles';
 import theftFields from '../../../../Utils/theftFields';
 import {NormalText, BoldText} from '../../../../Utils/commonComponents';
@@ -41,11 +41,7 @@ function BikeInputField({field, setFieldValue, fieldType, values}) {
       </View>
       {fieldIsBikeType && (
         <View style={styles.checkBoxContainer}>
-          {values.bike_details.ebike ? (
-            <BoldText style={styles.ebikeText}>e-bike</BoldText>
-          ) : (
-            <NormalText style={styles.ebikeText}>e-bike</NormalText>
-          )}
+          <NormalText style={styles.ebikeText}>e-bike</NormalText>
           <CheckBox
             tintColors={{
               true: commonStyles.iconColor.darkRed,

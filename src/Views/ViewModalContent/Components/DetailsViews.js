@@ -7,15 +7,26 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {NormalText, BoldText} from '../../../Utils/commonComponents';
+import {
+  NormalText,
+  BoldText,
+  SelectableText,
+} from '../../../Utils/commonComponents';
 import Modal from 'react-native-modal';
 import ImageZoom from 'react-native-image-pan-zoom';
 
-export function FieldRow({field, value}) {
+export function FieldRow({field, value, selectable, ebike}) {
   return (
     <View style={styles.fieldRow}>
       <BoldText style={styles.fieldName}>{field}</BoldText>
-      <NormalText style={styles.fieldValue}>{value}</NormalText>
+      {!selectable ? (
+        <NormalText style={styles.fieldValue}>
+          {value}
+          {ebike && ' (e-bike)'}
+        </NormalText>
+      ) : (
+        <SelectableText style={styles.fieldValue}>{value}</SelectableText>
+      )}
     </View>
   );
 }
@@ -45,6 +56,7 @@ export function BikeDetailsView({theftData}) {
     frame_size,
     wheel_size,
     photos,
+    ebike,
   } = theftData.bike;
   const [isImgModalVisible, setIsImgModalVisible] = useState(false);
   const [selectedImg, setSelectedImg] = useState();
@@ -59,7 +71,7 @@ export function BikeDetailsView({theftData}) {
   return (
     <View style={styles.detailsContainer}>
       <NormalText style={styles.fieldHeader}>Bike info</NormalText>
-      <FieldRow field={'Type:'} value={type} />
+      <FieldRow field={'Type:'} value={type} ebike={ebike} />
       <FieldRow field={'Brand:'} value={brand} />
       <FieldRow field={'Color:'} value={color} />
       {year && <FieldRow field={'Manufacture year:'} value={year} />}
@@ -102,12 +114,43 @@ export function BikeDetailsView({theftData}) {
     </View>
   );
 }
+
+function RevealedContact({setIsContactVisible}) {
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        setIsContactVisible(true);
+      }}>
+      <SelectableText style={[styles.fieldValue, {fontStyle: 'italic'}]}>
+        Tap to display
+      </SelectableText>
+    </TouchableOpacity>
+  );
+}
+
 export function OtherDetailsView({theftData}) {
-  if (theftData.comments) {
+  const [isContactVisible, setIsContactVisible] = useState(false);
+
+  if (theftData.comments || theftData.contact) {
     return (
       <View style={styles.detailsContainer}>
         <NormalText style={styles.fieldHeader}>Other</NormalText>
-        <FieldRow field={'Comments:'} value={theftData.comments} />
+        {theftData.comments && (
+          <FieldRow field={'Comments:'} value={theftData.comments} />
+        )}
+        {theftData.contact && (
+          <FieldRow
+            field={'Contact:'}
+            value={
+              isContactVisible ? (
+                theftData.contact
+              ) : (
+                <RevealedContact setIsContactVisible={setIsContactVisible} />
+              )
+            }
+            selectable
+          />
+        )}
       </View>
     );
   } else {

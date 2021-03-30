@@ -4,6 +4,7 @@ import {useSetSelectedTheftId} from '../../../ContextProviders/SelectedTheftIdCo
 import {useToggleIsViewModalVisible} from '../../../ContextProviders/IsViewModalVisibleContext';
 import {useIsAddingNewTheft} from '../../../ContextProviders/IsAddingNewTheftContext';
 import {NormalText} from '../../../Utils/commonComponents';
+import commonVariables from '../../../Utils/commonVariables';
 
 const MarkersWithCallouts = ({thefts}) => {
   const setSelectedTheftId = useSetSelectedTheftId();
@@ -50,8 +51,8 @@ function getWeightFromFreshness(freshnessInDays, highestFreshnessDifference) {
   // highestFreshnessDifference = yMax
   const minFreshness = 0; // yMin
 
-  const maxWeight = 5;
-  const minWeight = 1;
+  const maxWeight = commonVariables.HEAT_MAP_MAX_WEIGHT;
+  const minWeight = commonVariables.HEAT_MAP_MIN_WEIGHT;
 
   function convertRange(value, r1, r2) {
     return ((value - r1[0]) * (r2[1] - r2[0])) / (r1[1] - r1[0]) + r2[0];

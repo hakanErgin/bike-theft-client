@@ -36,7 +36,7 @@ const FormModal = ({
   const currentUser = useCurrentUser();
   const setIsAddingNewTheft = useToggleIsAddingNewTheft();
   const [token, setToken] = useState();
-
+  const [isSharingContact, setIsSharingContact] = useState(false);
   // carousel intervals
   const [interval, setInterval] = useState(1);
   const [width, setWidth] = useState(0);
@@ -95,7 +95,7 @@ const FormModal = ({
       transparent={false}>
       <Formik
         validateOnChange={false}
-        validate={validate}
+        validate={(values) => validate(values, isSharingContact)}
         initialValues={initialValues}
         onSubmit={(values) =>
           submitForm(
@@ -106,6 +106,7 @@ const FormModal = ({
             submitCreateMutation,
             selectedRegion,
             token,
+            isSharingContact,
           )
         }>
         {({handleChange, values, handleSubmit, setFieldValue}) => (
@@ -129,7 +130,12 @@ const FormModal = ({
                   />
                 </ScrollView>
               </BikeDetails>
-              <OtherDetails handleChange={handleChange} values={values} />
+              <OtherDetails
+                handleChange={handleChange}
+                values={values}
+                isSharingContact={isSharingContact}
+                setIsSharingContact={setIsSharingContact}
+              />
             </FormCarousel>
             <View style={styles.bottomContainer}>
               <TouchableOpacity

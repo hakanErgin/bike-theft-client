@@ -8,6 +8,7 @@ export async function submitForm(
   submitCreateMutation,
   selectedRegion,
   token,
+  isSharingContact,
 ) {
   const {longitude, latitude} = selectedRegion; // can use this to print location fetched from coords
   if (pickedImages.length > 1) {
@@ -48,7 +49,14 @@ export async function submitForm(
             photos: photos,
             ebike: values.bike_details.ebike,
           },
-          ...(values.comments && {comments: values.comments}),
+          ...(values.other_details.comments && {
+            comments: values.other_details.comments,
+          }),
+          ...(isSharingContact &&
+            values.other_details.contact && {
+              contact: values.other_details.contact,
+            }),
+
           date_time: {
             date: values.date_details.date,
             ...(values.date_details.time && {time: values.date_details.time}),
@@ -61,7 +69,7 @@ export async function submitForm(
   }
 }
 
-export function validate(values) {
+export function validate(values, isSharingContact) {
   const errors = {};
   if (!values.bike_details.type) {
     errors.type = 'Bike type';
@@ -72,6 +80,12 @@ export function validate(values) {
   if (!values.bike_details.color) {
     errors.color = 'Bike color';
   }
+  if (isSharingContact) {
+    if (!values.other_details.contact) {
+      errors.contact = 'Email or Phone';
+    }
+  }
+
   handleValidationWarning(errors);
   return errors;
 }
@@ -101,5 +115,5 @@ export const initialValues = {
     photos: [],
     ebike: false,
   },
-  comments: undefined,
+  other_details: {comments: undefined, contact: undefined},
 };
