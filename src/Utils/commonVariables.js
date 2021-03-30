@@ -7,6 +7,15 @@ const commonVariables = {
   SEARCH_DEBOUNCE: 500,
   SEARCH_MIN_CHAR_TRIGGER: 3,
   ADDING_THEFT_ZOOM_LEVEL_CAP: 13.25,
+  HEAT_MAP_MAX_WEIGHT: 15,
+  HEAT_MAP_MIN_WEIGHT: 1,
+};
+
+export const BRUSSELS_LOCATION = {
+  latitude: 50.84721026795662,
+  latitudeDelta: 0.33153671644238614,
+  longitude: 4.353442993015051,
+  longitudeDelta: 0.32761406153440387,
 };
 
 export default commonVariables;
