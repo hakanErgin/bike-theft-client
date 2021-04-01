@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: commonStyles.gap[2],
     paddingHorizontal: 10,
-    elevation: 1,
   },
   imageThumbnailContainer: {flexDirection: 'row'},
   imageThumbnail: {

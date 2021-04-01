@@ -59,7 +59,8 @@ const CustomMapView = ({
         mapRef.current != null &&
         mapRef.current.animateToRegion(BRUSSELS_LOCATION);
     });
-  }, [usersLocation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usersLocation, mapRef.current]);
 
   // set boundaries on region change
   useEffect(() => {
