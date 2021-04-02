@@ -53,14 +53,8 @@ const CustomMapView = ({
   // set initial location to my location
 
   useEffect(() => {
-    setCurrentPosition(setUsersLocation).then(() => {
-      // if no location is set for the user then just show Brussels
-      !usersLocation &&
-        mapRef.current != null &&
-        mapRef.current.animateToRegion(BRUSSELS_LOCATION);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usersLocation, mapRef.current]);
+    setCurrentPosition(setUsersLocation);
+  }, [usersLocation]);
 
   // set boundaries on region change
   useEffect(() => {
@@ -118,7 +112,7 @@ const CustomMapView = ({
         showsMyLocationButton={false}
         pitchEnabled={false}
         rotateEnabled={false}
-        initialRegion={usersLocation}
+        initialRegion={BRUSSELS_LOCATION}
         onRegionChangeComplete={updateStateAndMapLayers}
         minZoomLevel={isAddingNewTheft ? ADDING_THEFT_ZOOM_LEVEL_CAP : 0}
         ref={mapRef}>
