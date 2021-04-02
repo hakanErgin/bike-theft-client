@@ -117,7 +117,11 @@ const CustomMapView = ({
         minZoomLevel={isAddingNewTheft ? ADDING_THEFT_ZOOM_LEVEL_CAP : 0}
         ref={mapRef}>
         {thefts && (
-          <MapLayerOverlay visibleMapLayer={visibleMapLayer} thefts={thefts} />
+          <MapLayerOverlay
+            visibleMapLayer={visibleMapLayer}
+            thefts={thefts}
+            isAddingNewTheft={isAddingNewTheft}
+          />
         )}
       </MapView>
       {isAddingNewTheft && (

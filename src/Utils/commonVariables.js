@@ -9,6 +9,7 @@ const commonVariables = {
   ADDING_THEFT_ZOOM_LEVEL_CAP: 13.25,
   HEAT_MAP_MAX_WEIGHT: 15,
   HEAT_MAP_MIN_WEIGHT: 1,
+  HEAT_MAP_RADIUS: 30,
 };
 
 export const BRUSSELS_LOCATION = {
