@@ -58,7 +58,7 @@ const CustomMapView = ({
 
   useEffect(() => {
     setCurrentPosition(setUsersLocation);
-  }, [usersLocation]);
+  }, []);
 
   // set boundaries on region change
   useEffect(() => {
