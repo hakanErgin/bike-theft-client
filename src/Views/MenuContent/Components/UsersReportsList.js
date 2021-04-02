@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import ViewIcon from 'react-native-vector-icons/Entypo';
 import commonStyles from '../../../Utils/commonStyles';
 import {GET_USERS_THEFTS} from '../../../Utils/gql';
@@ -24,11 +24,16 @@ function ViewButton({theftId}) {
   }
 
   return (
-    <ViewIcon
-      name="magnifying-glass"
-      style={styles.viewButton}
+    <TouchableOpacity
       onPress={viewReport}
-    />
+      hitSlop={{
+        top: commonStyles.hitSlop[1],
+        bottom: commonStyles.hitSlop[1],
+        left: commonStyles.hitSlop[1],
+        right: commonStyles.hitSlop[1],
+      }}>
+      <ViewIcon name="magnifying-glass" style={styles.viewButton} />
+    </TouchableOpacity>
   );
 }
 

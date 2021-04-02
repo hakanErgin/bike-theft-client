@@ -72,6 +72,12 @@ const CustomDrawerContent = ({navigation}) => {
       )}
       <TouchableOpacity
         style={styles.feedbackButton}
+        hitSlop={{
+          top: commonStyles.hitSlop[0],
+          bottom: commonStyles.hitSlop[0],
+          left: commonStyles.hitSlop[0],
+          right: commonStyles.hitSlop[0],
+        }}
         onPress={() => navigation.navigate({name: 'Feedback'})}>
         <NormalText>Give feedback!</NormalText>
       </TouchableOpacity>
