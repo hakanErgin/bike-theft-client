@@ -98,7 +98,11 @@ export default function MapLayerOverlay({
     } else if (visibleMapLayer === 'heatmap') {
       return (
         <Heatmap
-          radius={commonVariables.HEAT_MAP_RADIUS}
+          //      gradient={{
+          //        colors: ['rgb(102, 225, 0)', 'rgb(255, 191, 0)', 'rgb(255, 0, 0)'],
+          //        startPoints: [0.1, 0.5, 1],
+          //      }}
+          radius={commonVariables.HEAT_MAP_RADIUS_MID}
           opacity={1}
           points={getTheftsWithFreshness(thefts)}
         />
