@@ -47,6 +47,7 @@ const CustomMapView = ({
     VISIBLE_LAYER_DEFINING_VALUE,
     ADDING_THEFT_ZOOM_LEVEL_CAP,
     MY_POSITION_ZOOM_LEVEL,
+    ANIMATION_SPEED,
   } = commonVariables;
 
   // fetch thefts and set them to state
@@ -55,10 +56,15 @@ const CustomMapView = ({
   }, [get_data]);
 
   // set initial location to my location
+  useEffect(() => {
+    if (usersLocation && mapRef.current != null) {
+      mapRef.current.animateToRegion(usersLocation, ANIMATION_SPEED);
+    }
+  }, [usersLocation, ANIMATION_SPEED]);
 
   useEffect(() => {
     setCurrentPosition(setUsersLocation);
-  }, []);
+  }, []); // users location dependency causes rerenders
 
   // set boundaries on region change
   useEffect(() => {

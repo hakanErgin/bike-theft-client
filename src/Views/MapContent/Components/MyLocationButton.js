@@ -11,9 +11,7 @@ const MyLocationButton = React.forwardRef(
     function goToLocation() {
       if (mapRef.current != null) {
         if (usersLocation === undefined) {
-          setCurrentPosition(setUsersLocation).then(() =>
-            mapRef.current.animateToRegion(usersLocation, ANIMATION_SPEED),
-          );
+          setCurrentPosition(setUsersLocation);
         } else {
           mapRef.current.animateToRegion(usersLocation, ANIMATION_SPEED);
         }
