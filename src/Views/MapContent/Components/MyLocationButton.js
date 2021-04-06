@@ -7,22 +7,18 @@ import commonVariables from '../../../Utils/commonVariables';
 
 const MyLocationButton = React.forwardRef(
   ({usersLocation, setUsersLocation}, mapRef) => {
-    const ANIMATION_SPEED = commonVariables.ANIMATION_SPEED;
+    const {ANIMATION_SPEED} = commonVariables;
     function goToLocation() {
       if (mapRef.current != null) {
         if (usersLocation === undefined) {
-          setCurrentPosition(setUsersLocation).then(() =>
-            mapRef.current.animateToRegion(usersLocation, ANIMATION_SPEED),
-          );
+          setCurrentPosition(setUsersLocation);
         } else {
           mapRef.current.animateToRegion(usersLocation, ANIMATION_SPEED);
         }
       }
     }
     return (
-      <TouchableOpacity
-        style={styles.gpsIconContainer}
-        onPress={() => goToLocation()}>
+      <TouchableOpacity style={styles.gpsIconContainer} onPress={goToLocation}>
         <GpsIcon name="crosshairs-gps" style={styles.gpsIcon} />
       </TouchableOpacity>
     );
@@ -35,7 +31,7 @@ const styles = StyleSheet.create({
     top: commonStyles.gap[3],
     right: commonStyles.gap[3],
     backgroundColor: 'white',
-    borderRadius: 5,
+    borderRadius: commonStyles.borderRadius.small,
     elevation: 1,
   },
   gpsIcon: {

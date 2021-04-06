@@ -5,6 +5,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {ReactNativeFile} from 'apollo-upload-client';
 import commonStyles from '../../../Utils/commonStyles';
 import AddPhotoIcon from 'react-native-vector-icons/MaterialIcons';
+import {ToastAndroid} from 'react-native';
 
 const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
   const chooseFile = (type) => {
@@ -14,16 +15,16 @@ const ImagePickerComponent = ({pickedImages, setPickedImages}) => {
       maxHeight: 1280,
     };
     launchImageLibrary(options, (response) => {
-      // if (response.didCancel) {
-      //   console.log('User cancelled camera picker');
-      //   return;
-      // } else if (response.errorCode === 'permission') {
-      //   console.log('Permission not satisfied');
-      //   return;
-      // } else if (response.errorCode === 'others') {
-      //   console.log(response.errorMessage);
-      //   return;
-      // }
+      if (response.didCancel) {
+        ToastAndroid.show('User cancelled', ToastAndroid.SHORT);
+        return;
+      } else if (response.errorCode === 'permission') {
+        ToastAndroid.show('Permission not found', ToastAndroid.SHORT);
+        return;
+      } else if (response.errorCode === 'others') {
+        ToastAndroid.show(response.errorMessage, ToastAndroid.SHORT);
+        return;
+      }
       const file = new ReactNativeFile({
         uri: response.uri,
         name: response.fileName,

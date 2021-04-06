@@ -1,7 +1,7 @@
 import {PermissionsAndroid} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import commonVariables from './commonVariables';
-
+import {ToastAndroid} from 'react-native';
 //  https://stackoverflow.com/a/65648357/7525593
 //  https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
 
@@ -20,12 +20,15 @@ export default async function setCurrentPosition(setPosition) {
         longitudeDelta: MY_POSITION_ZOOM_LEVEL,
       });
     }
-    Geolocation.getCurrentPosition(
-      successCallback,
-      (error) => {
-        console.log(error.code, error.message);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
+    function errorCallback(error) {
+      console.log(error.code);
+      ToastAndroid.show(error.message, ToastAndroid.SHORT);
+    }
+
+    Geolocation.getCurrentPosition(successCallback, errorCallback, {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 10000,
+    });
   }
 }

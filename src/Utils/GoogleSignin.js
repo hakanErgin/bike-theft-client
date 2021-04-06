@@ -10,6 +10,7 @@ import {useMutation} from '@apollo/client';
 import {CREATE_USER_OR_SIGN_IN} from './gql';
 import {useToggleIsUserLoggedIn} from '../ContextProviders/IsUserLoggedInContext';
 import SignOutIcon from 'react-native-vector-icons/Entypo';
+import commonStyles from './commonStyles';
 
 export const SignInButton = () => {
   const setIsUserLoggedIn = useToggleIsUserLoggedIn();
@@ -86,7 +87,14 @@ export const LogoutButton = ({
     }
   };
   return (
-    <TouchableOpacity onPress={() => showConfirmationAlert(signOut)}>
+    <TouchableOpacity
+      onPress={() => showConfirmationAlert(signOut)}
+      hitSlop={{
+        top: commonStyles.hitSlop[2],
+        bottom: commonStyles.hitSlop[2],
+        left: commonStyles.hitSlop[2],
+        right: commonStyles.hitSlop[2],
+      }}>
       <SignOutIcon name={'log-out'} size={size} color={color} />
     </TouchableOpacity>
   );

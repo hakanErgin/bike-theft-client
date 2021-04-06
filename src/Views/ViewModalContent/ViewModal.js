@@ -77,6 +77,12 @@ const ViewModal = () => {
           <BoldText style={styles.header}>Reported bike theft</BoldText>
           <TouchableOpacity
             style={styles.closeButtonContainer}
+            hitSlop={{
+              top: commonStyles.hitSlop[4],
+              bottom: commonStyles.hitSlop[4],
+              left: commonStyles.hitSlop[4],
+              right: commonStyles.hitSlop[4],
+            }}
             onPress={() => {
               setIsViewModalVisible(false);
             }}>

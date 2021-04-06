@@ -87,18 +87,26 @@ function getTheftsWithFreshness(thefts) {
   });
 }
 
-export default function MapLayerOverlay({visibleMapLayer, thefts}) {
+export default function MapLayerOverlay({
+  visibleMapLayer,
+  thefts,
+  isAddingNewTheft,
+}) {
   if (thefts.length > 0) {
-    if (visibleMapLayer === 'heatmap') {
+    if (visibleMapLayer === 'markers' || isAddingNewTheft) {
+      return <MarkersWithCallouts thefts={thefts} />;
+    } else if (visibleMapLayer === 'heatmap') {
       return (
         <Heatmap
-          radius={30}
+          //      gradient={{
+          //        colors: ['rgb(102, 225, 0)', 'rgb(255, 191, 0)', 'rgb(255, 0, 0)'],
+          //        startPoints: [0.1, 0.5, 1],
+          //      }}
+          radius={commonVariables.HEAT_MAP_RADIUS_MID}
           opacity={1}
           points={getTheftsWithFreshness(thefts)}
         />
       );
-    } else if (visibleMapLayer === 'markers') {
-      return <MarkersWithCallouts thefts={thefts} />;
     }
   } else {
     return null;
