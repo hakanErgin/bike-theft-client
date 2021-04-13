@@ -9,19 +9,20 @@ export function useCurrentUser() {
 export function useSetCurrentUser() {
   return useContext(SetCurrentUser);
 }
+const SetterProvider = React.memo(({setCurrentUser, children}) => (
+  <SetCurrentUser.Provider value={setCurrentUser}>
+    {children}
+  </SetCurrentUser.Provider>
+));
 
 export function CurrentUserProvider({children}) {
   const [currentUser, setCurrentUser] = useState();
 
-  function changeCurrentUser(value) {
-    setCurrentUser(value);
-  }
-
   return (
     <CurrentUser.Provider value={currentUser}>
-      <SetCurrentUser.Provider value={changeCurrentUser}>
+      <SetterProvider setCurrentUser={setCurrentUser}>
         {children}
-      </SetCurrentUser.Provider>
+      </SetterProvider>
     </CurrentUser.Provider>
   );
 }
