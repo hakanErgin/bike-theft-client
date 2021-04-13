@@ -9,19 +9,20 @@ export function useSelectedTheftId() {
 export function useSetSelectedTheftId() {
   return useContext(SetSelectedTheftId);
 }
+const SetterProvider = React.memo(({setSelectedTheftId, children}) => (
+  <SetSelectedTheftId.Provider value={setSelectedTheftId}>
+    {children}
+  </SetSelectedTheftId.Provider>
+));
 
 export function SelectedTheftIdProvider({children}) {
   const [selectedTheftId, setSelectedTheftId] = useState();
 
-  function changeSelectedTheftId(value) {
-    setSelectedTheftId(value);
-  }
-
   return (
     <SelectedTheftId.Provider value={selectedTheftId}>
-      <SetSelectedTheftId.Provider value={changeSelectedTheftId}>
+      <SetterProvider setSelectedTheftId={setSelectedTheftId}>
         {children}
-      </SetSelectedTheftId.Provider>
+      </SetterProvider>
     </SelectedTheftId.Provider>
   );
 }

@@ -9,19 +9,20 @@ export function useIsViewModalVisible() {
 export function useToggleIsViewModalVisible() {
   return useContext(ToggleIsViewModalVisible);
 }
+const SetterProvider = React.memo(({setIsViewModalVisible, children}) => (
+  <ToggleIsViewModalVisible.Provider value={setIsViewModalVisible}>
+    {children}
+  </ToggleIsViewModalVisible.Provider>
+));
 
 export function IsViewModalVisibleProvider({children}) {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
 
-  function toggleIsViewModalVisible(boolean) {
-    setIsViewModalVisible(boolean);
-  }
-
   return (
     <IsViewModalVisible.Provider value={isViewModalVisible}>
-      <ToggleIsViewModalVisible.Provider value={toggleIsViewModalVisible}>
+      <SetterProvider setIsViewModalVisible={setIsViewModalVisible}>
         {children}
-      </ToggleIsViewModalVisible.Provider>
+      </SetterProvider>
     </IsViewModalVisible.Provider>
   );
 }

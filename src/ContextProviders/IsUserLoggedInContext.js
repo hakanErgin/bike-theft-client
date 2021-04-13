@@ -9,19 +9,20 @@ export function useIsUserLoggedIn() {
 export function useToggleIsUserLoggedIn() {
   return useContext(ToggleIsUserLoggedIn);
 }
+const SetterProvider = React.memo(({setIsUserLoggedIn, children}) => (
+  <ToggleIsUserLoggedIn.Provider value={setIsUserLoggedIn}>
+    {children}
+  </ToggleIsUserLoggedIn.Provider>
+));
 
 export function IsUserLoggedInProvider({children}) {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  function toggleIsUserLoggedIn(boolean) {
-    setIsUserLoggedIn(boolean);
-  }
-
   return (
     <IsUserLoggedIn.Provider value={isUserLoggedIn}>
-      <ToggleIsUserLoggedIn.Provider value={toggleIsUserLoggedIn}>
+      <SetterProvider setIsUserLoggedIn={setIsUserLoggedIn}>
         {children}
-      </ToggleIsUserLoggedIn.Provider>
+      </SetterProvider>
     </IsUserLoggedIn.Provider>
   );
 }

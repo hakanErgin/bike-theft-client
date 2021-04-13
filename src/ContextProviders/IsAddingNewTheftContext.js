@@ -9,19 +9,20 @@ export function useIsAddingNewTheft() {
 export function useToggleIsAddingNewTheft() {
   return useContext(ToggleIsAddingNewTheft);
 }
+const SetterProvider = React.memo(({setIsAddingNewTheft, children}) => (
+  <ToggleIsAddingNewTheft.Provider value={setIsAddingNewTheft}>
+    {children}
+  </ToggleIsAddingNewTheft.Provider>
+));
 
 export function IsAddingNewTheftProvider({children}) {
   const [isAddingNewTheft, setIsAddingNewTheft] = useState(false);
 
-  function toggleIsAddingNewTheft(boolean) {
-    setIsAddingNewTheft(boolean);
-  }
-
   return (
     <IsAddingNewTheft.Provider value={isAddingNewTheft}>
-      <ToggleIsAddingNewTheft.Provider value={toggleIsAddingNewTheft}>
+      <SetterProvider setIsAddingNewTheft={setIsAddingNewTheft}>
         {children}
-      </ToggleIsAddingNewTheft.Provider>
+      </SetterProvider>
     </IsAddingNewTheft.Provider>
   );
 }
